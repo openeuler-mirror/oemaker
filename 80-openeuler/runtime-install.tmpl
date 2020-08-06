@@ -1,0 +1,145 @@
+## lorax template file: populate the ramdisk (runtime image)
+<%page args="basearch, product"/>
+
+## anaconda package
+installpkg anaconda anaconda-widgets kexec-tools-anaconda-addon anaconda-install-env-deps
+## Other available payloads
+installpkg dnf
+installpkg ostree
+## speed up compression on multicore systems
+installpkg pigz
+
+## kernel and firmware
+## NOTE: Without explicitly including kernel-modules-extra dnf will choose kernel-debuginfo-*
+##       to satify a gfs2-utils kmod requirement
+##installpkg kernel kernel-modules kernel-modules-extra
+installpkg kernel
+installpkg grubby
+## skip the firmware for sound, video, and scanners, none of which will
+## do much good for the installer. Also skip uhd-firmware which is not
+## even a kernel firmware package.
+installpkg --optional *-firmware --except alsa* --except midisport-firmware \
+                       --except crystalhd-firmware --except ivtv-firmware \
+                       --except cx18-firmware --except iscan-firmware \
+                       --except uhd-firmware --except lulzbot-marlin-firmware \
+                       --except arm-trusted-firmware
+installpkg b43-openfwwf
+
+## install all of the glibc langpacks since otherwise we get no locales
+installpkg glibc-all-langpacks
+
+## arch-specific packages (bootloaders etc.)
+%if basearch == "aarch64":
+    installpkg efibootmgr
+    installpkg grub2-efi-aa64-cdboot shim-aa64
+    installpkg uboot-tools
+%endif
+%if basearch in ("arm", "armhfp"):
+    installpkg efibootmgr
+    installpkg grub2-efi-arm-cdboot
+    installpkg kernel-lpae
+    installpkg uboot-tools
+%endif
+%if basearch == "x86_64":
+    installpkg grub2-tools-efi
+    installpkg efibootmgr
+    installpkg shim-x64 grub2-efi-x64-cdboot
+    installpkg syslinux
+    installpkg grub2-tools grub2-tools-minimal grub2-tools-extra
+%endif
+
+## yay, plymouth
+installpkg plymouth
+
+## extra dracut modules
+installpkg anaconda-dracut dracut-network dracut-config-generic dracut-fips
+
+## import-state.service for switchroot
+installpkg initscripts
+
+## rescue needs this
+installpkg cryptsetup
+
+## rpcbind or portmap needed by dracut nfs module
+installpkg rpcbind
+
+## required for dracut
+installpkg kbd kbd-misc
+## required for anaconda-dracut (img-lib etc.)
+installpkg tar xz curl bzip2
+
+## basic system stuff
+installpkg systemd-sysv systemd-units
+installpkg rsyslog
+
+## xorg/GUI packages
+installpkg xorg-x11-drivers xorg-x11-server-Xorg
+installpkg xorg-x11-server-utils xorg-x11-xauth
+installpkg dbus-x11 metacity gsettings-desktop-schemas
+installpkg nm-connection-editor
+installpkg librsvg2
+
+## filesystem tools
+installpkg btrfs-progs xfsprogs
+installpkg device-mapper-persistent-data
+installpkg xfsdump
+
+## extra storage packages
+# hostname is needed for iscsi to work, see RHBZ#1593917
+installpkg udisks2 hostname
+# udisks2-iscsi hostname
+
+## extra libblockdev plugins
+installpkg libblockdev-lvm-dbus
+
+## needed for LUKS escrow
+installpkg volume_key
+installpkg nss-tools
+
+## SELinux support
+installpkg selinux-policy-targeted audit
+
+## network tools/servers
+installpkg ethtool openssh-server nfs-utils openssh-clients
+installpkg tigervnc-server-minimal
+installpkg tigervnc-server-module
+installpkg net-tools
+installpkg bridge-utils
+installpkg nmap-ncat
+
+## hardware utilities/libraries
+installpkg pciutils usbutils ipmitool
+installpkg smartmontools
+installpkg hdparm
+## see bug #1483278
+%if basearch not in ("arm", "armhfp"):
+    installpkg libmlx4 rdma-core
+%endif
+installpkg rng-tools
+
+## fonts & themes
+installpkg xorg-x11-fonts-misc
+installpkg abattis-cantarell-fonts
+installpkg google-noto-sans-cjk-ttc-fonts
+
+## debugging/bug reporting tools
+installpkg gdb-gdbserver
+installpkg libreport
+installpkg fpaste
+installpkg python3-pyatspi
+
+## extra tools not required by anaconda
+installpkg vim-minimal strace lsof xz less eject
+installpkg wget rsync bind-utils ftp mtr vconfig
+installpkg icfg spice-vdagent
+installpkg gdisk sg3_utils
+
+## satisfy libnotify's desktop-notification-daemon with the least crazy option
+installpkg notification-daemon
+
+## Docker enabled boot.iso
+# Not all arches currently have docker
+installpkg docker-anaconda-addon
+
+## actually install all the requested packages
+run_pkg_transaction
