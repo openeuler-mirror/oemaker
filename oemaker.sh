@@ -37,10 +37,9 @@ function mkclean()
 
 function mk_euleros_main()
 {
-    echo "Parsing cmd line..."
     parse_cmd_line "$@"
     if [ $? -ne 0 ]; then
-        echo "parse params error"
+        echo "parse params failed"
         return 1
     fi
 

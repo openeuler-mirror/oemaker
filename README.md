@@ -21,7 +21,7 @@ Generally, the disk space is more than 50g.
 
 #### Contribution
 
-oemaker <font color=#0000FF >_[-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
+oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
     optional arguments:
     -t Type
@@ -38,3 +38,6 @@ oemaker <font color=#0000FF >_[-t Type] [-p Product] [-v Version] [-r RELEASE] [
 
     -s REPOSITORY
        source dnf repository address link(may be listed multiple times)
+
+    -h 
+       show the help message and exit
