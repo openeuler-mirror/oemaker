@@ -1,36 +1,40 @@
 # oemaker
 
 #### Description
-a building tool for making DVD iso
 
-#### Software Architecture
-Software architecture description
+`oemaker` is a building tool for making DVD iso, include standard iso, debug iso and source iso.
+`oemaker` uses local arch when building, did not support cross building.
+currently, `oemaker` support the arch of aarch64 and x86_64 for iso making.
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+To install `oemaker`, you can use `rpm` or `dnf` package manager command with openEuler repository.
+
+Install oemaker with dnf
+```sh
+dnf install -y oemaker
+```
 
 #### Instructions
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+Generally, the disk space is more than 50g
 
 #### Contribution
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
+    optional arguments:
+    -t Type
+       ISO Type include standard debug and source
 
-#### Gitee Feature
+    -p Product
+       Product Name, such as: openEuler
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+    -v Version
+       version identifier
+
+    -r RELEASE
+       release information
+
+    -s REPOSITORY
+       source dnf repository address link(may be listed multiple times)

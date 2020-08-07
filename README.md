@@ -1,37 +1,43 @@
 # oemaker
 
 #### 介绍
-a building tool for making DVD iso
-
-#### 软件架构
-软件架构说明
-
+oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso和source iso等。
+oemaker采用的是本地架构的方式进行构建，不支持交叉编译环境构建。
+目前，oemkaer支持aarch64和x86_64两个架构的iso制作。
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+可以用rpm命令或dnf包管理命令通过openEuler repository安装oemaker包。
+
+用dnf命令安装方式：
+```sh
+dnf install -y oemaker
+```
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+一般要求磁盘空间大于50G
 
 
-#### 码云特技
+#### 使用方法
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
+
+    optional arguments:
+    -t Type
+       ISO Type include standard debug and source
+
+    -p Product
+       Product Name, such as: openEuler
+
+    -v Version
+       version identifier
+
+    -r RELEASE
+       release information
+
+    -s REPOSITORY
+       source dnf repository address link(may be listed multiple times)
+
+    -h 
+       show the help message and exit

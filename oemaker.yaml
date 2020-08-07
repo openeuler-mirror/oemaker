@@ -1,0 +1,5 @@
+git_url: https://gitee.com/openeuler/oemaker
+version_control: gitee
+src_repo: openeuler/oemaker
+tag_prefix: "^v"
+seperator: "."
