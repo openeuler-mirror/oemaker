@@ -16,6 +16,21 @@
 #!/bin/bash
 
 set -e
+function oemaker_usage()
+{
+    cat << EOF
+Usage: oemaker [-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]
+
+optional arguments:
+    -t Type        ISO Type, include standard debug and source
+    -p Product     Product Name, such as: openEuler
+    -v Version     version identifier
+    -r RELEASE     release information
+    -s REPOSITORY  source dnf repository address link(may be listed multiple times)
+    -h             show the help message and exit
+EOF
+}
+
 function parse_cmd_line()
 {
     #param init
@@ -34,16 +49,33 @@ function parse_cmd_line()
     ISOTYPE="standard"
 
     # parse input params
-    while getopts ":p:v:r:s:t:" opt
+    while getopts ":p:v:r:s:t:h" opt
     do
         case "$opt" in
-            p)    PRODUCT="$OPTARG";;
-            v)    VERSION="$OPTARG";;
-            r)    RELEASE="$OPTARG";;
-            s)    REPOS1="$OPTARG";;
-            t)    ISOTYPE="$OPTARG";;
-            ?)    printf "Usage: %s: [-f config_file] args\n" "$0"
-                  return 1;;
+            p)
+                PRODUCT="$OPTARG"
+            ;;
+            v)
+                VERSION="$OPTARG"
+            ;;
+            r)
+                RELEASE="$OPTARG"
+            ;;
+            s)
+                REPOS1="$OPTARG"
+            ;;
+            t)
+                ISOTYPE="$OPTARG"
+            ;;
+            h)
+                oemaker_usage
+                exit 0
+            ;;
+            ?)
+                echo "error: please check the params."
+                oemaker_usage
+                return 1
+            ;;
         esac
     done
 
@@ -101,14 +133,7 @@ function global_var_init()
     set -e
     return 0
 }
-#######################################
-# copy config.
-# Arguments:
-#   None
-# Returns:
-#   Success: 0
-#   Failed:  1
-#######################################
+
 function init_config()
 {
     [ -f "${BUILD}"/isopackage.sdf ] && cp "${BUILD}"/isopackage.sdf "${BUILD}"/iso/
