@@ -5,7 +5,7 @@ Group:          System/Management
 Version:        1.0.0
 Release:        1
 BuildRoot:      %{_tmppath}/%{name}
-Source:         %{name}-%{version}.tar.gz
+Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz
 BuildArch:      noarch
 Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libselinux-utils libxml2
 Requires:       lorax >= 19.6.78-1
