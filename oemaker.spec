@@ -3,7 +3,7 @@ Summary:        a duilding tool for making DVD ISO
 License:        GPL
 Group:          System/Management
 Version:        1.0.0
-Release:        1
+Release:        2
 BuildRoot:      %{_tmppath}/%{name}
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch:      noarch
@@ -62,6 +62,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Sep 29 2020 zhuchunyi <zhuchunyi@huawei.com> - 1.0.0-2
+- ID:NA
+- SUG:NA
+- DESC:change Source format to URL
+
 * Sat Jul 25 2020 zhuchunyi <zhuchunyi@huawei.com> - 1.0.0-1
 - ID:NA
 - SUG:NA
