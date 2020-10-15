@@ -18,6 +18,7 @@
 set -e
 cd /opt/oemaker
 REPOS=""
+ISO_TYPE="standard"
 export OUTPUT_DIR="/result"
 export CPATH=$(pwd)
 
@@ -27,12 +28,15 @@ source "${CPATH}"/init.sh
 source "${CPATH}"/iso.sh
 source "${CPATH}"/rpm.sh
 source "${CPATH}"/img_repo.sh
+source "${CPATH}"/make_debug.sh
 
 function mkclean()
 {
-    rm -rf /etc/yum/repos.d/*
-    [ -n "${BUILD}" ] && rm -rf "${BUILD}"
-    rm -rf /etc/yum.repos.d && mv repos.old /etc/yum.repos.d
+    if [ -d repos.old ];then
+        rm -rf /etc/yum.repos.d && mv repos.old /etc/yum.repos.d
+    fi
+
+    [ -d "$BUILD" ] && rm -rf "$BUILD"
 }
 
 function mk_euleros_main()
@@ -82,31 +86,29 @@ function mk_euleros_main()
     fi
 
     echo "Waiting for lorax to finish..."
-    if [ "${ISOTYPE}" == "debug" ]; then
+    if [ "${ISO_TYPE}" == "debug" ]; then
         gen_debug_iso
         if [ $? -ne 0 ]; then
             echo "create debug iso failed"
             return 1
         fi
-        mkclean
-        echo "${OUTPUT_DIR}/${DBG_ISO_NAME}"
-    elif [ "${ISOTYPE}" == "standard" ]; then
-        gen_iso
+        ls "${OUTPUT_DIR}/${DBG_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "standard" ]; then
+        gen_standard_iso
         if [ $? -ne 0 ]; then
             echo "create install iso failed"
             return 1
         fi
-        mkclean
-        echo "${OUTPUT_DIR}/${ISO_NAME}"
-   elif [ "${ISOTYPE}" == "source" ]; then
+        ls "${OUTPUT_DIR}/${STANDARD_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "source" ]; then
         gen_src_iso
         if [ $? -ne 0 ]; then
             echo "create source iso failed"
             return 1
         fi
-        mkclean
-        echo "${OUTPUT_DIR}/${SRC_ISO_NAME}"
+        ls "${OUTPUT_DIR}/${SRC_ISO_NAME}"
     fi
+    mkclean
     return 0
 }
 

@@ -40,13 +40,12 @@ function parse_cmd_line()
         source "${CONFIG_FILE}"
     else
         echo "unsupported architectures: ${ARCH}"
-        return 1;
+        return 1
     fi
     PRODUCT="${CONFIG_PRODUCT}"
     VERSION="${CONFIG_VERSION}"
     RELEASE="${CONFIG_RELEASE}"
     REPOS1="${CONFIG_YUM_REPOS}"
-    ISOTYPE="standard"
 
     # parse input params
     while getopts ":p:v:r:s:t:h" opt
@@ -65,7 +64,7 @@ function parse_cmd_line()
                 REPOS1="$OPTARG"
             ;;
             t)
-                ISOTYPE="$OPTARG"
+                ISO_TYPE="$OPTARG"
             ;;
             h)
                 oemaker_usage
@@ -81,12 +80,12 @@ function parse_cmd_line()
 
     for typename in standard source debug
     do
-        if [ "${typename}" == "${ISOTYPE}" ];then
+        if [ "${typename}" == "${ISO_TYPE}" ];then
             return 0
         fi
     done
 
-    echo "unsupported iso type: ${ISOTYPE}"
+    echo "unsupported iso type: ${ISO_TYPE}"
     echo "supported iso types: standard source and debug"
     return 1
 }
@@ -99,14 +98,11 @@ function global_var_init()
 
     TYPE="iso"
     BUILD="${OUTPUT_DIR}"/tmp
-    SRC_DIR="${BUILD}"/src
-    DBG_DIR="${BUILD}"/dbg
-    if [ "${ISOTYPE}" == "debug" ]; then
-        source ./make_debug.sh
-    fi
+    SRC_DIR="$OUTPUT_DIR"/tmp/src
+    DBG_DIR="$OUTPUT_DIR"/tmp/dbg
 
     RELEASE_NAME="${PRODUCT}-${VERSION}-${RELEASE}-${ARCH}"
-    ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-${ARCH}-dvd.iso"
+    STANDARD_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-${ARCH}-dvd.iso"
     SRC_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-source-dvd.iso"
     DBG_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-debug-${ARCH}-dvd.iso"
 

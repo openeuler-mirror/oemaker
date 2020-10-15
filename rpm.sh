@@ -92,7 +92,7 @@ function download_rpms()
     parse_rpmlist_xml "exclude"
     local exclude_cmd=""
     if [ -s parsed_rpmlist_exclude ];then
-        for rpmname in `cat parsed_rpmlist_exclude`;do
+        for rpmname in $(cat parsed_rpmlist_exclude);do
             exclude_cmd="${exclude_cmd} -x ${rpmname}"
         done
     fi
@@ -110,10 +110,10 @@ function download_rpms()
     fi
 
     set +e
-    if [ "${ISOTYPE}" == "debug" ]; then
+    if [ "${ISO_TYPE}" == "debug" ]; then
         down_ava_debug_rpm
         get_debug_rpm
-    elif [ "${ISOTYPE}" == "source" ]; then
+    elif [ "${ISO_TYPE}" == "source" ]; then
         [ -d "$SRC_DIR" ] && rm -rf "$SRC_DIR"
         mkdir "$SRC_DIR"
         ls "${BUILD}"/iso/Packages/ | sed 's/.rpm$//g'| tr '\n' ' ' | sort | uniq | xargs yumdownloader --installroot="${BUILD}"/tmp --source --destdir="$SRC_DIR"

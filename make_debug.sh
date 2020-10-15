@@ -15,7 +15,6 @@
 
 #!/bin/bash
 
-CONFIG_DBG_LIST="config/standard/debug_rpmlist"
 
 set -e
 function down_ava_debug_rpm()
@@ -49,6 +48,7 @@ function get_debug_rpm()
     local yumdownloader_log_startline=$(($(awk 'END{print NR}' /var/log/dnf.log)+1))
     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="$DBG_DIR" $(cat debug_rpm_lst | tr '\n' ' ')
     if [ $? -ne 0 ] || sed -n ''${yumdownloader_log_startline}',$p' /var/log/dnf.log | grep -n 'conflicting requests'; then
+        echo "Download debug rpms failed!"
         return 1
     fi
     ls "${BUILD}"/iso/Packages/ | sort > iso_lst

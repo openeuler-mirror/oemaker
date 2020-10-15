@@ -19,7 +19,7 @@ set -e
 function create_install_img()
 {
     echo "$YUMREPO" > yumrepo.file
-    lorax --isfinal -p "$NAME" -v "$VERSION" -r "$RELEASE" --sharedir 80-openeuler --rootfs-size=3 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
+    lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" --sharedir 80-openeuler --rootfs-size=3 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
 
     if [ $? != 0 ] ; then
         cat lorax.logfile
@@ -29,12 +29,16 @@ function create_install_img()
 
 function create_repos()
 {
-    mv /etc/yum.repos.d repos.old && mkdir /etc/yum.repos.d/
+    if [ -d /etc/yum.repos.d ];then
+        mv /etc/yum.repos.d repos.old && mkdir -p /etc/yum.repos.d/
+    fi
+
     repos=($(echo "$YUMREPO" | sed 's/-s//g'))
 
     for repo in  ${repos[@]}
     do
         yum-config-manager  --add-repo "$repo"
     done
+
     yum clean all
 }
