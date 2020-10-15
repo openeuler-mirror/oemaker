@@ -24,26 +24,26 @@ function gen_debug_iso()
     mv "$DBG_DIR" "$BUILD"/iso/Packages
     createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
     if [ "$ARCH" == "x86_64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${DBG_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DBG_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     elif [ "$ARCH" == "aarch64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${DBG_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DBG_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
-    implantisomd5 /result/"${DBG_ISO_NAME}"
+    implantisomd5 "${OUTPUT_DIR}/${DBG_ISO_NAME}"
     return 0
 }
 
-function gen_iso()
+function gen_standard_iso()
 {
     if [ "$ARCH" == "x86_64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     elif [ "$ARCH" == "aarch64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
-    implantisomd5 /result/"${ISO_NAME}"
+    implantisomd5 "${OUTPUT_DIR}/${STANDARD_ISO_NAME}"
     return 0
 }
 
@@ -55,10 +55,10 @@ function gen_src_iso()
     mv "$SRC_DIR" "$BUILD"/iso/Packages
 
     if [ "$ARCH" == "x86_64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     elif [ "$ARCH" == "aarch64" ]; then
-        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
     return 0
