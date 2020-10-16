@@ -1,6 +1,6 @@
 Name:           oemaker
 Summary:        a duilding tool for making DVD ISO
-License:        GPL
+License:        Mulan PSL v2
 Group:          System/Management
 Version:        1.0.1
 Release:        1
