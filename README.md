@@ -2,7 +2,7 @@
 
 #### Description
 
-`oemaker` is a building tool for making DVD iso, include standard iso, debug iso and source iso.
+`oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything source iso,everything debug iso and netinst iso.
 `oemaker` uses local arch when building, did not support cross building.
 currently, `oemaker` support the arch of aarch64 and x86_64 for iso making.
 

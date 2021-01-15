@@ -41,11 +41,13 @@ function download_rpms()
     set +e
     for rname in $(cat _all_rpms.lst)
     do
+        if [ -z "${rname}" ];then
+            continue
+        fi
         if [ $(echo "$rname" | grep "\*$") ]; then
             echo "$rname" >> __rpm.list
             continue
         fi
-        rname=$(echo "$rname")
         rarch=${rname##*.}
         if [ "X$rarch" == "Xi686" ] && [ "$ARCH" == "aarch64" ]; then
             continue
@@ -56,8 +58,8 @@ function download_rpms()
         fi
         cat __list.arch | grep -w "^$rname" > /dev/null 2>&1
         if [ $? != 0 ]; then
-            rname=`repoquery --queryformat="%{name}.%{arch}" -q --whatprovides $rname`
-            if [ -z "$rname" ]; then
+            rname_tmp=`repoquery --queryformat="%{name}.%{arch}" -q --whatprovides $rname`
+            if [ -z "${rname_tmp}" ]; then
                 echo "cannot find $rname in yum repo" >> not_find
                 ret=1
                 continue
@@ -65,6 +67,7 @@ function download_rpms()
                 echo "$rname" >> __rpm.list
                 continue
             fi
+            rname=${rname_tmp}
         fi
         if [ "X$rarch" == "Xi686" ] || [ "X$rarch" == "Xx86_64" ] || [ "X$rarch" == "Xnoarch" ] || [ "X$rarch" == "Xaarch64" ]; then
             rname="${rname}"
@@ -118,6 +121,12 @@ function download_rpms()
         mkdir "$SRC_DIR"
         ls "${BUILD}"/iso/Packages/ | sed 's/.rpm$//g'| tr '\n' ' ' | sort | uniq | xargs yumdownloader --installroot="${BUILD}"/tmp --source --destdir="$SRC_DIR"
         yumdownloader kernel-source  --installroot="${BUILD}"/tmp  --destdir="$SRC_DIR"
+    elif [ "${ISO_TYPE}" == "everything" ]; then
+        everything_rpms_download
+    elif [ "${ISO_TYPE}" == "everything_src" ]; then
+        everything_source_rpms_download
+    elif [ "${ISO_TYPE}" == "everything_debug" ]; then
+        everything_debug_rpms_download
     fi
 
     mkdir -p "${BUILD}"/iso/repodata
@@ -136,3 +145,77 @@ function get_rpm_pub_key()
     cp "${BUILD}"/iso/GPG_tmp/etc/pki/rpm-gpg/RPM-GPG-KEY-openEuler "${BUILD}"/iso
     rm -rf "${BUILD}"/iso/GPG_tmp
 }
+
+function get_everything_rpms()
+{
+    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "noarch|${ARCH}" | grep -v "debuginfo" | grep -v "debugsource" > ava_every_lst
+    parse_rpmlist_xml "exclude"
+    cat parsed_rpmlist_exclude
+    if [ -s parsed_rpmlist_exclude ];then
+        for rpmname in $(cat parsed_rpmlist_exclude)
+        do
+            sed -i "/^${rpmname}/d" ava_every_lst
+        done
+    fi 
+    if [ -s conflict_list ];then
+        rm -rf conflict_list
+    fi
+    parse_rpmlist_xml "conflict"
+    cat parsed_rpmlist_conflict
+    if [ -s parsed_rpmlist_conflict ];then
+        for rpmname in $(cat parsed_rpmlist_conflict)
+        do
+            sed -i "/^${rpmname}/d" ava_every_lst
+            echo "${rpmname}" >> conflict_list
+        done
+    fi 
+    parse_rpmlist_xml "everything_conflict"
+    cat parsed_rpmlist_everything_conflict
+    if [ -s parsed_rpmlist_everything_conflict ];then
+        for rpmname in $(cat parsed_rpmlist_everything_conflict)
+        do
+            sed -i "/^${rpmname}/d" ava_every_lst
+            echo "${rpmname}" >> conflict_list
+        done
+    fi 
+}
+
+function everything_rpms_download()
+{
+    mkdir ${EVERY_DIR}
+    get_everything_rpms
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DIR}" $(cat ava_every_lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls ${EVERY_DIR} | wc -l) == 0 ]; then
+       echo "Download rpms failed!"
+       exit 133
+    fi
+    if [ -s conflict_list ];then
+        yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DIR}" $(cat conflict_list | tr '\n' ' ')
+    fi
+}
+
+function everything_source_rpms_download()
+{
+    mkdir ${EVERY_SRC_DIR}
+    get_everything_rpms
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls ${EVERY_SRC_DIR} | wc -l) == 0 ]; then
+       echo "Download rpms failed!"
+       exit 133
+    fi
+    if [ -s conflict_list ];then
+        yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat conflict_list | tr '\n' ' ')
+    fi
+}
+ 
+function everything_debug_rpms_download()
+{
+    mkdir ${EVERY_DEBUG_DIR}
+    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "debuginfo|debugsource" > ava_debug_lst
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DEBUG_DIR}" $(cat ava_debug_lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls ${EVERY_DEBUG_DIR} | wc -l) == 0 ]; then
+        echo "yumdownloader with --resolve failed, trying to yumdownloader without --resolve"
+        yumdownloader --installroot="${BUILD}"/tmp --destdir="${EVERY_DEBUG_DIR}" $(cat ava_debug_lst | tr '\n' ' ')
+    fi
+}
+ 

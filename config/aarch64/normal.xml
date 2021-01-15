@@ -662,7 +662,6 @@
       <packagereq type="mandatory">initial-setup-gui</packagereq>
       <packagereq type="mandatory">libcanberra-gtk2</packagereq>
       <packagereq type="mandatory">libcanberra-gtk3</packagereq>
-      <packagereq type="mandatory">libproxy-mozjs</packagereq>
       <packagereq type="mandatory">librsvg2</packagereq>
       <packagereq type="mandatory">metacity</packagereq>
       <packagereq type="mandatory">nautilus</packagereq>
@@ -1121,7 +1120,6 @@
       <packagereq type="mandatory">libXtst-devel</packagereq>
       <packagereq type="mandatory">libXv-devel</packagereq>
       <packagereq type="mandatory">libXxf86dga-devel</packagereq>
-      <packagereq type="mandatory">libXxf86misc-devel</packagereq>
       <packagereq type="mandatory">libdb-devel</packagereq>
       <packagereq type="mandatory">libjpeg-turbo-devel</packagereq>
       <packagereq type="mandatory">libstdc++-devel</packagereq>
@@ -1424,7 +1422,6 @@
       <packagereq type="mandatory">libvirt-lock-sanlock</packagereq>
       <packagereq type="mandatory">libvirt-nss</packagereq>
       <packagereq type="mandatory">python3-libvirt</packagereq>
-      <packagereq type="mandatory">python2-libvirt</packagereq>
       <packagereq type="mandatory">edk2-aarch64</packagereq>
       <packagereq type="mandatory">edk2-help</packagereq>
       <packagereq type="mandatory">qemu-help</packagereq>
@@ -1442,7 +1439,6 @@
     <uservisible>false</uservisible>
     <packagelist>
       <packagereq type="mandatory">openvswitch</packagereq>
-      <packagereq type="mandatory">openvswitch-kmod</packagereq>
     </packagelist>
   </group>
   <group>

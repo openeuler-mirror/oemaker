@@ -81,13 +81,3 @@ mkdir ${KERNELDIR}
     <% filegraft += " {0}={1}/{0}".format(basename(f), outroot) %>
 %endfor
 
-%if exists("boot/efi/EFI/*/gcdaa64.efi"):
-## make boot.iso
-runcmd mkisofs -o ${outroot}/images/boot.iso \
-       ${efiargs} -R -J -V '${isolabel}' -T ${udfargs} \
-       -graft-points \
-       ${KERNELDIR}=${outroot}/${KERNELDIR} \
-       ${LIVEDIR}=${outroot}/${LIVEDIR} \
-       ${efigraft} ${filegraft}
-treeinfo images-${basearch} boot.iso images/boot.iso
-%endif
