@@ -4,7 +4,34 @@
         <packagereq>mariadb</packagereq>
         <packagereq>mariadb-server</packagereq>
     </packagelist>
+    <packagelist type="everything_conflict">
+        <packagereq>abrt-addon-ccpp</packagereq>
+        <packagereq>podman-help</packagereq>
+        <packagereq>libcmpiCppImpl0</packagereq>
+        <packagereq>libev-libevent-devel</packagereq>
+        <packagereq>mariadb-devel</packagereq>
+        <packagereq>mariadb-test</packagereq>
+        <packagereq>podman-docker</packagereq>
+        <packagereq>python3-unversioned-command</packagereq>
+        <packagereq>python3-abrt-container-addon</packagereq>
+    </packagelist>
     <packagelist type="exclude">
+        <packagereq>texlive-collection-bibtexextra</packagereq>
+        <packagereq>texlive-collection-mathscience</packagereq>
+        <packagereq>texlive-collection-latexextra</packagereq>
+        <packagereq>texlive-collection-fontsextra</packagereq>
+        <packagereq>texlive-ctanupload</packagereq>
+        <packagereq>texlive-exceltex</packagereq>
+        <packagereq>texlive-latexindent</packagereq>
+        <packagereq>texlive-biblatex-apa</packagereq>
+        <packagereq>texlive-collection-binextra</packagereq>
+        <packagereq>texlive-collection-fontutils</packagereq>
+        <packagereq>texlive-includernw</packagereq>
+        <packagereq>texlive-oldstandard</packagereq>
+        <packagereq>texlive-scheme-full</packagereq>
+        <packagereq>texlive-scheme-gust</packagereq>
+        <packagereq>texlive-scheme-medium</packagereq>
+        <packagereq>texlive-scheme-tetex</packagereq>
     </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
@@ -118,7 +145,6 @@
         <packagereq>boost-random</packagereq>
         <packagereq>boost-regex</packagereq>
         <packagereq>boost-serialization</packagereq>
-        <packagereq>boost-signals</packagereq>
         <packagereq>boost-system</packagereq>
         <packagereq>boost-test</packagereq>
         <packagereq>boost-thread</packagereq>
@@ -227,7 +253,6 @@
         <packagereq>dnf</packagereq>
         <packagereq>dnf-data</packagereq>
         <packagereq>dnf-plugins-core</packagereq>
-        <packagereq>dnf-plugin-subscription-manager</packagereq>
         <packagereq>dnsmasq</packagereq>
         <packagereq>dnsmasq-help</packagereq>
         <packagereq>dnsmasq-utils</packagereq>
@@ -371,7 +396,6 @@
         <packagereq>hdf5-devel</packagereq>
         <packagereq>hdparm</packagereq>
         <packagereq>hdparm-help</packagereq>
-        <packagereq>hesiod</packagereq>
         <packagereq>hostname</packagereq>
         <packagereq>httpd</packagereq>
         <packagereq>httpd-help</packagereq>
@@ -803,7 +827,6 @@
         <packagereq>make-help</packagereq>
         <packagereq>man-db</packagereq>
         <packagereq>man-pages</packagereq>
-        <packagereq>man-pages-help</packagereq>
         <packagereq>mcstrans</packagereq>
         <packagereq>mcstrans-help</packagereq>
         <packagereq>mdadm</packagereq>
@@ -823,8 +846,6 @@
         <packagereq>mod_session</packagereq>
         <packagereq>mod_ssl</packagereq>
         <packagereq>mozilla-filesystem</packagereq>
-        <packagereq>mozjs52</packagereq>
-        <packagereq>mozjs52-help</packagereq>
         <packagereq>mpfr</packagereq>
         <packagereq>mtdev</packagereq>
         <packagereq>mtools</packagereq>
@@ -889,8 +910,6 @@
         <packagereq>numactl-libs</packagereq>
         <packagereq>numad</packagereq>
         <packagereq>numad-help</packagereq>
-        <packagereq>oci-systemd-hook</packagereq>
-        <packagereq>oci-systemd-hook-help</packagereq>
         <packagereq>oddjob</packagereq>
         <packagereq>oddjob-help</packagereq>
         <packagereq>openblas-serial</packagereq>
@@ -930,7 +949,6 @@
         <packagereq>openvpn-help</packagereq>
         <packagereq>openvswitch</packagereq>
         <packagereq>openvswitch-devel</packagereq>
-        <packagereq>openvswitch-kmod</packagereq>
         <packagereq>opus</packagereq>
         <packagereq>opus-help</packagereq>
         <packagereq>ORBit2</packagereq>
@@ -1037,7 +1055,6 @@
         <packagereq>ppp</packagereq>
         <packagereq>ppp-help</packagereq>
         <packagereq>pprof</packagereq>
-        <packagereq>prefetch_tuning</packagereq>
         <packagereq>procmail</packagereq>
         <packagereq>procmail-help</packagereq>
         <packagereq>procps-ng</packagereq>
@@ -1051,7 +1068,6 @@
         <packagereq>publicsuffix-list</packagereq>
         <packagereq>pulseaudio</packagereq>
         <packagereq>pulseaudio-help</packagereq>
-        <packagereq>python2-urlgrabber</packagereq>
         <packagereq>python3</packagereq>
         <packagereq>python3-aniso8601</packagereq>
         <packagereq>python3-click</packagereq>
@@ -1111,8 +1127,6 @@
         <packagereq>python3-six</packagereq>
         <packagereq>python3-slip</packagereq>
         <packagereq>python3-sssdconfig</packagereq>
-        <packagereq>python3-subscription-manager-rhsm</packagereq>
-        <packagereq>python3-syspurpose</packagereq>
         <packagereq>python3-talloc</packagereq>
         <packagereq>python3-unbound</packagereq>
         <packagereq>python3-urlgrabber</packagereq>
@@ -1226,9 +1240,6 @@
         <packagereq>sssd-nfs-idmap</packagereq>
         <packagereq>strace</packagereq>
         <packagereq>strongswan</packagereq>
-        <packagereq>strongswan-help</packagereq>
-        <packagereq>subscription-manager</packagereq>
-        <packagereq>subscription-manager-rhsm-certificates</packagereq>
         <packagereq>sudo</packagereq>
         <packagereq>sudo-help</packagereq>
         <packagereq>symlinks</packagereq>

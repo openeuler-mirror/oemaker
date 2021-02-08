@@ -54,6 +54,22 @@ function mk_euleros_main()
         return 1
     fi
 
+    if [ "${ISO_TYPE}" == "netinst" ]; then
+        create_install_img
+        init_config
+        if [ $? -ne 0 ]; then
+            echo "init config failed"
+            return 1
+        fi
+        gen_netinst_iso
+        if [ $? -ne 0 ]; then
+            echo "create netinst iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${NETINST_ISO_NAME}"
+        return 0
+    fi
+
     create_install_img &
 
     echo "Creating repos..."
@@ -107,6 +123,27 @@ function mk_euleros_main()
             return 1
         fi
         ls "${OUTPUT_DIR}/${SRC_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "everything" ]; then
+        gen_everything_iso
+        if [ $? -ne 0 ]; then
+            echo "create everything iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${EVE_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "everything_debug" ]; then
+        gen_everything_debug_iso
+        if [ $? -ne 0 ]; then
+            echo "create everything debug iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${EVE_DEBUG_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "everything_src" ]; then
+        gen_everything_src_iso
+        if [ $? -ne 0 ]; then
+            echo "create everything source iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${EVE_SRC_ISO_NAME}"
     fi
     mkclean
     return 0

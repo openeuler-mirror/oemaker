@@ -19,7 +19,7 @@ set -e
 function create_install_img()
 {
     echo "$YUMREPO" > yumrepo.file
-    lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" --sharedir 80-openeuler --rootfs-size=3 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
+    lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
 
     if [ $? != 0 ] ; then
         cat lorax.logfile

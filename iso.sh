@@ -53,7 +53,7 @@ function gen_src_iso()
     set +e
     rm -rf "$BUILD"/iso/Packages
     mv "$SRC_DIR" "$BUILD"/iso/Packages
-
+    createrepo "$BUILD"/iso
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
@@ -61,5 +61,74 @@ function gen_src_iso()
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
+    return 0
+}
+
+function gen_everything_iso()
+{
+    set +e
+    rm -rf "${BUILD}"/iso/repodata/*
+    rm -rf "$BUILD"/iso/Packages
+    cp "$CONFIG" "${BUILD}"/iso/repodata/
+    mv "${EVERY_DIR}" "${BUILD}"/iso/Packages
+    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    if [ "$ARCH" == "x86_64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    elif [ "$ARCH" == "aarch64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    fi
+    implantisomd5 /result/"${EVE_ISO_NAME}"
+    return 0
+}
+
+function gen_everything_debug_iso()
+{
+    set +e
+    rm -rf "${BUILD}"/iso/repodata/*
+    rm -rf "${BUILD}"/iso/Packages
+    cp "$CONFIG" "${BUILD}"/iso/repodata/
+    mv "${EVERY_DEBUG_DIR}" "${BUILD}"/iso/Packages
+    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    if [ "$ARCH" == "x86_64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_DEBUG_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    elif [ "$ARCH" == "aarch64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_DEBUG_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    fi
+    implantisomd5 /result/"${EVE_DEBUG_ISO_NAME}"
+    return 0
+}
+
+function gen_everything_src_iso()
+{
+    set +e
+    rm -rf "${BUILD}"/iso/repodata/*
+    rm -rf "${BUILD}"/iso/Packages
+    cp "$CONFIG" "${BUILD}"/iso/repodata/
+    mv "${EVERY_SRC_DIR}" "${BUILD}"/iso/Packages
+    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    if [ "$ARCH" == "x86_64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    elif [ "$ARCH" == "aarch64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    fi
+    implantisomd5 /result/"${EVE_SRC_ISO_NAME}"
+    return 0
+}
+
+function gen_netinst_iso()
+{
+    if [ "$ARCH" == "x86_64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0  ] && return 1
+    elif [ "$ARCH" == "aarch64"  ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+    fi
+    implantisomd5 /result/"${NETINST_ISO_NAME}"
     return 0
 }

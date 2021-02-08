@@ -122,15 +122,3 @@ hardlink ${KERNELDIR}/initrd.img ${BOOTDIR}
     <% filegraft += " {0}={1}/{0}".format(basename(f), outroot) %>
 %endfor
 
-## make boot.iso
-runcmd mkisofs -o ${outroot}/images/boot.iso \
-       -b ${BOOTDIR}/isolinux.bin -c ${BOOTDIR}/boot.cat \
-       -boot-load-size 4 -boot-info-table -no-emul-boot \
-       ${efiargs} -R -J -V '${isolabel}' -T ${udfargs} \
-       -graft-points \
-       ${STAGE2IMG}=${outroot}/${STAGE2IMG} \
-       ${BOOTDIR}=${outroot}/${BOOTDIR} \
-       ${KERNELDIR}=${outroot}/${KERNELDIR} \
-       ${efigraft} ${filegraft}
-runcmd isohybrid ${efihybrid} ${outroot}/images/boot.iso
-treeinfo images-${basearch} boot.iso images/boot.iso
