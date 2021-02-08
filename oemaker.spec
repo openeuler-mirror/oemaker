@@ -2,7 +2,7 @@ Name:           oemaker
 Summary:        a duilding tool for making DVD ISO
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        1.0.1
+Version:        1.1.1
 Release:        1
 BuildRoot:      %{_tmppath}/%{name}
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -62,6 +62,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Feb 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.1-1
+- ID:NA
+- SUG:NA
+- DESC:upgrade version
+
 * Thu Oct 15 2020 zhuchunyi <zhuchunyi@huawei.com> - 1.0.1-1
 - ID:NA
 - SUG:NA
