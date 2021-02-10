@@ -278,8 +278,6 @@
         <packagereq>e2fsprogs-devel</packagereq>
         <packagereq>e2fsprogs-help</packagereq>
         <packagereq>ed</packagereq>
-        <packagereq>edac-utils</packagereq>
-        <packagereq>edac-utils-help</packagereq>
         <packagereq>edk2-devel</packagereq>
         <packagereq>edk2-help</packagereq>
         <packagereq>efibootmgr</packagereq>
@@ -388,8 +386,6 @@
         <packagereq>gvfs</packagereq>
         <packagereq>gzip</packagereq>
         <packagereq>gzip-help</packagereq>
-        <packagereq>hardlink</packagereq>
-        <packagereq>hardlink-help</packagereq>
         <packagereq>haveged</packagereq>
         <packagereq>haveged-help</packagereq>
         <packagereq>hdf5</packagereq>
@@ -1298,7 +1294,6 @@
         <packagereq>totem-pl-parser-help</packagereq>
         <packagereq>tpm2-abrmd</packagereq>
         <packagereq>tpm2-abrmd-help</packagereq>
-        <packagereq>tpm2-abrmd-selinux</packagereq>
         <packagereq>tpm2-tools</packagereq>
         <packagereq>tpm2-tools-help</packagereq>
         <packagereq>tpm2-tss</packagereq>
