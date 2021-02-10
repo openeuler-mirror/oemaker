@@ -1356,7 +1356,6 @@
       <packagereq type="optional">arpwatch</packagereq>
       <packagereq type="optional">chrpath</packagereq>
       <packagereq type="optional">fuse</packagereq>
-      <packagereq type="optional">hardlink</packagereq>
       <packagereq type="optional">iotop</packagereq>
       <packagereq type="optional">lzop</packagereq>
       <packagereq type="default">xdelta</packagereq>
