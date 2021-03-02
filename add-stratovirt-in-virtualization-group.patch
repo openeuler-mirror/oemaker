@@ -1,0 +1,38 @@
+From 13b5d81210a6174bd71ce558777ce98981520170 Mon Sep 17 00:00:00 2001
+From: Chen Qun <kuhn.chenqun@huawei.com>
+Date: Mon, 1 Mar 2021 09:51:01 +0800
+Subject: [PATCH] add stratovirt in virtualization group
+
+Signed-off-by: Chen Qun <kuhn.chenqun@huawei.com>
+---
+ config/aarch64/normal.xml | 1 +
+ config/x86_64/normal.xml  | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/config/aarch64/normal.xml b/config/aarch64/normal.xml
+index cab5406..3582974 100644
+--- a/config/aarch64/normal.xml
++++ b/config/aarch64/normal.xml
+@@ -1426,6 +1426,7 @@
+       <packagereq type="mandatory">qemu-help</packagereq>
+       <packagereq type="mandatory">qemu</packagereq>
+       <packagereq type="mandatory">qemu-img</packagereq>
++      <packagereq type="mandatory">stratovirt</packagereq>
+     </packagelist>
+   </group>
+   <group>
+diff --git a/config/x86_64/normal.xml b/config/x86_64/normal.xml
+index 4ef88de..60c4704 100644
+--- a/config/x86_64/normal.xml
++++ b/config/x86_64/normal.xml
+@@ -1428,6 +1428,7 @@
+       <packagereq type="mandatory">qemu-help</packagereq>
+       <packagereq type="mandatory">qemu</packagereq>
+       <packagereq type="mandatory">qemu-img</packagereq>
++      <packagereq type="mandatory">stratovirt</packagereq>
+     </packagelist>
+   </group>
+   <group>
+-- 
+2.25.1
+
