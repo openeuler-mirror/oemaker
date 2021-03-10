@@ -3,7 +3,7 @@ Summary:        a duilding tool for making DVD ISO
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        1.1.2
-Release:        3
+Release:        4
 BuildRoot:      %{_tmppath}/%{name}
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch:      noarch
@@ -12,6 +12,7 @@ Requires:       lorax >= 19.6.78-1
 
 Patch0001: add-stratovirt-in-virtualization-group.patch
 Patch0002: 0001-change-source-iso-method.patch
+Patch0003: add-qemu-block-iscsi-in-virtualization-group.patch
 
 %description
 a building tool for making DVD ISO
@@ -67,6 +68,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Thu MAR 10 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-4
+- ID:NA
+- SUG:NA
+- DESC: add qemu-block-iscsi in virtualization-hypervisor group
+
 * Mon MAR 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-3
 - ID:NA
 - SUG:NA
