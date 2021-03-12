@@ -3,15 +3,14 @@ Summary:        a duilding tool for making DVD ISO
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        1.1.2
-Release:        3
+Release:        4
 BuildRoot:      %{_tmppath}/%{name}
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libselinux-utils libxml2
 Requires:       lorax >= 19.6.78-1
 
-Patch0001: add-stratovirt-in-virtualization-group.patch
-Patch0002: 0001-change-source-iso-method.patch
+Patch0001: 0001-change-source-iso-method.patch
 
 %description
 a building tool for making DVD ISO
@@ -67,12 +66,17 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
-* Mon MAR 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-3
+* Thu Mar 11 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-4
+- ID:NA
+- SUG:NA
+- DESC: delete stratovirt from xml file
+
+* Mon Mar 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-3
 - ID:NA
 - SUG:NA
 - DESC: change method of creating source iso
 
-* Thu MAR 01 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-2
+* Thu Mar 01 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-2
 - ID:NA
 - SUG:NA
 - DESC: add stratovirt in virtualization-hypervisor group
