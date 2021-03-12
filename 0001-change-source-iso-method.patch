@@ -1,0 +1,92 @@
+From d2181a8bd05e2761827f0cc9451992d137828095 Mon Sep 17 00:00:00 2001
+From: miao_kaibo <miaokaibo@outlook.com>
+Date: Wed, 10 Mar 2021 09:16:00 +0800
+Subject: [PATCH] change source iso method
+
+---
+ config/rpmlist.xml | 11 +++++++++++
+ rpm.sh             | 21 +++++++++++++--------
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/config/rpmlist.xml b/config/rpmlist.xml
+index d5fcf8a..a6ac01b 100644
+--- a/config/rpmlist.xml
++++ b/config/rpmlist.xml
+@@ -32,6 +32,17 @@
+         <packagereq>texlive-scheme-gust</packagereq>
+         <packagereq>texlive-scheme-medium</packagereq>
+         <packagereq>texlive-scheme-tetex</packagereq>
++        <packagereq>totem</packagereq>
++        <packagereq>gimp</packagereq>
++        <packagereq>python3-nni</packagereq>
++        <packagereq>ceph-mgr-rook</packagereq>
++        <packagereq>ceph-mgr-ssh</packagereq>
++        <packagereq>ceph-mgr-dashboard</packagereq>
++        <packagereq>ceph-mgr-k8sevents</packagereq>
++    </packagelist>
++    <packagelist type="src_exclude">
++        <packagereq>totem</packagereq>
++        <packagereq>gimp</packagereq>
+     </packagelist>
+     <packagelist type="aarch64">
+         <packagereq>edk2-aarch64</packagereq>
+diff --git a/rpm.sh b/rpm.sh
+index 7e4a7e2..f8cf92e 100755
+--- a/rpm.sh
++++ b/rpm.sh
+@@ -154,7 +154,7 @@ function get_everything_rpms()
+     if [ -s parsed_rpmlist_exclude ];then
+         for rpmname in $(cat parsed_rpmlist_exclude)
+         do
+-            sed -i "/^${rpmname}/d" ava_every_lst
++            sed -i "/^${rpmname}\./d" ava_every_lst
+         done
+     fi 
+     if [ -s conflict_list ];then
+@@ -165,7 +165,7 @@ function get_everything_rpms()
+     if [ -s parsed_rpmlist_conflict ];then
+         for rpmname in $(cat parsed_rpmlist_conflict)
+         do
+-            sed -i "/^${rpmname}/d" ava_every_lst
++            sed -i "/^${rpmname}\./d" ava_every_lst
+             echo "${rpmname}" >> conflict_list
+         done
+     fi 
+@@ -174,7 +174,7 @@ function get_everything_rpms()
+     if [ -s parsed_rpmlist_everything_conflict ];then
+         for rpmname in $(cat parsed_rpmlist_everything_conflict)
+         do
+-            sed -i "/^${rpmname}/d" ava_every_lst
++            sed -i "/^${rpmname}\./d" ava_every_lst
+             echo "${rpmname}" >> conflict_list
+         done
+     fi 
+@@ -197,15 +197,20 @@ function everything_rpms_download()
+ function everything_source_rpms_download()
+ {
+     mkdir ${EVERY_SRC_DIR}
+-    get_everything_rpms
+-    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
++    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep ".src" > ava_every_lst
++    parse_rpmlist_xml "src_exclude"
++    cat parsed_rpmlist_src_exclude
++    if [ -s parsed_rpmlist_src_exclude ];then
++        for rpmname in $(cat parsed_rpmlist_src_exclude)
++        do
++            sed -i "/^${rpmname}\./d" ava_every_lst
++        done
++    fi 
++    yumdownloader --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
+     if [ $? != 0 ] || [ $(ls ${EVERY_SRC_DIR} | wc -l) == 0 ]; then
+        echo "Download rpms failed!"
+        exit 133
+     fi
+-    if [ -s conflict_list ];then
+-        yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat conflict_list | tr '\n' ' ')
+-    fi
+ }
+  
+ function everything_debug_rpms_download()
+-- 
+2.27.0
+
