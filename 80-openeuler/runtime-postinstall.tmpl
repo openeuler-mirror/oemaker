@@ -32,6 +32,8 @@ symlink /lib/systemd/system/tmp.mount etc/systemd/system/local-fs.target.wants/t
 mkdir etc/systemd/system/basic.target.wants/
 symlink /lib/systemd/system/rngd.service etc/systemd/system/basic.target.wants/rngd.service
 
+## Ensable wanted systemd services
+systemctl enable import-state.service
 ## Disable unwanted systemd services
 systemctl disable systemd-readahead-collect.service \
                   systemd-readahead-replay.service \
