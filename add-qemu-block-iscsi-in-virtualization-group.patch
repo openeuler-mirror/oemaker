@@ -1,0 +1,38 @@
+From 9f22b2c591b2b0baf97c55473d2d13e4b72f3063 Mon Sep 17 00:00:00 2001
+From: Chen Qun <kuhn.chenqun@huawei.com>
+Date: Wed, 10 Mar 2021 18:52:57 +0800
+Subject: [PATCH] add qemu-block-iscsi in virtualization group
+
+Signed-off-by: Chen Qun <kuhn.chenqun@huawei.com>
+---
+ config/aarch64/normal.xml | 1 +
+ config/x86_64/normal.xml  | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/config/aarch64/normal.xml b/config/aarch64/normal.xml
+index 3582974..7e61eba 100644
+--- a/config/aarch64/normal.xml
++++ b/config/aarch64/normal.xml
+@@ -1425,6 +1425,7 @@
+       <packagereq type="mandatory">edk2-help</packagereq>
+       <packagereq type="mandatory">qemu-help</packagereq>
+       <packagereq type="mandatory">qemu</packagereq>
++      <packagereq type="mandatory">qemu-block-iscsi</packagereq>
+       <packagereq type="mandatory">qemu-img</packagereq>
+       <packagereq type="mandatory">stratovirt</packagereq>
+     </packagelist>
+diff --git a/config/x86_64/normal.xml b/config/x86_64/normal.xml
+index 60c4704..fe68bae 100644
+--- a/config/x86_64/normal.xml
++++ b/config/x86_64/normal.xml
+@@ -1427,6 +1427,7 @@
+       <packagereq type="mandatory">python3-libvirt</packagereq>
+       <packagereq type="mandatory">qemu-help</packagereq>
+       <packagereq type="mandatory">qemu</packagereq>
++      <packagereq type="mandatory">qemu-block-iscsi</packagereq>
+       <packagereq type="mandatory">qemu-img</packagereq>
+       <packagereq type="mandatory">stratovirt</packagereq>
+     </packagelist>
+-- 
+2.25.1
+
