@@ -33,6 +33,9 @@
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
     </packagelist>
+    <packagelist type="src_exclude">
+        <packagereq>totem</packagereq>
+    </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
         <packagereq>grub2-efi-aa64</packagereq>

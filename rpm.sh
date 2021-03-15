@@ -154,7 +154,7 @@ function get_everything_rpms()
     if [ -s parsed_rpmlist_exclude ];then
         for rpmname in $(cat parsed_rpmlist_exclude)
         do
-            sed -i "/^${rpmname}/d" ava_every_lst
+            sed -i "/^${rpmname}\./d" ava_every_lst
         done
     fi 
     if [ -s conflict_list ];then
@@ -165,7 +165,7 @@ function get_everything_rpms()
     if [ -s parsed_rpmlist_conflict ];then
         for rpmname in $(cat parsed_rpmlist_conflict)
         do
-            sed -i "/^${rpmname}/d" ava_every_lst
+            sed -i "/^${rpmname}\./d" ava_every_lst
             echo "${rpmname}" >> conflict_list
         done
     fi 
@@ -174,7 +174,7 @@ function get_everything_rpms()
     if [ -s parsed_rpmlist_everything_conflict ];then
         for rpmname in $(cat parsed_rpmlist_everything_conflict)
         do
-            sed -i "/^${rpmname}/d" ava_every_lst
+            sed -i "/^${rpmname}\./d" ava_every_lst
             echo "${rpmname}" >> conflict_list
         done
     fi 
@@ -197,14 +197,19 @@ function everything_rpms_download()
 function everything_source_rpms_download()
 {
     mkdir ${EVERY_SRC_DIR}
-    get_everything_rpms
-    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
+    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep ".src" > ava_every_lst
+    parse_rpmlist_xml "src_exclude"
+    cat parsed_rpmlist_src_exclude
+    if [ -s parsed_rpmlist_src_exclude ];then
+        for rpmname in $(cat parsed_rpmlist_src_exclude)
+        do
+            sed -i "/^${rpmname}\./d" ava_every_lst
+        done
+    fi 
+    yumdownloader --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
     if [ $? != 0 ] || [ $(ls ${EVERY_SRC_DIR} | wc -l) == 0 ]; then
        echo "Download rpms failed!"
        exit 133
-    fi
-    if [ -s conflict_list ];then
-        yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat conflict_list | tr '\n' ' ')
     fi
 }
  
