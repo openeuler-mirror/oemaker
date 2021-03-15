@@ -1,0 +1,35 @@
+From 7c7a395c02ed94d15c7e3f4249017e8a7604572c Mon Sep 17 00:00:00 2001
+From: miao_kaibo <miaokaibo@outlook.com>
+Date: Mon, 15 Mar 2021 17:44:38 +0800
+Subject: [PATCH] delete firefox from normal.xml of x86_64
+
+---
+ config/x86_64/normal.xml | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/config/x86_64/normal.xml b/config/x86_64/normal.xml
+index 4ef88de..3f2e038 100644
+--- a/config/x86_64/normal.xml
++++ b/config/x86_64/normal.xml
+@@ -792,18 +792,6 @@
+     </packagelist>
+   </group>
+   <group>
+-    <id>internet-browser</id>
+-    <name>Internet Browser</name>
+-    <name xml:lang="zh_CN">互联网浏览器</name>
+-    <description>The Firefox web browser</description>
+-    <description xml:lang="zh_CN">Firefox web 浏览器</description>
+-    <default>true</default>
+-    <uservisible>false</uservisible>
+-    <packagelist>
+-      <packagereq type="mandatory">firefox</packagereq>
+-    </packagelist>
+-  </group>
+-    <group>
+     <id>java-platform</id>
+     <name>Java Platform</name>
+     <name xml:lang="zh_CN">Java 平台</name>
+-- 
+2.27.0
+
