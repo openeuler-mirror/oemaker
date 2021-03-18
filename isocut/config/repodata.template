@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps
+  PUBLIC '-//Huawei Technologies Co., Ltd.//DTD Comps info//EN'
+  'comps.dtd'>
+<comps>
+  <group>
+    <id>core</id>
+    <name>Core</name>
+    <name xml:lang="zh_CN">产品基础包</name>
+    <description>Product base.</description>
+    <description xml:lang="zh_CN">产品基础包。</description>
+    <default>false</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+    </packagelist>
+  </group>
+  <environment>
+    <id>product</id>
+    <name>Product</name>
+    <name xml:lang="zh_CN">产品基础包</name>
+    <description>Product base.</description>
+    <description xml:lang="zh_CN">产品基础包。</description>
+    <display_order>5</display_order>
+    <grouplist>
+      <groupid>core</groupid>
+    </grouplist>
+  </environment>
+  <langpacks>
+    <match install="autocorr-%s" name="autocorr-en"/>
+    <match install="firefox-langpack-%s" name="firefox"/>
+    <match install="gimp-help-%s" name="gimp-help"/>
+    <match install="gnome-getting-started-docs-%s" name="gnome-getting-started-docs"/>
+    <match install="hunspell-%s" name="hunspell"/>
+    <match install="hyphen-%s" name="hyphen"/>
+    <match install="kde-l10n-%s" name="kdelibs"/>
+    <match install="libreoffice-langpack-%s" name="libreoffice-core"/>
+    <match install="man-pages-%s" name="man-pages"/>
+    <match install="mythes-%s" name="mythes"/>
+  </langpacks>
+</comps>
