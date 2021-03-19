@@ -32,9 +32,27 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
+        <packagereq>totem</packagereq>
+        <packagereq>totem-debuginfo</packagereq>
+        <packagereq>totem-debugsource</packagereq>
+        <packagereq>totem-devel</packagereq>
+        <packagereq>totem-help</packagereq>
+        <packagereq>totem-nautilus</packagereq>
+        <packagereq>gimp</packagereq>
+        <packagereq>gimp-libs</packagereq>
+        <packagereq>gimp-devel</packagereq>
+        <packagereq>gimp-help</packagereq>
+        <packagereq>gimp-debuginfo</packagereq>
+        <packagereq>gimp-debugsource</packagereq>
+        <packagereq>python3-nni</packagereq>
+        <packagereq>ceph-mgr-rook</packagereq>
+        <packagereq>ceph-mgr-ssh</packagereq>
+        <packagereq>ceph-mgr-dashboard</packagereq>
+        <packagereq>ceph-mgr-k8sevents</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
         <packagereq>totem</packagereq>
+        <packagereq>gimp</packagereq>
     </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
@@ -187,10 +205,7 @@
         <packagereq>clutter-gtk-help</packagereq>
         <packagereq>clutter-help</packagereq>
         <packagereq>cockpit</packagereq>
-        <packagereq>cockpit-bridge</packagereq>
         <packagereq>cockpit-help</packagereq>
-        <packagereq>cockpit-storaged</packagereq>
-        <packagereq>cockpit-ws</packagereq>
         <packagereq>cogl</packagereq>
         <packagereq>cogl-help</packagereq>
         <packagereq>color-filesystem</packagereq>
@@ -233,7 +248,6 @@
         <packagereq>cyrus-sasl-lib</packagereq>
         <packagereq>cyrus-sasl-md5</packagereq>
         <packagereq>cyrus-sasl-ntlm</packagereq>
-        <packagereq>cyrus-sasl-plain</packagereq>
         <packagereq>cyrus-sasl-scram</packagereq>
         <packagereq>dbus</packagereq>
         <packagereq>dbus-glib</packagereq>
@@ -241,7 +255,7 @@
         <packagereq>dbus-python-help</packagereq>
         <packagereq>device-mapper</packagereq>
         <packagereq>device-mapper-event</packagereq>
-        <packagereq>dhcp-client</packagereq>
+        <packagereq>dhcp</packagereq>
         <packagereq>dhcp-common</packagereq>
         <packagereq>dhcp-libs</packagereq>
         <packagereq>dhcp-server</packagereq>
@@ -1031,8 +1045,6 @@
         <packagereq>pkcs11-helper-help</packagereq>
         <packagereq>pkgconf</packagereq>
         <packagereq>pkgconf-help</packagereq>
-        <packagereq>pkgconf-m4</packagereq>
-        <packagereq>pkgconf-pkg-config</packagereq>
         <packagereq>plymouth</packagereq>
         <packagereq>plymouth-help</packagereq>
         <packagereq>policycoreutils</packagereq>
@@ -1167,14 +1179,12 @@
         <packagereq>rpm-plugin-systemd-inhibit</packagereq>
         <packagereq>rpmrebuild</packagereq>
         <packagereq>rpmrebuild-help</packagereq>
-        <packagereq>rpm-sign</packagereq>
         <packagereq>rsync</packagereq>
         <packagereq>rsync-help</packagereq>
         <packagereq>rsyslog</packagereq>
         <packagereq>rsyslog-crypto</packagereq>
         <packagereq>rsyslog-elasticsearch</packagereq>
         <packagereq>rsyslog-gnutls</packagereq>
-        <packagereq>rsyslog-gssapi</packagereq>
         <packagereq>rsyslog-help</packagereq>
         <packagereq>rsyslog-mmaudit</packagereq>
         <packagereq>rsyslog-mmjsonparse</packagereq>
@@ -1209,7 +1219,7 @@
         <packagereq>sgml-common</packagereq>
         <packagereq>sgml-common-help</packagereq>
         <packagereq>shadow-help</packagereq>
-        <packagereq>shadow-utils</packagereq>
+        <packagereq>shadow</packagereq>
         <packagereq>shared-mime-info</packagereq>
         <packagereq>shared-mime-info-help</packagereq>
         <packagereq>sharutils</packagereq>
@@ -1233,9 +1243,7 @@
         <packagereq>squid</packagereq>
         <packagereq>sssd</packagereq>
         <packagereq>sssd-client</packagereq>
-        <packagereq>sssd-common</packagereq>
         <packagereq>sssd-help</packagereq>
-        <packagereq>sssd-kcm</packagereq>
         <packagereq>sssd-nfs-idmap</packagereq>
         <packagereq>strace</packagereq>
         <packagereq>strongswan</packagereq>
