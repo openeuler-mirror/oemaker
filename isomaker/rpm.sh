@@ -148,7 +148,7 @@ function get_rpm_pub_key()
 
 function get_everything_rpms()
 {
-    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "noarch|${ARCH}" | grep -v "debuginfo" | grep -v "debugsource" > ava_every_lst
+    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "\.noarch|\.${ARCH}" | grep -v "debuginfo" | grep -v "debugsource" > ava_every_lst
     parse_rpmlist_xml "exclude"
     cat parsed_rpmlist_exclude
     if [ -s parsed_rpmlist_exclude ];then

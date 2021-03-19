@@ -130,7 +130,7 @@
       <packagereq type="mandatory">mdadm</packagereq>
       <packagereq type="mandatory">realmd</packagereq>
       <packagereq type="mandatory">shim-aa64</packagereq>
-      <packagereq type="mandatory">teamd</packagereq>
+      <packagereq type="mandatory">libteam</packagereq>
       <packagereq type="mandatory">tmux</packagereq>
       <packagereq type="mandatory">xfsprogs</packagereq>
       <packagereq type="mandatory">authselect-compat</packagereq>
@@ -151,7 +151,7 @@
       <packagereq type="mandatory">bc</packagereq>
       <packagereq type="mandatory">cpio</packagereq>
       <packagereq type="mandatory">crontabs</packagereq>
-      <packagereq type="mandatory">cyrus-sasl-plain</packagereq>
+      <packagereq type="mandatory">cyrus-sasl</packagereq>
       <packagereq type="mandatory">dbus</packagereq>
       <packagereq type="mandatory">ed</packagereq>
       <packagereq type="mandatory">file</packagereq>
@@ -197,7 +197,7 @@
       <packagereq type="default">smartmontools</packagereq>
       <packagereq type="default">sssd</packagereq>
       <packagereq type="default">strace</packagereq>
-      <packagereq type="default">teamd</packagereq>
+      <packagereq type="default">libteam</packagereq>
       <packagereq type="default">time</packagereq>
       <packagereq type="default">unzip</packagereq>
       <packagereq type="default">usbutils</packagereq>
@@ -282,9 +282,8 @@
       <packagereq type="mandatory">rpm</packagereq>
       <packagereq type="mandatory">selinux-policy-targeted</packagereq>
       <packagereq type="mandatory">setup</packagereq>
-      <packagereq type="mandatory">shadow-utils</packagereq>
-      <packagereq type="mandatory">sssd-common</packagereq>
-      <packagereq type="mandatory">sssd-kcm</packagereq>
+      <packagereq type="mandatory">shadow</packagereq>
+      <packagereq type="mandatory">sssd</packagereq>
       <packagereq type="mandatory">sudo</packagereq>
       <packagereq type="mandatory">systemd</packagereq>
       <packagereq type="mandatory">tuned</packagereq>
@@ -297,14 +296,12 @@
       <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="default">NetworkManager</packagereq>
-      <packagereq type="default">NetworkManager-team</packagereq>
-      <packagereq type="default">NetworkManager-tui</packagereq>
       <packagereq type="default">NetworkManager-config-server</packagereq>
       <packagereq type="default">authselect</packagereq>
       <packagereq type="default">dnf-plugins-core</packagereq>
       <packagereq type="default">dracut-config-rescue</packagereq>
       <packagereq type="default">kernel-tools</packagereq>
-      <packagereq type="default">libsysfs</packagereq>
+      <packagereq type="default">sysfsutils</packagereq>
       <packagereq type="default">linux-firmware</packagereq>
       <packagereq type="default">lshw</packagereq>
       <packagereq type="default">lsscsi</packagereq>
@@ -355,11 +352,9 @@
       <packagereq type="mandatory">make</packagereq>
       <packagereq type="mandatory">patch</packagereq>
       <packagereq type="mandatory">pkgconf</packagereq>
-      <packagereq type="mandatory">pkgconf-m4</packagereq>
-      <packagereq type="mandatory">pkgconf-pkg-config</packagereq>
       <packagereq type="mandatory">openEuler-rpm-config</packagereq>
       <packagereq type="mandatory">rpm-build</packagereq>
-      <packagereq type="mandatory">rpm-sign</packagereq>
+      <packagereq type="mandatory">rpm</packagereq>
       <packagereq type="default">asciidoc</packagereq>
       <packagereq type="default">byacc</packagereq>
       <packagereq type="default">ctags</packagereq>
@@ -446,7 +441,6 @@
       <packagereq type="optional">samba-winbind</packagereq>
       <packagereq type="optional">samba-winbind-clients</packagereq>
       <packagereq type="optional">sssd-dbus</packagereq>
-      <packagereq type="optional">sssd-kcm</packagereq>
       <packagereq type="optional">sssd-tools</packagereq>
       <packagereq type="optional">sssd-winbind-idmap</packagereq>
     </packagelist>
@@ -732,11 +726,7 @@
     <uservisible>true</uservisible>
     <packagelist>
       <packagereq type="mandatory">PackageKit</packagereq>
-      <packagereq type="mandatory">cockpit-packagekit</packagereq>
-      <packagereq type="mandatory">cockpit-storaged</packagereq>
-      <packagereq type="mandatory">cockpit-bridge</packagereq>
-      <packagereq type="mandatory">cockpit-system</packagereq>
-      <packagereq type="mandatory">cockpit-ws</packagereq>
+      <packagereq type="mandatory">cockpit</packagereq>
       <packagereq type="mandatory">openssh-server</packagereq>
       <packagereq type="default">sscg</packagereq>
     </packagelist>
@@ -923,7 +913,7 @@
       <packagereq type="optional">libreswan</packagereq>
       <packagereq type="optional">radvd</packagereq>
       <packagereq type="optional">rsyslog-gnutls</packagereq>
-      <packagereq type="optional">rsyslog-gssapi</packagereq>
+      <packagereq type="optional">rsyslog</packagereq>
       <packagereq type="optional">rsyslog-mysql</packagereq>
       <packagereq type="optional">rsyslog-pgsql</packagereq>
       <packagereq type="optional">rsyslog-relp</packagereq>
@@ -949,7 +939,7 @@
       <packagereq type="optional">libreswan</packagereq>
       <packagereq type="optional">radvd</packagereq>
       <packagereq type="optional">rsyslog-gnutls</packagereq>
-      <packagereq type="optional">rsyslog-gssapi</packagereq>
+      <packagereq type="optional">rsyslog</packagereq>
       <packagereq type="optional">rsyslog-mysql</packagereq>
       <packagereq type="optional">rsyslog-pgsql</packagereq>
       <packagereq type="optional">rsyslog-relp</packagereq>
@@ -967,7 +957,7 @@
       <packagereq type="default">NetworkManager-bluetooth</packagereq>
       <packagereq type="default">NetworkManager-wifi</packagereq>
       <packagereq type="default">NetworkManager-wwan</packagereq>
-      <packagereq type="default">dhcp-client</packagereq>
+      <packagereq type="default">dhcp</packagereq>
       <packagereq type="default">iptables</packagereq>
       <packagereq type="default">dnsmasq</packagereq>
     </packagelist>
@@ -1232,9 +1222,9 @@
       <packagereq type="mandatory">openEuler-release</packagereq>
       <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">timedatex</packagereq>
-      <packagereq type="default">dhcp-client</packagereq>
+      <packagereq type="default">dhcp</packagereq>
       <packagereq type="default">NetworkManager-config-server</packagereq>
-      <packagereq type="default">NetworkManager-team</packagereq>
+      <packagereq type="default">NetworkManager</packagereq>
     </packagelist>
   </group>
   <group>
@@ -1266,7 +1256,7 @@
       <packagereq type="mandatory">bc</packagereq>
       <packagereq type="mandatory">cpio</packagereq>
       <packagereq type="mandatory">crontabs</packagereq>
-      <packagereq type="mandatory">cyrus-sasl-plain</packagereq>
+      <packagereq type="mandatory">cyrus-sasl</packagereq>
       <packagereq type="mandatory">dbus</packagereq>
       <packagereq type="mandatory">ed</packagereq>
       <packagereq type="mandatory">file</packagereq>
@@ -1307,7 +1297,7 @@
       <packagereq type="default">smartmontools</packagereq>
       <packagereq type="default">sssd</packagereq>
       <packagereq type="default">strace</packagereq>
-      <packagereq type="default">teamd</packagereq>
+      <packagereq type="default">libteam</packagereq>
       <packagereq type="default">time</packagereq>
       <packagereq type="default">unzip</packagereq>
       <packagereq type="default">usbutils</packagereq>
@@ -1327,9 +1317,9 @@
       <packagereq type="default">nano</packagereq>
       <packagereq type="default">rng-tools</packagereq>
       <packagereq type="mandatory">rsyslog-gnutls</packagereq>
-      <packagereq type="mandatory">rsyslog-gssapi</packagereq>
+      <packagereq type="mandatory">rsyslog</packagereq>
       <packagereq type="mandatory">rsyslog-relp</packagereq>
-      <packagereq type="default">nmap-ncat</packagereq>
+      <packagereq type="default">nmap</packagereq>
       <packagereq type="default">pinfo</packagereq>
       <packagereq type="default">plymouth</packagereq>
       <packagereq type="default">tcpdump</packagereq>
@@ -1425,6 +1415,7 @@
       <packagereq type="mandatory">edk2-help</packagereq>
       <packagereq type="mandatory">qemu-help</packagereq>
       <packagereq type="mandatory">qemu</packagereq>
+      <packagereq type="mandatory">qemu-block-iscsi</packagereq>
       <packagereq type="mandatory">qemu-img</packagereq>
       <packagereq type="mandatory">stratovirt</packagereq>
     </packagelist>
