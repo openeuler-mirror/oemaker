@@ -1,0 +1,53 @@
+From c07e8a605f00b822add5e7f55c1f2b8227fa65f0 Mon Sep 17 00:00:00 2001
+From: yeah_wang <wangye70@huawei.com>
+Date: Fri, 26 Mar 2021 14:05:35 +0800
+Subject: [PATCH] remove atlas
+
+---
+ config/aarch64/normal.xml | 2 --
+ config/x86_64/normal.xml  | 2 --
+ 2 files changed, 4 deletions(-)
+
+diff --git a/config/aarch64/normal.xml b/config/aarch64/normal.xml
+index cab5406..f4a031b 100644
+--- a/config/aarch64/normal.xml
++++ b/config/aarch64/normal.xml
+@@ -12,7 +12,6 @@
+     <default>true</default>
+     <uservisible>false</uservisible>
+     <packagelist>
+-      <packagereq type="mandatory">atlas-devel</packagereq>
+       <packagereq type="mandatory">audit-libs-devel</packagereq>
+       <packagereq type="mandatory">bzip2-devel</packagereq>
+       <packagereq type="mandatory">c-ares-devel</packagereq>
+@@ -1187,7 +1186,6 @@
+     <default>true</default>
+     <uservisible>true</uservisible>
+     <packagelist>
+-      <packagereq type="optional">atlas</packagereq>
+       <packagereq type="optional">units</packagereq>
+       <packagereq type="optional">fftw</packagereq>
+       <packagereq type="optional">fftw-devel</packagereq>
+diff --git a/config/x86_64/normal.xml b/config/x86_64/normal.xml
+index 4ef88de..1c9dd8a 100644
+--- a/config/x86_64/normal.xml
++++ b/config/x86_64/normal.xml
+@@ -12,7 +12,6 @@
+     <default>true</default>
+     <uservisible>false</uservisible>
+     <packagelist>
+-      <packagereq type="mandatory">atlas-devel</packagereq>
+       <packagereq type="mandatory">audit-libs-devel</packagereq>
+       <packagereq type="mandatory">bzip2-devel</packagereq>
+       <packagereq type="mandatory">c-ares-devel</packagereq>
+@@ -1188,7 +1187,6 @@
+     <default>true</default>
+     <uservisible>true</uservisible>
+     <packagelist>
+-      <packagereq type="optional">atlas</packagereq>
+       <packagereq type="optional">units</packagereq>
+       <packagereq type="optional">fftw</packagereq>
+       <packagereq type="optional">fftw-devel</packagereq>
+-- 
+1.8.3.1
+
