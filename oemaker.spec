@@ -3,7 +3,7 @@ Summary:        a duilding tool for making DVD ISO
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        1.1.2
-Release:        5
+Release:        6
 BuildRoot:      %{_tmppath}/%{name}
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildArch:      noarch
@@ -12,6 +12,7 @@ Requires:       lorax >= 19.6.78-1
 
 Patch0001: 0001-change-source-iso-method.patch
 Patch0002: 0002-bug-fix-I3B7CH.patch
+Patch0003: 0003-add-rpms-to-rpmlist-which-will-be-deleted-from-iso.patch
 
 %description
 a building tool for making DVD ISO
@@ -67,6 +68,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Apr 7 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-6
+- ID:NA
+- SUG:NA
+- DESC: add rpms to rpmlist which will be deleted from iso
+
 * Sat Mar 13 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-5
 - ID:NA
 - SUG:NA
