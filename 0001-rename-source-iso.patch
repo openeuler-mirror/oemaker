@@ -1,16 +1,16 @@
-From 9693dae6c8173bb7277fa150e1a262a7f5d984e3 Mon Sep 17 00:00:00 2001
+From e11a1ff002fdc7aab81f40b99fcea2fc86eba85b Mon Sep 17 00:00:00 2001
 From: miao_kaibo <miaokaibo@outlook.com>
-Date: Fri, 2 Apr 2021 11:04:14 +0800
+Date: Fri, 2 Apr 2021 10:23:47 +0800
 Subject: [PATCH] rename source iso
 
 ---
- init.sh | 4 ++--
+ isomaker/init.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/init.sh b/init.sh
+diff --git a/isomaker/init.sh b/isomaker/init.sh
 index f708555..2603bfb 100755
---- a/init.sh
-+++ b/init.sh
+--- a/isomaker/init.sh
++++ b/isomaker/init.sh
 @@ -112,7 +112,7 @@ function global_var_init()
          DBG_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-debug-${ARCH}-dvd.iso"
          EVE_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-everything-${ARCH}-dvd.iso"
