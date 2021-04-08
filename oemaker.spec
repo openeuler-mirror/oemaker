@@ -11,15 +11,18 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        4
+Release:        5
 BuildRoot:      %{_tmppath}/%{name}
+
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:        normal_aarch64.xml
+Source2:        normal_x86_64.xml
+Source3:        rpmlist.xml
+
 Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libselinux-utils libxml2
 Requires:       lorax >= 19.6.78-1
 
-Patch0001:      0001-replace-rsyslog-gnutls-by-rsyslog.patch
-Patch0002:	0002-remove-atlas.patch
-Patch0003:	0003-rename-source-iso.patch
+Patch0001:	0001-rename-source-iso.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -34,6 +37,12 @@ a building tool for ISO cutting
 
 %prep
 %setup -c
+rm -rf %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/normal.xml
+cp %{SOURCE1} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/normal.xml
+rm -rf  %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/normal.xml
+cp %{SOURCE2} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/normal.xml
+rm -rf %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/rpmlist.xml
+cp %{SOURCE3} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/rpmlist.xml
 cd %{_builddir}/%{name}-%{version}/%{name}
 %autopatch -p1
 
@@ -111,6 +120,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Apr 7 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-5
+- ID:NA
+- SUG:NA
+- DESC: change for issue I3DJJW
+
 * Fri Apr 2 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-4
 - ID:NA
 - SUG:NA
