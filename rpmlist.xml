@@ -65,6 +65,7 @@
         <packagereq>rubygem-rspec-rails-help</packagereq>
         <packagereq>rubygem-rspec2-doc-</packagereq>
         <packagereq>rubygem-selenium-webdriver-doc-</packagereq>
+        <packagereq>openal-soft-devel</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
         <packagereq>totem</packagereq>
