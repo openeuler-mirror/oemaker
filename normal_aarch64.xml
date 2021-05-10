@@ -1617,7 +1617,6 @@
       <groupid>standard</groupid>
     </grouplist>
     <optionlist>
-      <groupid>debugging</groupid>
       <groupid>dns-server</groupid>
       <groupid>file-server</groupid>
       <groupid>ftp-server</groupid>
@@ -1646,7 +1645,6 @@
       <groupid>virtualization-hypervisor</groupid>
     </grouplist>
     <optionlist>
-      <groupid>debugging</groupid>
       <groupid>network-file-system-client</groupid>
       <groupid>remote-system-management</groupid>
       <groupid>openvswitch</groupid>
