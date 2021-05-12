@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        2
+Release:        3
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -23,6 +23,7 @@ Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libs
 Requires:       lorax >= 19.6.78-1
 
 Patch0001:	0001-rename-source-iso.patch
+Patch0002:	0002-bugfix-I3QY98.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -120,6 +121,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed May 12 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-3
+- ID:NA
+- SUG:NA
+- DESC: bugfix I3QY98
+
 * Mon Apr 26 2021 lingsheng <lingsheng@huawei.com> - 2.0.0-2
 - ID:NA
 - SUG:NA
