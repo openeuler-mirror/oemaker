@@ -1,0 +1,44 @@
+From 1907bdefd7fc8c4e1ef2db78d3e38dc3d6b6a32c Mon Sep 17 00:00:00 2001
+From: miao_kaibo <miaokaibo@outlook.com>
+Date: Wed, 12 May 2021 03:34:44 +0000
+Subject: [PATCH] bugfix I3QY98
+
+---
+ isomaker/rpm.sh | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/isomaker/rpm.sh b/isomaker/rpm.sh
+index e5fad1f..e3feaab 100755
+--- a/isomaker/rpm.sh
++++ b/isomaker/rpm.sh
+@@ -165,8 +165,11 @@ function get_everything_rpms()
+     if [ -s parsed_rpmlist_conflict ];then
+         for rpmname in $(cat parsed_rpmlist_conflict)
+         do
+-            sed -i "/^${rpmname}\./d" ava_every_lst
+-            echo "${rpmname}" >> conflict_list
++            cat ava_every_lst | grep "^${rpmname}\."
++            if [ $? -eq 0 ];then
++                sed -i "/^${rpmname}\./d" ava_every_lst
++                echo "${rpmname}" >> conflict_list
++            fi
+         done
+     fi 
+     parse_rpmlist_xml "everything_conflict"
+@@ -174,8 +177,11 @@ function get_everything_rpms()
+     if [ -s parsed_rpmlist_everything_conflict ];then
+         for rpmname in $(cat parsed_rpmlist_everything_conflict)
+         do
+-            sed -i "/^${rpmname}\./d" ava_every_lst
+-            echo "${rpmname}" >> conflict_list
++            cat ava_every_lst | grep "^${rpmname}\."
++            if [ $? -eq 0 ];then
++                sed -i "/^${rpmname}\./d" ava_every_lst
++                echo "${rpmname}" >> conflict_list
++            fi
+         done
+     fi 
+ }
+-- 
+1.8.3.1
+
