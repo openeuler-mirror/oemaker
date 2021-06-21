@@ -28,6 +28,8 @@
         <packagereq>texlive-bibtexperllibs</packagereq>
         <packagereq>texlive-collection-binextra</packagereq>
         <packagereq>texlive-collection-fontutils</packagereq>
+        <packagereq>texlive-collection-humanities</packagereq>
+        <packagereq>texlive-collection-langother</packagereq>
         <packagereq>texlive-includernw</packagereq>
         <packagereq>texlive-oldstandard</packagereq>
         <packagereq>texlive-pdfpc-movie</packagereq>
@@ -35,6 +37,10 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
+        <packagereq>texlive-babel-vietnamese</packagereq>
+        <packagereq>texlive-babel-vietnamese-doc</packagereq>
+        <packagereq>texlive-lexikon</packagereq>
+        <packagereq>texlive-lexikon-doc</packagereq>
         <packagereq>wildfly-core</packagereq>
         <packagereq>wildfly-core-javadoc</packagereq>
         <packagereq>wildfly-core-feature-pack</packagereq>
@@ -1065,8 +1071,6 @@
         <packagereq>pkcs11-helper-help</packagereq>
         <packagereq>pkgconf</packagereq>
         <packagereq>pkgconf-help</packagereq>
-        <packagereq>pkgconf-m4</packagereq>
-        <packagereq>pkgconf-pkg-config</packagereq>
         <packagereq>plymouth</packagereq>
         <packagereq>plymouth-help</packagereq>
         <packagereq>policycoreutils</packagereq>
@@ -1201,7 +1205,6 @@
         <packagereq>rpm-plugin-systemd-inhibit</packagereq>
         <packagereq>rpmrebuild</packagereq>
         <packagereq>rpmrebuild-help</packagereq>
-        <packagereq>rpm-sign</packagereq>
         <packagereq>rsync</packagereq>
         <packagereq>rsync-help</packagereq>
         <packagereq>rsyslog</packagereq>
