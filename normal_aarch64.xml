@@ -647,7 +647,7 @@
       <packagereq type="mandatory">gvfs-afc</packagereq>
       <packagereq type="mandatory">gvfs-afp</packagereq>
       <packagereq type="mandatory">gvfs-archive</packagereq>
-      <packagereq type="mandatory">gvfs-fuse</packagereq>
+      <packagereq type="mandatory">gvfs-fuse3</packagereq>
       <packagereq type="mandatory">gvfs-goa</packagereq>
       <packagereq type="mandatory">gvfs-gphoto2</packagereq>
       <packagereq type="mandatory">gvfs-mtp</packagereq>
