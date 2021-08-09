@@ -77,7 +77,6 @@
         <packagereq>dpkg-dev</packagereq>
         <packagereq>dpkg-perl</packagereq>
         <packagereq>eog-tests</packagereq>
-        <packagereq>firefox</packagereq>
         <packagereq>fwupd</packagereq>
         <packagereq>gnome-calculator</packagereq>
         <packagereq>gnome-clocks</packagereq>
@@ -97,11 +96,9 @@
         <packagereq>kiwi-other</packagereq>
         <packagereq>kiwi-systemdeps</packagereq>
         <packagereq>kmod-kvdo</packagereq>
-        <packagereq>libXScrnSaver</packagereq>
         <packagereq>libXp</packagereq>
         <packagereq>libinput-utils</packagereq>
         <packagereq>lorax-lmc-virt</packagereq>
-        <packagereq>m17n-lib</packagereq>
         <packagereq>mariadb-server-galera</packagereq>
         <packagereq>mariadb-test</packagereq>
         <packagereq>maven-local</packagereq>
@@ -155,7 +152,6 @@
         <packagereq>speech-dispatcher-espeak-ng</packagereq>
         <packagereq>speech-dispatcher-festival</packagereq>
         <packagereq>speech-dispatcher-flite</packagereq>
-        <packagereq>spice-gtk</packagereq>
         <packagereq>systemtap-runtime-java</packagereq>
         <packagereq>containernetworking-plugins-devel</packagereq>
         <packagereq>containernetworking-plugins-unit-test-devel</packagereq>
