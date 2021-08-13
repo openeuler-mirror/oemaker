@@ -41,9 +41,6 @@
         <packagereq>texlive-babel-vietnamese-doc</packagereq>
         <packagereq>texlive-lexikon</packagereq>
         <packagereq>texlive-lexikon-doc</packagereq>
-        <packagereq>wildfly-core</packagereq>
-        <packagereq>wildfly-core-javadoc</packagereq>
-        <packagereq>wildfly-core-feature-pack</packagereq>
         <packagereq>totem</packagereq>
         <packagereq>gimp</packagereq>
         <packagereq>python3-nni</packagereq>
@@ -51,12 +48,10 @@
         <packagereq>ceph-mgr-ssh</packagereq>
         <packagereq>ceph-mgr-dashboard</packagereq>
         <packagereq>ceph-mgr-k8sevents</packagereq>
-        <packagereq>dbus-c++-devel</packagereq>
         <packagereq>gnome-software</packagereq>
         <packagereq>gnome-software-devel</packagereq>
         <packagereq>gnome-software-editor</packagereq>
         <packagereq>gnome-software-help</packagereq>
-        <packagereq>ironjacamar</packagereq>
         <packagereq>metrics-jdbi</packagereq>
         <packagereq>nodejs-bunker</packagereq>
         <packagereq>nodejs-lru-queue</packagereq>
