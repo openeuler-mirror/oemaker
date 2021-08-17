@@ -33,7 +33,6 @@
       <packagereq type="mandatory">libcurl-devel</packagereq>
       <packagereq type="mandatory">libffi-devel</packagereq>
       <packagereq type="mandatory">libgcrypt-devel</packagereq>
-      <packagereq type="mandatory">libhugetlbfs-devel</packagereq>
       <packagereq type="mandatory">libnl3-devel</packagereq>
       <packagereq type="mandatory">libselinux-devel</packagereq>
       <packagereq type="mandatory">libusbx-devel</packagereq>
@@ -814,8 +813,6 @@
       <packagereq type="mandatory">numactl</packagereq>
       <packagereq type="mandatory">numad</packagereq>
       <packagereq type="default">hwloc</packagereq>
-      <packagereq type="default">libhugetlbfs</packagereq>
-      <packagereq type="default">libhugetlbfs-utils</packagereq>
       <packagereq type="default">mstflint</packagereq>
       <packagereq type="default">qperf</packagereq>
       <packagereq type="optional">libvma</packagereq>

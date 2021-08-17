@@ -352,8 +352,6 @@
         <packagereq>geocode-glib-help</packagereq>
         <packagereq>GeoIP</packagereq>
         <packagereq>GeoIP-help</packagereq>
-        <packagereq>geolite2-city</packagereq>
-        <packagereq>geolite2-country</packagereq>
         <packagereq>gettext</packagereq>
         <packagereq>gettext-help</packagereq>
         <packagereq>gettext-libs</packagereq>
@@ -534,8 +532,6 @@
         <packagereq>libcomps</packagereq>
         <packagereq>libcomps-help</packagereq>
         <packagereq>libconfig</packagereq>
-        <packagereq>libcroco</packagereq>
-        <packagereq>libcroco-help</packagereq>
         <packagereq>libcurl</packagereq>
         <packagereq>libdaemon</packagereq>
         <packagereq>libdaemon-help</packagereq>
@@ -595,9 +591,6 @@
         <packagereq>libgweather-help</packagereq>
         <packagereq>libgxps</packagereq>
         <packagereq>libgxps-help</packagereq>
-        <packagereq>libhugetlbfs</packagereq>
-        <packagereq>libhugetlbfs-help</packagereq>
-        <packagereq>libhugetlbfs-utils</packagereq>
         <packagereq>libical</packagereq>
         <packagereq>libicu-devel</packagereq>
         <packagereq>libidn</packagereq>
