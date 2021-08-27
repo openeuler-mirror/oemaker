@@ -32,23 +32,7 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
-        <packagereq>totem</packagereq>
-        <packagereq>totem-debuginfo</packagereq>
-        <packagereq>totem-debugsource</packagereq>
-        <packagereq>totem-devel</packagereq>
-        <packagereq>totem-help</packagereq>
-        <packagereq>totem-nautilus</packagereq>
-        <packagereq>gimp</packagereq>
-        <packagereq>gimp-libs</packagereq>
-        <packagereq>gimp-devel</packagereq>
-        <packagereq>gimp-help</packagereq>
-        <packagereq>gimp-debuginfo</packagereq>
-        <packagereq>gimp-debugsource</packagereq>
         <packagereq>python3-nni</packagereq>
-        <packagereq>ceph-mgr-rook</packagereq>
-        <packagereq>ceph-mgr-ssh</packagereq>
-        <packagereq>ceph-mgr-dashboard</packagereq>
-        <packagereq>ceph-mgr-k8sevents</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
         <packagereq>totem</packagereq>
