@@ -4,7 +4,7 @@
 
 The source package `oemaker` has two functions: iso making and iso cutting. Correspondingly, two binary RPM packages are generated: `oemaker` and `isocut`.
 
-The generated binary RPM package `oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything source iso,everything debug iso and netinst iso.
+The generated binary RPM package `oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything source iso,everything debug iso, edge computing iso and netinst iso.
 
 The generated binary RPM package `isocut` is a building tool for iso cutting which supports only RPM package-level.
 
