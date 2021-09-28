@@ -4,7 +4,7 @@
 
 源码包oemaker保护两部分功能：iso制作和iso裁剪。相应的，会构建生成两个二进制RPM包：oemaker和isocut.
 
-生成的二进制RPM包oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source and netinst iso等。
+生成的二进制RPM包oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source, edge computing iso and netinst iso等
 
 生成的二进制RPM包isocut是一款用于iso裁剪的构建工具，支持RPM包级别的裁剪。
 
