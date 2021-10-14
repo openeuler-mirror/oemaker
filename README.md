@@ -1,7 +1,7 @@
 # oemaker
 
 #### 介绍
-oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source and netinst iso等。
+oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source iso, edge computing iso and netinst iso等。
 oemaker采用的是本地架构的方式进行构建，不支持交叉编译环境构建。
 目前，oemkaer支持aarch64和x86_64两个架构的iso制作。
 
