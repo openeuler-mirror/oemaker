@@ -22,7 +22,7 @@ Install `isocut` with `dnf`
 dnf install -y isocut
 ```
 
-#### Instructions
+#### Instruction
 
 Generally, the disk space must be more than 50 GB.
 
