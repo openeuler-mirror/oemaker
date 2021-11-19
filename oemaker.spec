@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        9
+Release:        10
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -129,6 +129,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Fri Nov 19 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-10
+- ID:NA
+- SUG:NA
+- DESC: delete openssh-ldap because it has been removed from openssh
+
 * Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-9
 - ID:NA
 - SUG:NA
