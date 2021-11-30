@@ -35,9 +35,6 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
-        <packagereq>wildfly-core</packagereq>
-        <packagereq>wildfly-core-javadoc</packagereq>
-        <packagereq>wildfly-core-feature-pack</packagereq>
         <packagereq>totem</packagereq>
         <packagereq>gimp</packagereq>
         <packagereq>python3-nni</packagereq>
@@ -45,7 +42,6 @@
         <packagereq>ceph-mgr-ssh</packagereq>
         <packagereq>ceph-mgr-dashboard</packagereq>
         <packagereq>ceph-mgr-k8sevents</packagereq>
-        <packagereq>dbus-c++-devel</packagereq>
         <packagereq>gnome-software</packagereq>
         <packagereq>gnome-software-devel</packagereq>
         <packagereq>gnome-software-editor</packagereq>
