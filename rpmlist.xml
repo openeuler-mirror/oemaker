@@ -250,6 +250,7 @@
         <packagereq>cyrus-sasl-ntlm</packagereq>
         <packagereq>cyrus-sasl-scram</packagereq>
         <packagereq>dbus</packagereq>
+        <packagereq>dbus-broker</packagereq>
         <packagereq>dbus-glib</packagereq>
         <packagereq>dbus-help</packagereq>
         <packagereq>dbus-python-help</packagereq>

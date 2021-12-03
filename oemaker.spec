@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        10
+Release:        11
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -129,6 +129,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Fri Dec 03 2021 licunlong <licunlong1@huawei.com> - 2.0.0-11
+- ID:NA
+- SUG:NA
+- DESC: add dbus-broker to Base Group.
+
 * Fri Nov 19 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-10
 - ID:NA
 - SUG:NA
