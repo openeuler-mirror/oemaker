@@ -1254,6 +1254,7 @@
       <packagereq type="mandatory">crontabs</packagereq>
       <packagereq type="mandatory">cyrus-sasl</packagereq>
       <packagereq type="mandatory">dbus</packagereq>
+      <packagereq type="mandatory">dbus-broker</packagereq>
       <packagereq type="mandatory">ed</packagereq>
       <packagereq type="mandatory">file</packagereq>
       <packagereq type="mandatory">iptstate</packagereq>
