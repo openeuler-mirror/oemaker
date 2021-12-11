@@ -46,7 +46,6 @@
         <packagereq>gnome-software-devel</packagereq>
         <packagereq>gnome-software-editor</packagereq>
         <packagereq>gnome-software-help</packagereq>
-        <packagereq>ironjacamar</packagereq>
         <packagereq>metrics-jdbi</packagereq>
         <packagereq>nodejs-bunker</packagereq>
         <packagereq>nodejs-lru-queue</packagereq>
