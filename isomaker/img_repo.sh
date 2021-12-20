@@ -30,7 +30,7 @@ function create_install_img()
 function create_repos()
 {
     if [ -d /etc/yum.repos.d ];then
-        mv /etc/yum.repos.d repos.old && mkdir -p /etc/yum.repos.d/
+        rm -fr repos.old && mv /etc/yum.repos.d repos.old && mkdir -p /etc/yum.repos.d/
     fi
 
     repos=($(echo "$YUMREPO" | sed 's/-s//g'))
