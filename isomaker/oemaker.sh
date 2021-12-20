@@ -70,7 +70,7 @@ function mk_euleros_main()
         return 0
     fi
 
-    create_install_img &
+    create_install_img
 
     echo "Creating repos..."
     create_repos
