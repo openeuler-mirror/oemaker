@@ -10,8 +10,8 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        2.0.0
-Release:        6
+Version:        2.0.1
+Release:        7
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -127,6 +127,12 @@ fi
 rm -rf $RPM_BUILD_ROOT/*
 rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
+
+%changelog
+* Mon Dec 20 2021 xinsheng3 <xinsheng3@huawei.com> - 2.0.1-7
+- ID:NA
+- SUG:NA
+- DESC: Rectify the failure to copy yum.repos.d and cancel the background execution of create_install_img.
 
 %changelog
 * Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-6
