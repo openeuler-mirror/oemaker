@@ -138,7 +138,6 @@ def check_input():
     parser.add_argument("dest_iso", help="destination iso image")
     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
-    # parser.add_argument("-k", metavar="file_path", help="kickstart file")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
