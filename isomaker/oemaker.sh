@@ -39,7 +39,7 @@ function mkclean()
     [ -d "$BUILD" ] && rm -rf "$BUILD"
 }
 
-function mk_euleros_main()
+function mk_oe_main()
 {
     parse_cmd_line "$@"
     if [ $? -ne 0 ]; then
@@ -149,7 +149,7 @@ function mk_euleros_main()
     return 0
 }
 
-mk_euleros_main "$@"
+mk_oe_main "$@"
 if [ $? -ne 0 ]; then
     echo "make iso failed"
     exit 1

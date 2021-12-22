@@ -44,9 +44,7 @@ systemctl disable systemd-readahead-collect.service \
                   systemd-networkd-wait-online.service
 ## These services can't be disabled normally (they're linked into place in
 ## /usr/lib/systemd rather than /etc/systemd), so we have to mask them.
-systemctl mask fedora-configure.service fedora-loadmodules.service \
-               fedora-autorelabel.service fedora-autorelabel-mark.service \
-               fedora-wait-storage.service media.mount \
+systemctl mask media.mount \
                systemd-tmpfiles-clean.service systemd-tmpfiles-clean.timer \
                ldconfig.service
 

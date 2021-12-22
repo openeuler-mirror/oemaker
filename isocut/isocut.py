@@ -138,14 +138,13 @@ def check_input():
     parser.add_argument("dest_iso", help="destination iso image")
     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
-    parser.add_argument("-k", metavar="file_path", help="kickstart file")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
     ICONFIG.dest_iso = args.dest_iso
     ICONFIG.temp_path = args.t
     ICONFIG.rpm_path = args.r
-    ICONFIG.ks_file = args.k
+    ICONFIG.ks_file = None
 
     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
         print("Must specify source iso image and destination iso image")

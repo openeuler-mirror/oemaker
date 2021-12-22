@@ -27,9 +27,8 @@ removepkg checkpolicy selinux-policy libselinux-utils
 append etc/selinux/config ""
 
 ## anaconda has its own repo files
-removefrom fedora-release --allbut /etc/os-release /usr/lib/os-release \
+removefrom openEuler-release --allbut /etc/os-release /usr/lib/os-release \
                                    /usr/lib/os.release.d/*
-removepkg fedora-release-rawhide
 
 ## keep enough of shadow-utils to create accounts
 removefrom shadow-utils --allbut /usr/bin/chage /usr/sbin/chpasswd \
