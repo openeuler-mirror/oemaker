@@ -134,7 +134,6 @@ rm -rf $RPM_BUILD_DIR/%{name}
 - SUG:NA
 - DESC: Rectify the failure to copy yum.repos.d and cancel the background execution of create_install_img.
 
-%changelog
 * Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-6
 - ID:NA
 - SUG:NA
