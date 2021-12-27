@@ -133,7 +133,7 @@ def check_tools():
     return 0
 
 def check_input():
-    parser = argparse.ArgumentParser(description='Cut EulerOS iso to small one')
+    parser = argparse.ArgumentParser(description='Cut openEuler iso to small one')
     parser.add_argument("source_iso", help="source iso image")
     parser.add_argument("dest_iso", help="destination iso image")
     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
