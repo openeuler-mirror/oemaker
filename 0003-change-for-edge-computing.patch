@@ -95,7 +95,7 @@ diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
 index 74d923e..37196e5 100755
 --- a/isomaker/oemaker.sh
 +++ b/isomaker/oemaker.sh
-@@ -144,6 +144,13 @@ function mk_euleros_main()
+@@ -144,6 +144,13 @@ function mk_oe_main()
              return 1
          fi
          ls "${OUTPUT_DIR}/${EVE_SRC_ISO_NAME}"
