@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        1
+Release:        2
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -28,7 +28,7 @@ Patch0001:	0001-rename-source-iso.patch
 Patch0002:	0002-bugfix-I3QY98.patch
 Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
-
+Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 %description
 a building tool for DVD ISO making and ISO cutting
 
@@ -129,6 +129,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Dec 28 2021 chemingdao <chemingdao@huawei.com> - 2.0.3-2
+- ID:NA
+- SUG:NA
+- DESC: add fpi_tail param for grub2
+
 * Tue Dec 28 2021 xinsheng3 <xinsheng3@huawei.com> - 2.0.3-1
 - ID:NA
 - SUG:NA
