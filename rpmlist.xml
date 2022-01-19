@@ -928,7 +928,6 @@
         <packagereq>openssh-clients</packagereq>
         <packagereq>openssh-help</packagereq>
         <packagereq>openssh-keycat</packagereq>
-        <packagereq>openssh-ldap</packagereq>
         <packagereq>openssh-server</packagereq>
         <packagereq>openssl</packagereq>
         <packagereq>openssl-devel</packagereq>
