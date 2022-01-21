@@ -461,6 +461,30 @@
     </packagelist>
   </group>
   <group>
+    <id>opengauss-server</id>
+    <name>openGauss Server</name>
+    <name xml:lang="zh_CN">openGauss数据库</name>
+    <description>openGauss is an open source relational database management system.</description>
+    <description xml:lang="zh_CN">openGauss一款开源的关系数据库管理系统。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">lz4-devel</packagereq>
+      <packagereq type="mandatory">protobuf-devel</packagereq>
+      <packagereq type="mandatory">snappy-devel</packagereq>
+      <packagereq type="mandatory">zstd-devel</packagereq>
+      <packagereq type="mandatory">boost-devel</packagereq>
+      <packagereq type="mandatory">libcgroup-devel</packagereq>
+      <packagereq type="mandatory">unixODBC-devel</packagereq>
+      <packagereq type="mandatory">jemalloc-devel</packagereq>
+      <packagereq type="mandatory">java-1.8.0-openjdk-devel</packagereq>
+      <packagereq type="mandatory">libedit-devel</packagereq>
+      <packagereq type="mandatory">libaio-devel</packagereq>
+      <packagereq type="mandatory">DCF</packagereq>
+      <packagereq type="mandatory">opengauss</packagereq>
+    </packagelist>
+  </group>
+  <group>
     <id>fonts</id>
     <name>Fonts</name>
     <name xml:lang="zh_CN">字体</name>
@@ -1620,6 +1644,7 @@
       <groupid>smb-server</groupid>
       <groupid>virtualization-hypervisor</groupid>
       <groupid>web-server</groupid>
+      <groupid>opengauss-server</groupid>
     </optionlist>
   </environment>
   <environment>

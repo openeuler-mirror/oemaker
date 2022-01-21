@@ -491,6 +491,7 @@
         <packagereq>lftp-help</packagereq>
         <packagereq>libacl</packagereq>
         <packagereq>libaio</packagereq>
+        <packagereq>libaio-devel</packagereq>
         <packagereq>libarchive</packagereq>
         <packagereq>libarchive-help</packagereq>
         <packagereq>libassuan</packagereq>
@@ -536,6 +537,7 @@
         <packagereq>libecap</packagereq>
         <packagereq>libecap-help</packagereq>
         <packagereq>libedit</packagereq>
+        <packagereq>libedit-devel</packagereq>
         <packagereq>libedit-help</packagereq>
         <packagereq>liberation-fonts</packagereq>
         <packagereq>libesmtp</packagereq>
@@ -801,6 +803,7 @@
         <packagereq>lz4</packagereq>
         <packagereq>lz4-help</packagereq>
         <packagereq>lz4-libs</packagereq>
+        <packagereq>lz4-devel</packagereq>
         <packagereq>lzo</packagereq>
         <packagereq>lzo-help</packagereq>
         <packagereq>lzo-minilzo</packagereq>
@@ -1206,6 +1209,7 @@
         <packagereq>smp_utils</packagereq>
         <packagereq>smp_utils-help</packagereq>
         <packagereq>snappy</packagereq>
+        <packagereq>snappy-devel</packagereq>
         <packagereq>snappy-help</packagereq>
         <packagereq>source-highlight</packagereq>
         <packagereq>source-highlight-help</packagereq>
@@ -1361,8 +1365,13 @@
         <packagereq>zlib-help</packagereq>
         <packagereq>zsh</packagereq>
         <packagereq>zstd-help</packagereq>
+        <packagereq>zstd-devel</packagereq>
         <packagereq>zziplib-help</packagereq>
         <packagereq>zziplib-utils</packagereq>
+        <packagereq>unixODBC-devel</packagereq>
+        <packagereq>jemalloc-devel</packagereq>
+        <packagereq>DCF</packagereq>
+        <packagereq>opengauss</packagereq>
     </packagelist>
     <packagelist type="edge_aarch64">
         <packagereq>grub2-efi-aa64</packagereq>
