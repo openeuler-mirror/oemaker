@@ -1168,6 +1168,7 @@
         <packagereq>rsyslog-mmsnmptrapd</packagereq>
         <packagereq>rsyslog-mysql</packagereq>
         <packagereq>rsyslog-snmp</packagereq>
+	<packagereq>rsyslog-gnutls</packagereq>
         <packagereq>rtkit</packagereq>
         <packagereq>rtkit-help</packagereq>
         <packagereq>samba-common-tools</packagereq>
