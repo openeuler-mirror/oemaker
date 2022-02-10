@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        14
+Release:        15
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -129,6 +129,9 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Thu Feb 10 2022 hanhui15 <hanhui@h-partners> - 2.0.0-15
+- DESC:delete decay packages, gamin and openjpeg
+
 * Wed Feb 9 2022 wuchaochao <cyanrose@yeah.net> - 2.0.0-14
 - ID:NA
 - SUG:NA
