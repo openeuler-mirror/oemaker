@@ -39,6 +39,7 @@ function gen_standard_iso()
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
+        isohybrid -u "${OUTPUT_DIR}/${STANDARD_ISO_NAME}"
     elif [ "$ARCH" == "aarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
@@ -75,6 +76,7 @@ function gen_everything_iso()
     if [ "$ARCH" == "x86_64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
+        isohybrid -u /result/"${EVE_ISO_NAME}"
     elif [ "$ARCH" == "aarch64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
@@ -126,6 +128,7 @@ function gen_netinst_iso()
     if [ "$ARCH" == "x86_64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
+        isohybrid -u /result/"${NETINST_ISO_NAME}"
     elif [ "$ARCH" == "aarch64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
     fi
