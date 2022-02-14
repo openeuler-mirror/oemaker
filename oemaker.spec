@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        6
+Release:        7
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -28,6 +28,7 @@ Patch0001:	0001-rename-source-iso.patch
 Patch0002:	0002-bugfix-I3QY98.patch
 Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
+Patch0005:	0005-support-usb-flash-drive-mode.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -129,6 +130,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Feb 14 2022 wangchong <952173335@qq.com> - 2.0.0-7
+- ID:NA
+- SUG:NA
+- DESC: support usb flash drive mode
+
 * Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-6
 - ID:NA
 - SUG:NA
