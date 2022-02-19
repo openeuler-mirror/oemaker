@@ -1011,7 +1011,6 @@
       <packagereq type="default">pcp-import-mrtg2pcp</packagereq>
       <packagereq type="default">pcp-libs</packagereq>
       <packagereq type="default">pcp-libs-devel</packagereq>
-      <packagereq type="default">pcp-manager</packagereq>
       <packagereq type="default">pcp-pmda-apache</packagereq>
       <packagereq type="default">pcp-pmda-bash</packagereq>
       <packagereq type="default">pcp-pmda-bonding</packagereq>
@@ -1046,13 +1045,11 @@
       <packagereq type="default">pcp-pmda-nfsclient</packagereq>
       <packagereq type="default">pcp-pmda-nvidia-gpu</packagereq>
       <packagereq type="default">pcp-pmda-oracle</packagereq>
-      <packagereq type="default">pcp-pmda-papi</packagereq>
       <packagereq type="default">pcp-pmda-pdns</packagereq>
       <packagereq type="default">pcp-pmda-perfevent</packagereq>
       <packagereq type="default">pcp-pmda-prometheus</packagereq>
       <packagereq type="default">pcp-pmda-redis</packagereq>
       <packagereq type="default">pcp-pmda-roomtemp</packagereq>
-      <packagereq type="default">pcp-pmda-rpm</packagereq>
       <packagereq type="default">pcp-pmda-rsyslog</packagereq>
       <packagereq type="default">pcp-pmda-samba</packagereq>
       <packagereq type="default">pcp-pmda-sendmail</packagereq>
@@ -1064,7 +1061,6 @@
       <packagereq type="default">pcp-pmda-systemd</packagereq>
       <packagereq type="default">pcp-pmda-trace</packagereq>
       <packagereq type="default">pcp-pmda-unbound</packagereq>
-      <packagereq type="default">pcp-pmda-vmware</packagereq>
       <packagereq type="default">pcp-pmda-weblog</packagereq>
       <packagereq type="default">pcp-pmda-zimbra</packagereq>
       <packagereq type="default">pcp-pmda-zswap</packagereq>
@@ -1072,11 +1068,6 @@
       <packagereq type="default">pcp-system-tools</packagereq>
       <packagereq type="default">pcp-testsuite</packagereq>
       <packagereq type="default">pcp-webapi</packagereq>
-      <packagereq type="default">pcp-webapp-blinkenlights</packagereq>
-      <packagereq type="default">pcp-webapp-grafana</packagereq>
-      <packagereq type="default">pcp-webapp-graphite</packagereq>
-      <packagereq type="default">pcp-webapp-vector</packagereq>
-      <packagereq type="default">pcp-webjs</packagereq>
       <packagereq type="default">pcp-zeroconf</packagereq>
       <packagereq type="default">perl-PCP-LogImport</packagereq>
       <packagereq type="default">perl-PCP-LogSummary</packagereq>
