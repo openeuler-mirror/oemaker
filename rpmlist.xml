@@ -882,7 +882,6 @@
         <packagereq>notification-daemon</packagereq>
         <packagereq>notification-daemon-help</packagereq>
         <packagereq>npth</packagereq>
-        <packagereq>nscd</packagereq>
         <packagereq>nss</packagereq>
         <packagereq>nss-help</packagereq>
         <packagereq>nss-mdns</packagereq>
