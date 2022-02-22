@@ -434,7 +434,6 @@
       <packagereq type="optional">krb5-pkinit</packagereq>
       <packagereq type="optional">krb5-workstation</packagereq>
       <packagereq type="optional">luksmeta</packagereq>
-      <packagereq type="optional">nscd</packagereq>
       <packagereq type="optional">nss-pam-ldapd</packagereq>
       <packagereq type="optional">openldap-clients</packagereq>
       <packagereq type="optional">samba-winbind</packagereq>
