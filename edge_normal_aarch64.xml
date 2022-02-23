@@ -102,6 +102,30 @@
       <packagereq type="optional">chrony</packagereq>
     </packagelist>
   </group>
+  <group>
+    <id>edge</id>
+    <name>Edge</name>
+    <name xml:lang="zh_CN">边缘场景</name>
+    <description>Package for edge scene</description>
+    <description xml:lang="zh_CN">边缘场景相关包</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="default">kubernetes</packagereq>
+      <packagereq type="default">kubernetes-client</packagereq>
+      <packagereq type="default">kubernetes-help</packagereq>
+      <packagereq type="default">kubernetes-kubeadm</packagereq>
+      <packagereq type="default">kubernetes-kubelet</packagereq>
+      <packagereq type="default">kubernetes-master</packagereq>
+      <packagereq type="default">kubernetes-node</packagereq>
+      <packagereq type="default">kubeedge-cloudcore</packagereq>
+      <packagereq type="default">kubeedge-edgecore</packagereq>
+      <packagereq type="default">kubeedge-edgesite</packagereq>
+      <packagereq type="default">kubeedge-keadm</packagereq>
+      <packagereq type="default">mdadm</packagereq>
+      <packagereq type="default">mdadm-help</packagereq>
+    </packagelist>
+  </group>
   <environment>
     <id>minimal-environment</id>
     <name>Minimal Install</name>
@@ -111,6 +135,21 @@
     <display_order>1</display_order>
     <grouplist>
       <groupid>core</groupid>
+    </grouplist>
+    <optionlist>
+      <groupid>standard</groupid>
+    </optionlist>
+  </environment>
+  <environment>
+    <id>edge-cloud-environment</id>
+    <name>Edge Cloud</name>
+    <name xml:lang="zh_CN">边缘云</name>
+    <description>For edge computing scenarios</description>
+    <description xml:lang="zh_CN">用于边缘计算场景</description>
+    <display_order>2</display_order>
+    <grouplist>
+      <groupid>core</groupid>
+      <groupid>edge</groupid>
     </grouplist>
     <optionlist>
       <groupid>standard</groupid>
