@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        18
+Release:        19
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -130,6 +130,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Feb 23 2022 imxcc <xingchaochao@huawei.com> - 2.0.0-19
+- ID:NA
+- SUG:NA
+- DESC: add edk2-ovmf package
+
 * Tue Feb 22 2022 jiangheng <jiangheng12@huawei.com> - 2.0.0-18
 - ID:NA
 - SUG:NA

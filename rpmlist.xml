@@ -52,6 +52,7 @@
         <packagereq>uacce</packagereq>
     </packagelist>
     <packagelist type="x86_64">
+        <packagereq>edk2-ovmf</packagereq>
         <packagereq>grub2-efi-x64</packagereq>
         <packagereq>grub2-efi-x64-modules</packagereq>
         <packagereq>shim</packagereq>
