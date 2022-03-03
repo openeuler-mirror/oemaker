@@ -19,12 +19,14 @@ set -e
 function create_install_img()
 {
     echo "$YUMREPO" > yumrepo.file
+    set +e
     lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
 
     if [ $? != 0 ] ; then
         cat lorax.logfile
         exit 1
     fi
+    set -e
 }
 
 function create_repos()
