@@ -1,15 +1,15 @@
-From 7bccd60b9425e1d77f433fa968b5895a897e4ebe Mon Sep 17 00:00:00 2001
+From 0efd69859777d608c8f8d51d14fcae9fd9eadf4b Mon Sep 17 00:00:00 2001
 From: xyn-coder <xiangyuning@huawei.com>
-Date: Wed, 2 Mar 2022 17:04:03 +0800
+Date: Fri, 4 Mar 2022 17:20:47 +0800
 Subject: [PATCH] restore env after selinux status changes
 
 ---
- isomaker/env_restore.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
- isomaker/img_repo.sh    |  2 +-
- isomaker/oemaker.sh     | 13 +++++++++++++
- isomaker/rpm.sh         | 20 +++++++++++++++-----
- 4 files changed, 73 insertions(+), 6 deletions(-)
- create mode 100644 env_restore.sh
+ isomaker/env_restore.sh | 44 +++++++++++++++++++++++++++++++++++++++++
+ isomaker/img_repo.sh    |  5 ++++-
+ isomaker/oemaker.sh     | 13 ++++++++++++
+ isomaker/rpm.sh         | 20 ++++++++++++++-----
+ 4 files changed, 76 insertions(+), 6 deletions(-)
+ create mode 100644 isomaker/env_restore.sh
 
 diff --git a/isomaker/env_restore.sh b/isomaker/env_restore.sh
 new file mode 100644
@@ -62,18 +62,26 @@ index 0000000..722db3b
 +}
 +
 diff --git a/isomaker/img_repo.sh b/isomaker/img_repo.sh
-index 9135b39..92fbaea 100644
+index 9135b39..f391dde 100644
 --- a/isomaker/img_repo.sh
 +++ b/isomaker/img_repo.sh
-@@ -39,7 +39,7 @@ function create_install_img()
+@@ -35,12 +35,15 @@ function create_install_img()
+     else
+         vertmp=${VERSION}
+     fi
++
++    set +e
+     lorax --isfinal -p "${PRODUCT}" -v "${vertmp}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
  
      if [ $? != 0 ] ; then
          cat lorax.logfile
 -        exit 1
 +        return 1
      fi
++    set -e
  }
  
+ function create_repos()
 diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
 index c5d85fb..fb542f3 100644
 --- a/isomaker/oemaker.sh
@@ -197,5 +205,5 @@ index 85b1042..443cb35 100644
  }
   
 -- 
-2.23.0
+2.33.0
 
