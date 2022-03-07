@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        10
+Release:        11
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -76,6 +76,7 @@ install -m 700 %{name}/isomaker/img_repo.sh %{buildroot}/opt/oemaker/img_repo.sh
 install -m 700 %{name}/isomaker/init.sh %{buildroot}/opt/oemaker/init.sh
 install -m 700 %{name}/isomaker/iso.sh %{buildroot}/opt/oemaker/iso.sh
 install -m 700 %{name}/isomaker/rpm.sh %{buildroot}/opt/oemaker/rpm.sh
+install -m 700 %{name}/isomaker/env_record.sh %{buildroot}/opt/oemaker/env_record.sh
 install -m 700 %{name}/isomaker/env_restore.sh %{buildroot}/opt/oemaker/env_restore.sh
 install -m 400 %{name}/isomaker/config/rpmlist.xml %{buildroot}/opt/oemaker/config/rpmlist.xml
 install -m 400 %{name}/isomaker/config/x86_64/* %{buildroot}/opt/oemaker/config/x86_64/
@@ -133,6 +134,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Mar 7 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-11
+- ID:NA
+- SUG:NA
+- DESC: modify restore env mode
+
 * Fri Mar 4 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-10
 - ID:NA
 - SUG:NA

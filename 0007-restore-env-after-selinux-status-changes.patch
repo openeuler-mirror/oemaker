@@ -1,24 +1,25 @@
-From 0efd69859777d608c8f8d51d14fcae9fd9eadf4b Mon Sep 17 00:00:00 2001
+From f075bae9bb9f32c4559cb48f51dd83d42f581a79 Mon Sep 17 00:00:00 2001
 From: xyn-coder <xiangyuning@huawei.com>
-Date: Fri, 4 Mar 2022 17:20:47 +0800
+Date: Tue, 8 Mar 2022 20:19:42 +0800
 Subject: [PATCH] restore env after selinux status changes
 
 ---
- isomaker/env_restore.sh | 44 +++++++++++++++++++++++++++++++++++++++++
- isomaker/img_repo.sh    |  5 ++++-
- isomaker/oemaker.sh     | 13 ++++++++++++
- isomaker/rpm.sh         | 20 ++++++++++++++-----
- 4 files changed, 76 insertions(+), 6 deletions(-)
+ isomaker/env_record.sh  | 49 +++++++++++++++++++++++++++++++++++++++++
+ isomaker/env_restore.sh | 30 +++++++++++++++++++++++++
+ isomaker/img_repo.sh    |  3 +++
+ isomaker/oemaker.sh     |  9 +++++++-
+ 4 files changed, 90 insertions(+), 1 deletion(-)
+ create mode 100644 isomaker/env_record.sh
  create mode 100644 isomaker/env_restore.sh
 
-diff --git a/isomaker/env_restore.sh b/isomaker/env_restore.sh
+diff --git a/isomaker/env_record.sh b/isomaker/env_record.sh
 new file mode 100644
-index 0000000..722db3b
+index 0000000..f4ed024
 --- /dev/null
-+++ b/isomaker/env_restore.sh
-@@ -0,0 +1,44 @@
++++ b/isomaker/env_record.sh
+@@ -0,0 +1,49 @@
 +:<<!
-+ * Copyright (c) Huawei Technologies Co., Ltd. 2018-2022. All rights reserved.
++ * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
 + * oemaker licensed under the Mulan PSL v2.
 + * You can use this software according to the terms and conditions of the Mulan PSL v2.
 + * You may obtain a copy of Mulan PSL v2 at:
@@ -27,42 +28,84 @@ index 0000000..722db3b
 + * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
 + * PURPOSE.
 + * See the Mulan PSL v2 for more details.
-+ * Author: xiangyuning
-+ * Create: 2022-03-02
++ * Author:
++ * Create: 2022-03-08
 + * Description: provide container buffer functions
 +!
 +
 +#!/bin/bash
 +
-+SELINUX_FLAG=-1
-+
 +set -e
 +function env_record()
 +{
 +    # 记录环境
++    selinux_flag=-1
 +    se_status=$(getenforce)
 +    if [ "$se_status" == "Enforcing" ]; then
-+        SELINUX_FLAG=1
++        selinux_flag=1
 +    elif [ "$se_status" == "Permissive" ]; then
-+        SELINUX_FLAG=0
++        selinux_flag=0
 +    else
 +        echo "Selinux status is $se_status, can't restore"
++        return 0
 +    fi
++
++    env_value_name="SELINUX_FLAG"
++    if [ "$selinux_flag" -ne -1 ]; then
++        # 先删除(/d)环境变量，再添加环境变量
++        sed -i "/${env_value_name}=.*/d" /etc/profile
++        echo "export ${env_value_name}=${selinux_flag}" >> /etc/profile
++    fi
++
++    echo "the current env has been recorded. "
++    echo "If oemaker run failed, run the following cmd restore current env"
++    echo "sh ${CPATH}/env_restore.sh"
 +}
++
 +
 +function env_restore()
 +{
-+    # 恢复环境
-+    echo "restore environment"
++    sh "${CPATH}"/env_restore.sh
++}
+\ No newline at end of file
+diff --git a/isomaker/env_restore.sh b/isomaker/env_restore.sh
+new file mode 100644
+index 0000000..15f6311
+--- /dev/null
++++ b/isomaker/env_restore.sh
+@@ -0,0 +1,30 @@
++:<<!
++ * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
++ * oemaker licensed under the Mulan PSL v2.
++ * You can use this software according to the terms and conditions of the Mulan PSL v2.
++ * You may obtain a copy of Mulan PSL v2 at:
++ *     http://license.coscl.org.cn/MulanPSL2
++ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
++ * PURPOSE.
++ * See the Mulan PSL v2 for more details.
++ * Author:
++ * Create: 2022-03-08
++ * Description: provide container buffer functions
++!
 +
-+    # 恢复selinux
-+    if [ "$SELINUX_FLAG" -ne -1 ]; then
-+        setenforce "$SELINUX_FLAG"
++#!/bin/bash
++
++set -e
++function env_restore()
++{
++    # 使用环境变量执行恢复
++    source /etc/profile >> /dev/null
++    if [ "$SELINUX_FLAG" -eq 0 ] || [ "$SELINUX_FLAG" -eq 1 ]; then
++        setenforce "${SELINUX_FLAG}"
++    else
++        echo "/etc/profile have no value: SELINUX_FLAG"
 +    fi
 +}
 +
++env_restore
 diff --git a/isomaker/img_repo.sh b/isomaker/img_repo.sh
-index 9135b39..f391dde 100644
+index 9135b39..5e956c7 100644
 --- a/isomaker/img_repo.sh
 +++ b/isomaker/img_repo.sh
 @@ -35,12 +35,15 @@ function create_install_img()
@@ -75,135 +118,40 @@ index 9135b39..f391dde 100644
  
      if [ $? != 0 ] ; then
          cat lorax.logfile
--        exit 1
-+        return 1
+         exit 1
      fi
 +    set -e
  }
  
  function create_repos()
 diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
-index c5d85fb..fb542f3 100644
+index c5d85fb..9fa8e08 100644
 --- a/isomaker/oemaker.sh
 +++ b/isomaker/oemaker.sh
 @@ -29,6 +29,7 @@ source "${CPATH}"/iso.sh
  source "${CPATH}"/rpm.sh
  source "${CPATH}"/img_repo.sh
  source "${CPATH}"/make_debug.sh
-+source "${CPATH}"/env_restore.sh
++source "${CPATH}"/env_record.sh
  
  function mkclean()
  {
-@@ -56,6 +57,10 @@ function mk_oe_main()
- 
-     if [ "${ISO_TYPE}" == "netinst" ]; then
-         create_install_img
-+        if [ $? -ne 0 ]; then
-+            echo "create install img failed"
-+            return 1
-+        fi
-         init_config
-         if [ $? -ne 0 ]; then
-             echo "init config failed"
-@@ -71,6 +76,10 @@ function mk_oe_main()
-     fi
- 
-     create_install_img
-+    if [ $? -ne 0 ]; then
-+        echo "create install img failed"
-+        return 1
-+    fi
- 
-     echo "Creating repos..."
-     create_repos
-@@ -156,8 +165,12 @@ function mk_oe_main()
+@@ -156,8 +157,14 @@ function mk_oe_main()
      return 0
  }
  
 +env_record
++
  mk_oe_main "$@"
- if [ $? -ne 0 ]; then
-     echo "make iso failed"
-+    env_restore
-     exit 1
- fi
+-if [ $? -ne 0 ]; then
++main_ret="$?"
++
 +env_restore
 +
-diff --git a/isomaker/rpm.sh b/isomaker/rpm.sh
-index 85b1042..443cb35 100644
---- a/isomaker/rpm.sh
-+++ b/isomaker/rpm.sh
-@@ -28,6 +28,10 @@ function download_rpms()
- {
-     if [ "${ISO_TYPE}" == "edge" ]; then
-         get_edge_rpms
-+        if [ $? -ne 0 ]; then
-+            echo "get edge rpms failed"
-+            return 133
-+        fi
-         return 0
-     fi
-     cat "${CONFIG}" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 > _all_rpms.lst
-@@ -93,7 +97,7 @@ function download_rpms()
-     done
-     if [ "${ret}" -ne 0 ]; then
-         cat not_find|sort|uniq
--        exit "${ret}"
-+        return "${ret}"
-     fi
- 
-     parse_rpmlist_xml "exclude"
-@@ -107,7 +111,7 @@ function download_rpms()
-     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat __rpm.list | tr '\n' ' ') ${exclude_cmd}
-     if [ $? != 0 ] || sed -n ''${yumdownloader_log_startline}',$p' /var/log/dnf.log | grep -n 'conflicting requests'; then
-        echo "Download rpms failed!"
--       exit 133
-+       return 133
-     fi
- 
-     parse_rpmlist_xml "conflict"
-@@ -127,8 +131,14 @@ function download_rpms()
-         yumdownloader kernel-source  --installroot="${BUILD}"/tmp  --destdir="$SRC_DIR"
-     elif [ "${ISO_TYPE}" == "everything" ]; then
-         everything_rpms_download
-+        if [ $? -ne 0 ]; then
-+            return 133
-+        fi
-     elif [ "${ISO_TYPE}" == "everything_src" ]; then
-         everything_source_rpms_download
-+        if [ $? -ne 0 ]; then
-+            return 133
-+        fi
-     elif [ "${ISO_TYPE}" == "everything_debug" ]; then
-         everything_debug_rpms_download
-     fi
-@@ -161,7 +171,7 @@ function get_edge_rpms()
-     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _edge_rpms.lst | tr '\n' ' ')
-     if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
-         echo "Download rpms failed!"
--        exit 133
-+        return 133
-     fi
- }
- 
-@@ -212,7 +222,7 @@ function everything_rpms_download()
-     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DIR}" $(cat ava_every_lst | tr '\n' ' ')
-     if [ $? != 0 ] || [ $(ls ${EVERY_DIR} | wc -l) == 0 ]; then
-        echo "Download rpms failed!"
--       exit 133
-+       return 133
-     fi
-     if [ -s conflict_list ];then
-         yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DIR}" $(cat conflict_list | tr '\n' ' ')
-@@ -234,7 +244,7 @@ function everything_source_rpms_download()
-     yumdownloader --installroot="${BUILD}"/tmp --destdir="${EVERY_SRC_DIR}" --source $(cat ava_every_lst | tr '\n' ' ')
-     if [ $? != 0 ] || [ $(ls ${EVERY_SRC_DIR} | wc -l) == 0 ]; then
-        echo "Download rpms failed!"
--       exit 133
-+       return 133
-     fi
- }
-  
++if [ "$main_ret" -ne 0 ]; then
+     echo "make iso failed"
+     exit 1
+ fi
 -- 
 2.33.0
 
