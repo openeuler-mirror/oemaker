@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        3
+Release:        4
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
 Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0006:	0006-support-usb-flash-drive-mode.patch
+Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -75,6 +76,8 @@ install -m 700 %{name}/isomaker/img_repo.sh %{buildroot}/opt/oemaker/img_repo.sh
 install -m 700 %{name}/isomaker/init.sh %{buildroot}/opt/oemaker/init.sh
 install -m 700 %{name}/isomaker/iso.sh %{buildroot}/opt/oemaker/iso.sh
 install -m 700 %{name}/isomaker/rpm.sh %{buildroot}/opt/oemaker/rpm.sh
+install -m 700 %{name}/isomaker/env_record.sh %{buildroot}/opt/oemaker/env_record.sh
+install -m 700 %{name}/isomaker/env_restore.sh %{buildroot}/opt/oemaker/env_restore.sh
 install -m 400 %{name}/isomaker/config/rpmlist.xml %{buildroot}/opt/oemaker/config/rpmlist.xml
 install -m 400 %{name}/isomaker/config/x86_64/* %{buildroot}/opt/oemaker/config/x86_64/
 install -m 400 %{name}/isomaker/config/aarch64/* %{buildroot}/opt/oemaker/config/aarch64/
@@ -131,6 +134,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Mar 15 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-4
+- ID:NA
+- SUG:NA
+- DESC: restore env after selinux status changes
+
 * Mon Feb 14 2022 wangchong <952173335@qq.com> - 2.0.3-3
 - ID:NA
 - SUG:NA
