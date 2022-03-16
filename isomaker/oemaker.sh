@@ -29,6 +29,7 @@ source "${CPATH}"/iso.sh
 source "${CPATH}"/rpm.sh
 source "${CPATH}"/img_repo.sh
 source "${CPATH}"/make_debug.sh
+source "${CPATH}"/env_record.sh
 
 function mkclean()
 {
@@ -149,8 +150,14 @@ function mk_oe_main()
     return 0
 }
 
+env_record
+
 mk_oe_main "$@"
-if [ $? -ne 0 ]; then
+main_ret="$?"
+
+source "${CPATH}"/env_restore.sh
+
+if [ "$main_ret" -ne 0 ]; then
     echo "make iso failed"
     exit 1
 fi
