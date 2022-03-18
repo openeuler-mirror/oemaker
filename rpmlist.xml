@@ -32,11 +32,25 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
-        <packagereq>python3-nni</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>drbd-bash-completion</packagereq>
+        <packagereq>drbd-pacemaker</packagereq>
+        <packagereq>drbd-rgmanager</packagereq>
+        <packagereq>drbd-udev</packagereq>
+        <packagereq>drbd-utils</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
-        <packagereq>totem</packagereq>
-        <packagereq>gimp</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
+    </packagelist>
+    <packagelist type="everything_debug_exclude">
+        <packagereq>drbd-debuginfo</packagereq>
+        <packagereq>drbd-debugsource</packagereq>
+        <packagereq>gnome-boxes-debuginfo</packagereq>
+        <packagereq>gnome-boxes-debugsource</packagereq>
     </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
