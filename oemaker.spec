@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        11
+Release:        12
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -31,6 +31,7 @@ Patch0004:	0004-bugfix-I3OGUT.patch
 Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0006:	0006-support-usb-flash-drive-mode.patch
 Patch0007:	0007-restore-env-after-selinux-status-changes.patch
+Patch0008:  0008-add-parse_everything_deb_exclude.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -134,6 +135,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Mar 28 2022 Senlin <xiasenlin1@huawei.com> - 2.0.3-12
+- ID:NA
+- SUG:NA
+- DESC: add exclude list for everything
+
 * Mon Mar 7 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-11
 - ID:NA
 - SUG:NA
