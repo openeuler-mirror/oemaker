@@ -1,0 +1,157 @@
+From f075bae9bb9f32c4559cb48f51dd83d42f581a79 Mon Sep 17 00:00:00 2001
+From: xyn-coder <xiangyuning@huawei.com>
+Date: Tue, 8 Mar 2022 20:19:42 +0800
+Subject: [PATCH] restore env after selinux status changes
+
+---
+ isomaker/env_record.sh  | 49 +++++++++++++++++++++++++++++++++++++++++
+ isomaker/env_restore.sh | 30 +++++++++++++++++++++++++
+ isomaker/img_repo.sh    |  3 +++
+ isomaker/oemaker.sh     |  9 +++++++-
+ 4 files changed, 90 insertions(+), 1 deletion(-)
+ create mode 100644 isomaker/env_record.sh
+ create mode 100644 isomaker/env_restore.sh
+
+diff --git a/isomaker/env_record.sh b/isomaker/env_record.sh
+new file mode 100644
+index 0000000..f4ed024
+--- /dev/null
++++ b/isomaker/env_record.sh
+@@ -0,0 +1,49 @@
++:<<!
++ * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
++ * oemaker licensed under the Mulan PSL v2.
++ * You can use this software according to the terms and conditions of the Mulan PSL v2.
++ * You may obtain a copy of Mulan PSL v2 at:
++ *     http://license.coscl.org.cn/MulanPSL2
++ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
++ * PURPOSE.
++ * See the Mulan PSL v2 for more details.
++ * Author:
++ * Create: 2022-03-08
++ * Description: provide container buffer functions
++!
++
++#!/bin/bash
++
++set -e
++function env_record()
++{
++    # 记录环境
++    selinux_flag=-1
++    se_status=$(getenforce)
++    if [ "$se_status" == "Enforcing" ]; then
++        selinux_flag=1
++    elif [ "$se_status" == "Permissive" ]; then
++        selinux_flag=0
++    else
++        echo "Selinux status is $se_status, can't restore"
++        return 0
++    fi
++
++    env_value_name="SELINUX_FLAG"
++    if [ "$selinux_flag" -ne -1 ]; then
++        # 先删除(/d)环境变量，再添加环境变量
++        sed -i "/${env_value_name}=.*/d" /etc/profile
++        echo "export ${env_value_name}=${selinux_flag}" >> /etc/profile
++    fi
++
++    echo "the current env has been recorded. "
++    echo "If oemaker run failed, run the following cmd restore current env"
++    echo "sh ${CPATH}/env_restore.sh"
++}
++
++
++function env_restore()
++{
++    sh "${CPATH}"/env_restore.sh
++}
+\ No newline at end of file
+diff --git a/isomaker/env_restore.sh b/isomaker/env_restore.sh
+new file mode 100644
+index 0000000..15f6311
+--- /dev/null
++++ b/isomaker/env_restore.sh
+@@ -0,0 +1,30 @@
++:<<!
++ * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
++ * oemaker licensed under the Mulan PSL v2.
++ * You can use this software according to the terms and conditions of the Mulan PSL v2.
++ * You may obtain a copy of Mulan PSL v2 at:
++ *     http://license.coscl.org.cn/MulanPSL2
++ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
++ * PURPOSE.
++ * See the Mulan PSL v2 for more details.
++ * Author:
++ * Create: 2022-03-08
++ * Description: provide container buffer functions
++!
++
++#!/bin/bash
++
++set -e
++function env_restore()
++{
++    # 使用环境变量执行恢复
++    source /etc/profile >> /dev/null
++    if [ "$SELINUX_FLAG" -eq 0 ] || [ "$SELINUX_FLAG" -eq 1 ]; then
++        setenforce "${SELINUX_FLAG}"
++    else
++        echo "/etc/profile have no value: SELINUX_FLAG"
++    fi
++}
++
++env_restore
+diff --git a/isomaker/img_repo.sh b/isomaker/img_repo.sh
+index 9135b39..5e956c7 100644
+--- a/isomaker/img_repo.sh
++++ b/isomaker/img_repo.sh
+@@ -35,12 +35,15 @@ function create_install_img()
+     else
+         vertmp=${VERSION}
+     fi
++
++    set +e
+     lorax --isfinal -p "${PRODUCT}" -v "${vertmp}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
+ 
+     if [ $? != 0 ] ; then
+         cat lorax.logfile
+         exit 1
+     fi
++    set -e
+ }
+ 
+ function create_repos()
+diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
+index c5d85fb..9fa8e08 100644
+--- a/isomaker/oemaker.sh
++++ b/isomaker/oemaker.sh
+@@ -29,6 +29,7 @@ source "${CPATH}"/iso.sh
+ source "${CPATH}"/rpm.sh
+ source "${CPATH}"/img_repo.sh
+ source "${CPATH}"/make_debug.sh
++source "${CPATH}"/env_record.sh
+ 
+ function mkclean()
+ {
+@@ -156,8 +157,14 @@ function mk_oe_main()
+     return 0
+ }
+ 
++env_record
++
+ mk_oe_main "$@"
+-if [ $? -ne 0 ]; then
++main_ret="$?"
++
++env_restore
++
++if [ "$main_ret" -ne 0 ]; then
+     echo "make iso failed"
+     exit 1
+ fi
+-- 
+2.33.0
+
