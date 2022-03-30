@@ -10,8 +10,8 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        2.0.0
-Release:        19
+Version:        2.0.3
+Release:        12
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -28,7 +28,10 @@ Patch0001:	0001-rename-source-iso.patch
 Patch0002:	0002-bugfix-I3QY98.patch
 Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
-Patch0005:	0005-support-usb-flash-drive-mode.patch
+Patch0005:	0005-add-fpi_tail-param-for-grub.patch
+Patch0006:	0006-support-usb-flash-drive-mode.patch
+Patch0007:	0007-restore-env-after-selinux-status-changes.patch
+Patch0008:	0008-add-parse_everything_deb_exclude.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -74,6 +77,8 @@ install -m 700 %{name}/isomaker/img_repo.sh %{buildroot}/opt/oemaker/img_repo.sh
 install -m 700 %{name}/isomaker/init.sh %{buildroot}/opt/oemaker/init.sh
 install -m 700 %{name}/isomaker/iso.sh %{buildroot}/opt/oemaker/iso.sh
 install -m 700 %{name}/isomaker/rpm.sh %{buildroot}/opt/oemaker/rpm.sh
+install -m 700 %{name}/isomaker/env_record.sh %{buildroot}/opt/oemaker/env_record.sh
+install -m 700 %{name}/isomaker/env_restore.sh %{buildroot}/opt/oemaker/env_restore.sh
 install -m 400 %{name}/isomaker/config/rpmlist.xml %{buildroot}/opt/oemaker/config/rpmlist.xml
 install -m 400 %{name}/isomaker/config/x86_64/* %{buildroot}/opt/oemaker/config/x86_64/
 install -m 400 %{name}/isomaker/config/aarch64/* %{buildroot}/opt/oemaker/config/aarch64/
@@ -130,6 +135,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Mar 30 2022 wangchong <952173335@qq.com> - 2.0.3-12
+- ID:NA
+- SUG:NA
+- DESC: upgrade, keep up with openEuler-22.03-LTS
+
 * Wed Feb 23 2022 imxcc <xingchaochao@huawei.com> - 2.0.0-19
 - ID:NA
 - SUG:NA
