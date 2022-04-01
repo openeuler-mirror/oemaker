@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        12
+Release:        13
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -135,6 +135,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Thu Mar 31 2022 zhouwenpei <zhouwenpei1@h-partners.com> - 2.0.3-13
+- ID:NA
+- SUG:NA
+- DESC: add linux-firmware subpackage
+
 * Mon Mar 28 2022 Senlin <xiasenlin1@huawei.com> - 2.0.3-12
 - ID:NA
 - SUG:NA
