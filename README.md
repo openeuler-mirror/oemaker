@@ -1,17 +1,25 @@
 # oemaker
 
 #### 介绍
-oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source iso, edge computing iso and netinst iso等。
-oemaker采用的是本地架构的方式进行构建，不支持交叉编译环境构建。
-目前，oemkaer支持aarch64和x86_64两个架构的iso制作。
+
+源码包oemaker保护两部分功能：iso制作和iso裁剪。相应的，会构建生成两个二进制RPM包：oemaker和isocut.
+
+生成的二进制RPM包oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source, edge computing iso and netinst iso等
+
+生成的二进制RPM包isocut是一款用于iso裁剪的构建工具，支持RPM包级别的裁剪。
 
 #### 安装教程
 
-可以用rpm命令或dnf包管理命令通过openEuler repository安装oemaker包。
+可以用`rpm`或`dnf`命令通过openEuler repository来安装`oemaker`和`isocut`包。
 
-用dnf命令安装方式：
+用dnf命令安装`oemaker`方式：
 ```sh
 dnf install -y oemaker
+```
+
+用dnf命令安装`isocut`方式：
+```sh
+dnf install -y isocut
 ```
 
 #### 使用说明
@@ -20,6 +28,8 @@ dnf install -y oemaker
 
 
 #### 使用方法
+
+##### oemaker
 
 oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
@@ -41,3 +51,18 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
     -h 
        show the help message and exit
+
+##### isocut
+
+isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] origin-iso dest-iso_</font>
+
+  positional arguments:
+
+    origin-iso    origin iso image
+    dest-iso      destination iso image
+
+  optional arguments:
+
+    -t    the temporary path which must be an absolute path and must be greater than 8g
+    -r    extern rpm packages path
+    -h    show the help message and exit
