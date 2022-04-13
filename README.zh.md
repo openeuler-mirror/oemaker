@@ -53,7 +53,7 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
 ##### isocut
 
-isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
+isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] origin-iso dest-iso_</font>
 
   positional arguments:
 
@@ -64,5 +64,4 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -t    the temporary path which must be an absolute path and must be greater than 8g
     -r    extern rpm packages path
-    -k    kickstart file path
     -h    show the help message and exit
