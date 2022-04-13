@@ -2,28 +2,37 @@
 
 #### Description
 
-`oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything debug iso, everything source iso, edge computing iso and netinst iso.
-`oemaker` uses local arch when building, did not support cross building.
-currently, `oemaker` support the arch of aarch64 and x86_64 for iso making.
+The source package `oemaker` has two functions: iso making and iso cutting. Correspondingly, two binary RPM packages are generated: `oemaker` and `isocut`.
+
+The generated binary RPM package `oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything source iso,everything debug iso, edge computing iso and netinst iso.
+
+The generated binary RPM package `isocut` is a building tool for iso cutting which supports only RPM package-level.
 
 #### Installation
 
-To install `oemaker`, you can use `rpm` or `dnf` package manager command with openEuler repository.
+To install `oemaker` and `isocut`, you can use `rpm` or `dnf` package manager command with openEuler repository.
 
-Install oemaker with dnf
+Install `oemaker` with dnf
 ```sh
 dnf install -y oemaker
 ```
 
+Install `isocut` with dnf
+```sh
+dnf install -y isocut
+```
+
 #### Instructions
 
-Generally, the disk space is more than 50g
+Generally, the disk space is more than 50g.
 
-#### Contribution
+#### Usage
+
+##### oemaker
 
 oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
-    optional arguments:
+  optional arguments:
     -t Type
        ISO Type include standard debug source everything everything_debug everything_src and netinst
 
@@ -38,3 +47,21 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
     -s REPOSITORY
        source dnf repository address link(may be listed multiple times)
+
+    -h 
+       show the help message and exit
+
+##### isocut
+
+isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] origin-iso dest-iso_</font>
+
+  positional arguments:
+
+    origin-iso    origin iso image
+    dest-iso      destination iso image
+
+  optional arguments:
+
+    -t    the temporary path which must be an absolute path and must be greater than 8g
+    -r    extern rpm packages path
+    -h    show the help message and exit
