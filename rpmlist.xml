@@ -798,6 +798,14 @@
         <packagereq>libyaml</packagereq>
         <packagereq>libyaml-help</packagereq>
         <packagereq>linux-firmware</packagereq>
+        <packagereq>linux-firmware-ath</packagereq>
+        <packagereq>linux-firmware-cypress</packagereq>
+        <packagereq>linux-firmware-iwlwifi</packagereq>
+        <packagereq>linux-firmware-libertas</packagereq>
+        <packagereq>linux-firmware-mediatek</packagereq>
+        <packagereq>linux-firmware-mrvl</packagereq>
+        <packagereq>linux-firmware-netronome</packagereq>
+        <packagereq>linux-firmware-ti-connectivity</packagereq>
         <packagereq>lm_sensors</packagereq>
         <packagereq>lm_sensors-devel</packagereq>
         <packagereq>lm_sensors-help</packagereq>
