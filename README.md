@@ -54,7 +54,7 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
 ##### isocut
 
-isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] origin-iso dest-iso_</font>
+isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
 
   Positional arguments:
 
@@ -65,6 +65,7 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] origi
 
     -t    Temporary path, which must be an absolute path and must be greater than 8 GB
     -r    External RPM package path
+    -k    Kickstart file path
     -h    Show the help message and exit
 
   isocut 详细文档请查看《镜像裁剪定制工具使用指南》：
