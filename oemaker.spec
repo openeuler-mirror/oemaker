@@ -6,12 +6,16 @@
 %global efi_x64 1
 %endif
 
+%ifarch loongarch64
+%global efi_loong64 0
+%endif
+
 Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        12
+Release:        13
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -122,8 +126,10 @@ fi
 %files -n isocut
 %defattr(-,root,root)
 %config(noreplace) %attr(0600,root,root) %{_sysconfdir}/isocut/repodata.template
+%if 0%{?efi_loong64}
 %config(noreplace) %attr(0600,root,root) %{_sysconfdir}/isocut/rpmlist
 %config(noreplace) %attr(0600,root,root) %{_sysconfdir}/isocut/anaconda-ks.cfg
+%endif
 %{_bindir}/isocut
 %dir %{_sysconfdir}/isocut
 %{_sysconfdir}/isocut/*
@@ -135,6 +141,9 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Apr 19 2022 liyanan <liyanan32@h-partners.com> - 2.0.3-13
+- Add loongarch architecture support 
+
 * Wed Mar 30 2022 wangchong <952173335@qq.com> - 2.0.3-12
 - ID:NA
 - SUG:NA
