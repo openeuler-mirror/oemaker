@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        13
+Release:        14
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -32,6 +32,7 @@ Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0006:	0006-support-usb-flash-drive-mode.patch
 Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 Patch0008:  0008-add-parse_everything_deb_exclude.patch
+Patch0009:  0009-automated-kickstart-function.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -135,6 +136,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Apr 20 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-14
+- ID:NA
+- SUG:NA
+- DESC: restore the automated kickstart function
+
 * Thu Mar 31 2022 zhouwenpei <zhouwenpei1@h-partners.com> - 2.0.3-13
 - ID:NA
 - SUG:NA
