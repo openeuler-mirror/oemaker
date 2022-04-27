@@ -26,6 +26,10 @@ function parse_rpmlist_xml()
 
 function download_rpms()
 {
+    if [ "${ISO_TYPE}" == "edge" ]; then
+        get_edge_rpms
+        return 0
+    fi
     cat "${CONFIG}" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 > _all_rpms.lst
     parse_rpmlist_xml "${ARCH}"
     cat parsed_rpmlist_${ARCH} >> _all_rpms.lst
@@ -144,6 +148,21 @@ function get_rpm_pub_key()
     cd -
     cp "${BUILD}"/iso/GPG_tmp/etc/pki/rpm-gpg/RPM-GPG-KEY-openEuler "${BUILD}"/iso
     rm -rf "${BUILD}"/iso/GPG_tmp
+}
+
+function get_edge_rpms()
+{
+    parse_rpmlist_xml "edge_${ARCH}"
+    cat parsed_rpmlist_edge_${ARCH} > _edge_rpms.lst
+    parse_rpmlist_xml "edge_common"
+    cat parsed_rpmlist_edge_common >> _edge_rpms.lst
+    cat "config/${ARCH}/edge_normal.xml" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 >> _edge_rpms.lst
+    sort -r -u _edge_rpms.lst -o _edge_rpms.lst
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _edge_rpms.lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
+        echo "Download rpms failed!"
+        exit 133
+    fi
 }
 
 function get_everything_rpms()

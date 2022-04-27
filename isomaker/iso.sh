@@ -48,6 +48,22 @@ function gen_standard_iso()
     return 0
 }
 
+function gen_edge_iso()
+{
+    set +e
+    mkdir -p "${BUILD}"/iso/repodata/
+    cp "config/${ARCH}/edge_normal.xml" "${BUILD}"/iso/repodata/
+    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    if [ "$ARCH" == "x86_64" ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${EDGE_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0 ] && return 1
+    elif [ "$ARCH" == "aarch64" ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${EDGE_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0 ] && return 1
+    fi
+    implantisomd5 "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
+    return 0
+}
 
 function gen_src_iso()
 {

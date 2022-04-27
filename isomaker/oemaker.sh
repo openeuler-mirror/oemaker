@@ -145,6 +145,13 @@ function mk_oe_main()
             return 1
         fi
         ls "${OUTPUT_DIR}/${EVE_SRC_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "edge" ]; then
+        gen_edge_iso
+	if [ $? -ne 0 ]; then
+            echo "create edge iso failed"
+	    return 1
+        fi
+	ls "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
     fi
     mkclean
     return 0

@@ -78,7 +78,7 @@ function parse_cmd_line()
         esac
     done
 
-    for typename in standard source debug everything_debug everything everything_src netinst
+    for typename in standard source debug everything_debug everything everything_src netinst edge
     do
         if [ "${typename}" == "${ISO_TYPE}" ];then
             return 0
@@ -114,6 +114,7 @@ function global_var_init()
         EVE_DEBUG_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-everything-debug-${ARCH}-dvd.iso"
         EVE_SRC_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-everything-source-dvd.iso"
         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-netinst-${ARCH}-dvd.iso"
+        EDGE_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-edge-${ARCH}-dvd.iso"
     else
         RELEASE_NAME="${PRODUCT}-${VERSION}-${ARCH}"
         STANDARD_ISO_NAME="${PRODUCT}-${VERSION}-${ARCH}-dvd.iso"
@@ -123,6 +124,7 @@ function global_var_init()
         EVE_DEBUG_ISO_NAME="${PRODUCT}-${VERSION}-everything-debug-${ARCH}-dvd.iso"
         EVE_SRC_ISO_NAME="${PRODUCT}-${VERSION}-everything-source-dvd.iso"
         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-netinst-${ARCH}-dvd.iso"
+        EDGE_ISO_NAME="${PRODUCT}-${VERSION}-edge-${ARCH}-dvd.iso"
     fi
 
     [ ! -d "${BUILD}" ] && mkdir -p "${BUILD}"
