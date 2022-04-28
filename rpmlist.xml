@@ -919,6 +919,8 @@
         <packagereq>open-iscsi</packagereq>
         <packagereq>open-iscsi-help</packagereq>
         <packagereq>open-isns-help</packagereq>
+        <packagereq>openjpeg2-help</packagereq>
+        <packagereq>openjpeg2</packagereq>
         <packagereq>openldap</packagereq>
         <packagereq>openldap-clients</packagereq>
         <packagereq>openldap-help</packagereq>
