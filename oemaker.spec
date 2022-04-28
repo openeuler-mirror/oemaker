@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        17
+Release:        18
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -130,6 +130,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Thu Apr 28 2022 tianwei <tianwei12@h-partners.com> - 2.0.3-18
+- ID:NA
+- SUG:NA
+- DESC:delete latrace package
+
 * Thu Apr 28 2022 hanhui <hanhui15@h-partners.com> - 2.0.0-17
 - ID:NA
 - SUG:NA
