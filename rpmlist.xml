@@ -498,8 +498,6 @@
         <packagereq>krb5-server</packagereq>
         <packagereq>lapack</packagereq>
         <packagereq>lapack-devel</packagereq>
-        <packagereq>latrace</packagereq>
-        <packagereq>latrace-help</packagereq>
         <packagereq>lcr</packagereq>
         <packagereq>ldns</packagereq>
         <packagereq>ldns-help</packagereq>
