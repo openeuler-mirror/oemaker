@@ -334,8 +334,6 @@
         <packagereq>fuse-help</packagereq>
         <packagereq>fxload</packagereq>
         <packagereq>fxload-help</packagereq>
-        <packagereq>gamin</packagereq>
-        <packagereq>gamin-help</packagereq>
         <packagereq>gawk</packagereq>
         <packagereq>gawk-help</packagereq>
         <packagereq>gcc-gfortran</packagereq>
@@ -947,8 +945,8 @@
         <packagereq>open-iscsi</packagereq>
         <packagereq>open-iscsi-help</packagereq>
         <packagereq>open-isns-help</packagereq>
-        <packagereq>openjpeg-help</packagereq>
-        <packagereq>openjpeg-libs</packagereq>
+        <packagereq>openjpeg2-help</packagereq>
+        <packagereq>openjpeg2</packagereq>
         <packagereq>openldap</packagereq>
         <packagereq>openldap-clients</packagereq>
         <packagereq>openldap-help</packagereq>
