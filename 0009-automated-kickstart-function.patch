@@ -1,0 +1,32 @@
+From 399955bd41020fc3de9528372c797714a4f7d6f5 Mon Sep 17 00:00:00 2001
+From: xyn-coder <xiangyuninig@huawei.com>
+Date: Wed, 20 Apr 2022 15:34:08 +0800
+Subject: [PATCH] automated kickstart function
+
+---
+ isocut/isocut.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/isocut/isocut.py b/isocut/isocut.py
+index fb6ab4a..75dc45d 100755
+--- a/isocut/isocut.py
++++ b/isocut/isocut.py
+@@ -138,13 +138,14 @@ def check_input():
+     parser.add_argument("dest_iso", help="destination iso image")
+     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
+     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
++    parser.add_argument("-k", metavar="file_path", help="kickstart file")
+ 
+     args = parser.parse_args()
+     ICONFIG.src_iso = args.source_iso
+     ICONFIG.dest_iso = args.dest_iso
+     ICONFIG.temp_path = args.t
+     ICONFIG.rpm_path = args.r
+-    ICONFIG.ks_file = None
++    ICONFIG.ks_file = args.k
+ 
+     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
+         print("Must specify source iso image and destination iso image")
+-- 
+2.33.0
+

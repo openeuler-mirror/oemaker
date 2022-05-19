@@ -32,42 +32,41 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
-        <packagereq>totem</packagereq>
-        <packagereq>totem-debuginfo</packagereq>
-        <packagereq>totem-debugsource</packagereq>
-        <packagereq>totem-devel</packagereq>
-        <packagereq>totem-help</packagereq>
-        <packagereq>totem-nautilus</packagereq>
-        <packagereq>gimp</packagereq>
-        <packagereq>gimp-libs</packagereq>
-        <packagereq>gimp-devel</packagereq>
-        <packagereq>gimp-help</packagereq>
-        <packagereq>gimp-debuginfo</packagereq>
-        <packagereq>gimp-debugsource</packagereq>
-        <packagereq>python3-nni</packagereq>
-        <packagereq>ceph-mgr-rook</packagereq>
-        <packagereq>ceph-mgr-ssh</packagereq>
-        <packagereq>ceph-mgr-dashboard</packagereq>
-        <packagereq>ceph-mgr-k8sevents</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>drbd-bash-completion</packagereq>
+        <packagereq>drbd-pacemaker</packagereq>
+        <packagereq>drbd-rgmanager</packagereq>
+        <packagereq>drbd-udev</packagereq>
+        <packagereq>drbd-utils</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
-        <packagereq>totem</packagereq>
-        <packagereq>gimp</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
+    </packagelist>
+    <packagelist type="everything_debug_exclude">
+        <packagereq>drbd-debuginfo</packagereq>
+        <packagereq>drbd-debugsource</packagereq>
+        <packagereq>gnome-boxes-debuginfo</packagereq>
+        <packagereq>gnome-boxes-debugsource</packagereq>
     </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
         <packagereq>grub2-efi-aa64</packagereq>
         <packagereq>grub2-efi-aa64-modules</packagereq>
         <packagereq>hisi_hpre</packagereq>
-        <packagereq>hisi_rde</packagereq>
+        <packagereq>hisi_trng_v2</packagereq>
         <packagereq>hisi_sec2</packagereq>
         <packagereq>hisi_zip</packagereq>
-        <packagereq>libkae</packagereq>
+        <packagereq>uadk_engine</packagereq>
         <packagereq>libwd</packagereq>
         <packagereq>shim-aa64</packagereq>
         <packagereq>uacce</packagereq>
     </packagelist>
     <packagelist type="x86_64">
+        <packagereq>edk2-ovmf</packagereq>
         <packagereq>grub2-efi-x64</packagereq>
         <packagereq>grub2-efi-x64-modules</packagereq>
         <packagereq>shim</packagereq>
@@ -137,7 +136,6 @@
         <packagereq>bc-help</packagereq>
         <packagereq>bind-chroot</packagereq>
         <packagereq>bind-dyndb-ldap</packagereq>
-        <packagereq>bind-export-libs</packagereq>
         <packagereq>bind-libs</packagereq>
         <packagereq>bind-utils</packagereq>
         <packagereq>binutils</packagereq>
@@ -250,7 +248,6 @@
         <packagereq>cyrus-sasl-ntlm</packagereq>
         <packagereq>cyrus-sasl-scram</packagereq>
         <packagereq>dbus</packagereq>
-        <packagereq>dbus-broker</packagereq>
         <packagereq>dbus-glib</packagereq>
         <packagereq>dbus-help</packagereq>
         <packagereq>dbus-python-help</packagereq>
@@ -351,8 +348,6 @@
         <packagereq>geocode-glib-help</packagereq>
         <packagereq>GeoIP</packagereq>
         <packagereq>GeoIP-help</packagereq>
-        <packagereq>geolite2-city</packagereq>
-        <packagereq>geolite2-country</packagereq>
         <packagereq>gettext</packagereq>
         <packagereq>gettext-help</packagereq>
         <packagereq>gettext-libs</packagereq>
@@ -532,8 +527,6 @@
         <packagereq>libcomps</packagereq>
         <packagereq>libcomps-help</packagereq>
         <packagereq>libconfig</packagereq>
-        <packagereq>libcroco</packagereq>
-        <packagereq>libcroco-help</packagereq>
         <packagereq>libcurl</packagereq>
         <packagereq>libdaemon</packagereq>
         <packagereq>libdaemon-help</packagereq>
@@ -594,9 +587,6 @@
         <packagereq>libgweather-help</packagereq>
         <packagereq>libgxps</packagereq>
         <packagereq>libgxps-help</packagereq>
-        <packagereq>libhugetlbfs</packagereq>
-        <packagereq>libhugetlbfs-help</packagereq>
-        <packagereq>libhugetlbfs-utils</packagereq>
         <packagereq>libical</packagereq>
         <packagereq>libicu-devel</packagereq>
         <packagereq>libidn</packagereq>
@@ -943,8 +933,8 @@
         <packagereq>open-iscsi</packagereq>
         <packagereq>open-iscsi-help</packagereq>
         <packagereq>open-isns-help</packagereq>
-        <packagereq>openjpeg2-help</packagereq>
         <packagereq>openjpeg2</packagereq>
+        <packagereq>openjpeg2-help</packagereq>
         <packagereq>openldap</packagereq>
         <packagereq>openldap-clients</packagereq>
         <packagereq>openldap-help</packagereq>
@@ -1196,7 +1186,7 @@
         <packagereq>rsyslog-mmsnmptrapd</packagereq>
         <packagereq>rsyslog-mysql</packagereq>
         <packagereq>rsyslog-snmp</packagereq>
-	<packagereq>rsyslog-gnutls</packagereq>
+        <packagereq>rsyslog-gnutls</packagereq>
         <packagereq>rtkit</packagereq>
         <packagereq>rtkit-help</packagereq>
         <packagereq>samba-common-tools</packagereq>

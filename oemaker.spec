@@ -10,8 +10,8 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        2.0.0
-Release:        18
+Version:        2.0.3
+Release:        14
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -28,7 +28,11 @@ Patch0001:	0001-rename-source-iso.patch
 Patch0002:	0002-bugfix-I3QY98.patch
 Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
-Patch0005:	0005-support-usb-flash-drive-mode.patch
+Patch0005:	0005-add-fpi_tail-param-for-grub.patch
+Patch0006:	0006-support-usb-flash-drive-mode.patch
+Patch0007:	0007-restore-env-after-selinux-status-changes.patch
+Patch0008:  0008-add-parse_everything_deb_exclude.patch
+Patch0009:  0009-automated-kickstart-function.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -74,6 +78,8 @@ install -m 700 %{name}/isomaker/img_repo.sh %{buildroot}/opt/oemaker/img_repo.sh
 install -m 700 %{name}/isomaker/init.sh %{buildroot}/opt/oemaker/init.sh
 install -m 700 %{name}/isomaker/iso.sh %{buildroot}/opt/oemaker/iso.sh
 install -m 700 %{name}/isomaker/rpm.sh %{buildroot}/opt/oemaker/rpm.sh
+install -m 700 %{name}/isomaker/env_record.sh %{buildroot}/opt/oemaker/env_record.sh
+install -m 700 %{name}/isomaker/env_restore.sh %{buildroot}/opt/oemaker/env_restore.sh
 install -m 400 %{name}/isomaker/config/rpmlist.xml %{buildroot}/opt/oemaker/config/rpmlist.xml
 install -m 400 %{name}/isomaker/config/x86_64/* %{buildroot}/opt/oemaker/config/x86_64/
 install -m 400 %{name}/isomaker/config/aarch64/* %{buildroot}/opt/oemaker/config/aarch64/
@@ -130,60 +136,90 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
-* Thu Apr 28 2022 tianwei <tianwei12@h-partners.com> - 2.0.3-18
+* Wed Apr 20 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-14
 - ID:NA
 - SUG:NA
-- DESC:delete latrace package
+- DESC: restore the automated kickstart function
 
-* Thu Apr 28 2022 hanhui <hanhui15@h-partners.com> - 2.0.0-17
-- ID:NA
-- SUG:NA
-- DESC: delete gamin and openjpeg;add openjpeg2
-
-* Thu Apr 14 2022 zhouwenpei <zhouwenpei1@h-partners.com> - 2.0.0-16
+* Thu Mar 31 2022 zhouwenpei <zhouwenpei1@h-partners.com> - 2.0.3-13
 - ID:NA
 - SUG:NA
 - DESC: add linux-firmware subpackage
 
-* Thu Mar 24 2022 wuchaochao <cyanrose@yeah.net> - 2.0.0-15
+* Mon Mar 28 2022 Senlin <xiasenlin1@huawei.com> - 2.0.3-12
 - ID:NA
 - SUG:NA
-- DESC:  add rsyslog-gnutls package
+- DESC: add exclude list for everything
 
-* Tue Feb 22 2022 jiangheng <jiangheng12@huawei.com> - 2.0.0-14
+* Mon Mar 7 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-11
+- ID:NA
+- SUG:NA
+- DESC: modify restore env mode
+
+* Fri Mar 4 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-10
+- ID:NA
+- SUG:NA
+- DESC: lorax cmd add printed log
+
+* Fri Mar 4 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-9
+- ID:NA
+- SUG:NA
+- DESC: fix build oemaker failed issue
+
+* Wed Mar 2 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-8
+- ID:NA
+- SUG:NA
+- DESC: restore env after selinux status changes 
+
+* Wed Feb 23 2022 zhuyuncheng <zhuyuncheng@huawei.com> - 2.0.3-7
+- ID:NA
+- SUG:NA
+- DESC: add Server install mode and packages for edge computing iso
+
+* Wed Feb 23 2022 hanhui <hanhui15@h-partners.com> - 2.0.3-6
+- DESC: delete gamin and openjpeg
+        add rsyslog-gnutls and edk2-ovmf packages
+        rename hisi_rde to hisi_trng_v2,libkae to uadk_engine
+
+* Tue Feb 22 2022 jiangheng <jiangheng12@huawei.com> - 2.0.3-5
 - ID:NA
 - SUG:NA
 - DESC: delete nscd package
 
-* Mon Feb 14 2022 wangchong <952173335@qq.com> - 2.0.0-13
+* Mon Feb 14 2022 wangchong <952173335@qq.com> - 2.0.3-4
 - ID:NA
 - SUG:NA
-- DESC: support usb flash drive mode
+- DESC: upgrade to 2.0.3 and support usb flash drive mode and delete some packages
 
-* Fri Jan 21 2022 zhang_xubo <2578876417@qq.com> - 2.0.0-12
+* Fri Jan 21 2022 zhang_xubo <2578876417@qq.com> - 2.0.0-13
 - ID:NA
 - SUG:NA
 - DESC: add opengauss server pakcage
 
-* Fri Dec 03 2021 licunlong <licunlong1@huawei.com> - 2.0.0-11
+* Thu Jan 20 2022 yaokai13 <yaokai13@huawei.com> - 2.0.0-12
 - ID:NA
 - SUG:NA
-- DESC: add dbus-broker to Base Group.
+- DESC: delete decay package
 
-* Fri Nov 19 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-10
-- ID:NA
-- SUG:NA
-- DESC: delete openssh-ldap because it has been removed from openssh
-
-* Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-9
+* Thu Oct 14 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-11
 - ID:NA
 - SUG:NA
 - DESC: bugfix I3OGUT
 
-* Tue Sep 28 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-8
+* Tue Sep 28 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-10
 - ID:NA
 - SUG:NA
-- DESC: add methed for edge computing iso
+- DESC: change for edge computing iso
+
+* Tue Aug 26 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-9
+- ID:NA
+- SUG:NA
+- DESC: change exclude list
+
+* Tue Aug 17 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-8
+- ID:NA
+- SUG:NA
+- DESC: delete decay package
 
 * Thu Jul 15 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-7
 - ID:NA
