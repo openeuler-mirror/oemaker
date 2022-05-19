@@ -32,21 +32,35 @@
         <packagereq>texlive-scheme-gust</packagereq>
         <packagereq>texlive-scheme-medium</packagereq>
         <packagereq>texlive-scheme-tetex</packagereq>
-        <packagereq>python3-nni</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>drbd-bash-completion</packagereq>
+        <packagereq>drbd-pacemaker</packagereq>
+        <packagereq>drbd-rgmanager</packagereq>
+        <packagereq>drbd-udev</packagereq>
+        <packagereq>drbd-utils</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
-        <packagereq>totem</packagereq>
-        <packagereq>gimp</packagereq>
+        <packagereq>drbd</packagereq>
+        <packagereq>gnome-boxes</packagereq>
+        <packagereq>nodejs-grunt-contrib-watch</packagereq>
+    </packagelist>
+    <packagelist type="everything_debug_exclude">
+        <packagereq>drbd-debuginfo</packagereq>
+        <packagereq>drbd-debugsource</packagereq>
+        <packagereq>gnome-boxes-debuginfo</packagereq>
+        <packagereq>gnome-boxes-debugsource</packagereq>
     </packagelist>
     <packagelist type="aarch64">
         <packagereq>edk2-aarch64</packagereq>
         <packagereq>grub2-efi-aa64</packagereq>
         <packagereq>grub2-efi-aa64-modules</packagereq>
         <packagereq>hisi_hpre</packagereq>
-        <packagereq>hisi_rde</packagereq>
+        <packagereq>hisi_trng_v2</packagereq>
         <packagereq>hisi_sec2</packagereq>
         <packagereq>hisi_zip</packagereq>
-        <packagereq>libkae</packagereq>
+        <packagereq>uadk_engine</packagereq>
         <packagereq>libwd</packagereq>
         <packagereq>shim-aa64</packagereq>
         <packagereq>uacce</packagereq>
@@ -919,8 +933,8 @@
         <packagereq>open-iscsi</packagereq>
         <packagereq>open-iscsi-help</packagereq>
         <packagereq>open-isns-help</packagereq>
-        <packagereq>openjpeg2-help</packagereq>
         <packagereq>openjpeg2</packagereq>
+        <packagereq>openjpeg2-help</packagereq>
         <packagereq>openldap</packagereq>
         <packagereq>openldap-clients</packagereq>
         <packagereq>openldap-help</packagereq>
@@ -1172,7 +1186,7 @@
         <packagereq>rsyslog-mmsnmptrapd</packagereq>
         <packagereq>rsyslog-mysql</packagereq>
         <packagereq>rsyslog-snmp</packagereq>
-	<packagereq>rsyslog-gnutls</packagereq>
+        <packagereq>rsyslog-gnutls</packagereq>
         <packagereq>rtkit</packagereq>
         <packagereq>rtkit-help</packagereq>
         <packagereq>samba-common-tools</packagereq>
