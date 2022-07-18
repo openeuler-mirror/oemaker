@@ -285,7 +285,6 @@
         <packagereq>dracut-network</packagereq>
         <packagereq>dracut-tools</packagereq>
         <packagereq>dropwatch</packagereq>
-        <packagereq>dropwatch-help</packagereq>
         <packagereq>drpm</packagereq>
         <packagereq>drpm-devel</packagereq>
         <packagereq>drpm-help</packagereq>

@@ -648,14 +648,11 @@
       <packagereq type="mandatory">gdm</packagereq>
       <packagereq type="mandatory">glib-networking</packagereq>
       <packagereq type="mandatory">gnome-bluetooth</packagereq>
-      <packagereq type="mandatory">gnome-classic-session</packagereq>
       <packagereq type="mandatory">gnome-color-manager</packagereq>
       <packagereq type="mandatory">gnome-dictionary</packagereq>
-      <packagereq type="mandatory">gnome-disk-utility</packagereq>
       <packagereq type="mandatory">gnome-font-viewer</packagereq>
       <packagereq type="mandatory">gnome-getting-started-docs</packagereq>
       <packagereq type="mandatory">gnome-icon-theme</packagereq>
-      <packagereq type="mandatory">gnome-initial-setup</packagereq>
       <packagereq type="mandatory">gnome-packagekit</packagereq>
       <packagereq type="mandatory">gnome-packagekit-updater</packagereq>
       <packagereq type="mandatory">gnome-screenshot</packagereq>
@@ -663,8 +660,6 @@
       <packagereq type="mandatory">gnome-session-xsession</packagereq>
       <packagereq type="mandatory">gnome-settings-daemon</packagereq>
       <packagereq type="mandatory">gnome-shell</packagereq>
-      <packagereq type="mandatory">gnome-terminal</packagereq>
-      <packagereq type="mandatory">gnome-terminal-nautilus</packagereq>
       <packagereq type="mandatory">gnome-themes-standard</packagereq>
       <packagereq type="mandatory">gnome-user-docs</packagereq>
       <packagereq type="mandatory">gvfs-afc</packagereq>
@@ -685,12 +680,10 @@
       <packagereq type="mandatory">PackageKit-command-not-found</packagereq>
       <packagereq type="mandatory">PackageKit-gtk3-module</packagereq>
       <packagereq type="mandatory">sane-backends-drivers-scanners</packagereq>
-      <packagereq type="mandatory">setroubleshoot</packagereq>
       <packagereq type="mandatory">vinagre</packagereq>
       <packagereq type="mandatory">vino</packagereq>
       <packagereq type="mandatory">xdg-user-dirs-gtk</packagereq>
       <packagereq type="mandatory">yelp</packagereq>
-      <packagereq type="optional">dconf-editor</packagereq>
       <packagereq type="optional">vim-X11</packagereq>
     </packagelist>
   </group>
