@@ -152,6 +152,13 @@ function mk_oe_main()
 	    return 1
         fi
 	ls "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
+    elif [ "${ISO_TYPE}" == "desktop" ]; then
+        gen_desktop_iso
+        if [ $? -ne 0 ]; then
+            echo "create desktop iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}"
     fi
     mkclean
     return 0

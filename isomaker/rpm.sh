@@ -29,6 +29,9 @@ function download_rpms()
     if [ "${ISO_TYPE}" == "edge" ]; then
         get_edge_rpms
         return 0
+    elif [ "${ISO_TYPE}" == "desktop" ]; then
+        get_desktop_rpms
+        return 0
     fi
     cat "${CONFIG}" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 > _all_rpms.lst
     parse_rpmlist_xml "${ARCH}"
@@ -159,6 +162,21 @@ function get_edge_rpms()
     cat "config/${ARCH}/edge_normal.xml" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 >> _edge_rpms.lst
     sort -r -u _edge_rpms.lst -o _edge_rpms.lst
     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _edge_rpms.lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
+        echo "Download rpms failed!"
+        exit 133
+    fi
+}
+
+function get_desktop_rpms()
+{
+    parse_rpmlist_xml "desktop_${ARCH}"
+    cat parsed_rpmlist_desktop_${ARCH} > _desktop_rpms.lst
+    parse_rpmlist_xml "desktop_common"
+    cat parsed_rpmlist_desktop_common >> _desktop_rpms.lst
+    cat "config/${ARCH}/desktop_normal.xml" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 >> _desktop_rpms.lst
+    sort -r -u _desktop_rpms.lst -o _desktop_rpms.lst
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _desktop_rpms.lst | tr '\n' ' ')
     if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
         echo "Download rpms failed!"
         exit 133
