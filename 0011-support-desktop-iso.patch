@@ -1,0 +1,120 @@
+From 6476093453615673dc20611bc7812def55294fb6 Mon Sep 17 00:00:00 2001
+From: wangchong1995924 <15229716099@163.com>
+Date: Thu, 28 Jul 2022 14:23:11 +0800
+Subject: [PATCH] support Desktop iso
+
+
+diff --git a/isomaker/init.sh b/isomaker/init.sh
+index ca39d48..bb958b2 100644
+--- a/isomaker/init.sh
++++ b/isomaker/init.sh
+@@ -78,7 +78,7 @@ function parse_cmd_line()
+         esac
+     done
+ 
+-    for typename in standard source debug everything_debug everything everything_src netinst edge
++    for typename in standard source debug everything_debug everything everything_src netinst edge desktop
+     do
+         if [ "${typename}" == "${ISO_TYPE}" ];then
+             return 0
+@@ -115,6 +115,7 @@ function global_var_init()
+         EVE_SRC_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-source-dvd.iso"
+         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-netinst-${ARCH}-dvd.iso"
+         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-edge-${ARCH}-dvd.iso"
++        DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${RELEASE}-${ARCH}-dvd.iso"
+     else
+         RELEASE_NAME="${PRODUCT}-${VERSION}-${ARCH}"
+         STANDARD_ISO_NAME="${PRODUCT}-${VERSION}-${ARCH}-dvd.iso"
+@@ -125,6 +126,7 @@ function global_var_init()
+         EVE_SRC_ISO_NAME="${PRODUCT}-${VERSION}-source-dvd.iso"
+         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-netinst-${ARCH}-dvd.iso"
+         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-edge-${ARCH}-dvd.iso"
++        DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${ARCH}-dvd.iso"
+     fi
+ 
+     [ ! -d "${BUILD}" ] && mkdir -p "${BUILD}"
+diff --git a/isomaker/iso.sh b/isomaker/iso.sh
+index d728aaf..43b4dc0 100644
+--- a/isomaker/iso.sh
++++ b/isomaker/iso.sh
+@@ -65,6 +65,23 @@ function gen_edge_iso()
+     return 0
+ }
+ 
++function gen_desktop_iso()
++{
++    set +e
++    mkdir -p "${BUILD}"/iso/repodata/
++    cp "config/${ARCH}/desktop_normal.xml" "${BUILD}"/iso/repodata/
++    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
++    if [ "$ARCH" == "x86_64" ]; then
++        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
++        [ $? != 0 ] && return 1
++    elif [ "$ARCH" == "aarch64" ]; then
++        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
++        [ $? != 0 ] && return 1
++    fi
++    implantisomd5 "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}"
++    return 0
++}
++
+ function gen_src_iso()
+ {
+     set +e
+diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
+index 9fa8e08..3d6b419 100644
+--- a/isomaker/oemaker.sh
++++ b/isomaker/oemaker.sh
+@@ -152,6 +152,13 @@ function mk_oe_main()
+             return 1
+         fi
+         ls "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
++    elif [ "${ISO_TYPE}" == "desktop" ]; then
++        gen_desktop_iso
++        if [ $? -ne 0 ]; then
++            echo "create desktop iso failed"
++            return 1
++        fi
++        ls "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}"
+     fi
+     mkclean
+     return 0
+diff --git a/isomaker/rpm.sh b/isomaker/rpm.sh
+index 0f77b34..287a2a6 100644
+--- a/isomaker/rpm.sh
++++ b/isomaker/rpm.sh
+@@ -29,6 +29,9 @@ function download_rpms()
+     if [ "${ISO_TYPE}" == "edge" ]; then
+         get_edge_rpms
+         return 0
++    elif [ "${ISO_TYPE}" == "desktop" ]; then
++        get_desktop_rpms
++        return 0
+     fi
+     cat "${CONFIG}" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 > _all_rpms.lst
+     parse_rpmlist_xml "${ARCH}"
+@@ -165,6 +168,21 @@ function get_edge_rpms()
+     fi
+ }
+ 
++function get_desktop_rpms()
++{
++    parse_rpmlist_xml "desktop_${ARCH}"
++    cat parsed_rpmlist_desktop_${ARCH} > _desktop_rpms.lst
++    parse_rpmlist_xml "desktop_common"
++    cat parsed_rpmlist_desktop_common >> _desktop_rpms.lst
++    cat "config/${ARCH}/desktop_normal.xml" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 >> _desktop_rpms.lst
++    sort -r -u _desktop_rpms.lst -o _desktop_rpms.lst
++    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _desktop_rpms.lst | tr '\n' ' ')
++    if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
++        echo "Download rpms failed!"
++        exit 133
++    fi
++}
++
+ function get_everything_rpms()
+ {
+     yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "\.noarch|\.${ARCH}" | grep -v "debuginfo" | grep -v "debugsource" > ava_every_lst
+-- 
+2.27.0
+
