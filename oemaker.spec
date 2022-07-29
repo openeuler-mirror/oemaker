@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        16
+Release:        17
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -20,6 +20,8 @@ Source2:        normal_x86_64.xml
 Source3:        rpmlist.xml
 Source4:        edge_normal_aarch64.xml
 Source5:        edge_normal_x86_64.xml
+Source6:        desktop_normal_aarch64.xml
+Source7:        desktop_normal_x86_64.xml
 
 Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libselinux-utils libxml2
 Requires:       lorax >= 19.6.78-1
@@ -34,6 +36,7 @@ Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0009:	0009-automated-kickstart-function.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
+Patch0011:	0011-support-desktop-iso.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -58,6 +61,10 @@ rm -rf %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/edge_norm
 cp %{SOURCE4} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/edge_normal.xml
 rm -rf  %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/edge_normal.xml
 cp %{SOURCE5} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/edge_normal.xml
+rm -rf %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/desktop_normal.xml
+cp %{SOURCE6} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/desktop_normal.xml
+rm -rf  %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/desktop_normal.xml
+cp %{SOURCE7} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/desktop_normal.xml
 cd %{_builddir}/%{name}-%{version}/%{name}
 %autopatch -p1
 
@@ -137,6 +144,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Fri Jul 29 2022 wangchong <wangchong56@huawei.com> - 2.0.3-17
+- ID:NA
+- SUG:NA
+- DESC: support Desktop isp
+
 * Fri Jul 15 2022 caodongxia <caodongxia@h-partners.com> - 2.0.3-16
 - ID:NA
 - SUG:NA
