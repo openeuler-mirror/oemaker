@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        17
+Release:        18
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -144,6 +144,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Aug 15 2022 gaoruoshu <gaoruoshu@huawei.com> - 2.0.3-18
+- ID:NA
+- SUG:NA
+- DESC: add atune-engine rpm to rpmlist.xml
+
 * Fri Jul 29 2022 wangchong <wangchong56@huawei.com> - 2.0.3-17
 - ID:NA
 - SUG:NA

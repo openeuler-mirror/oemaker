@@ -107,6 +107,7 @@
         <packagereq>atune</packagereq>
         <packagereq>atune-client</packagereq>
         <packagereq>atune-db</packagereq>
+        <packagereq>atune-engine</packagereq>
         <packagereq>audiofile</packagereq>
         <packagereq>audit</packagereq>
         <packagereq>audit-help</packagereq>
