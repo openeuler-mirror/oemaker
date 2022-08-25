@@ -1425,4 +1425,69 @@
         <packagereq>dosfstools-help</packagereq>
         <packagereq>dosfstools</packagereq>
     </packagelist>
+    <packagelist type="desktop_aarch64">
+        <packagereq>grub2-efi-aa64</packagereq>
+        <packagereq>grub2-efi-aa64-cdboot</packagereq>
+        <packagereq>grub2-efi-aa64-modules</packagereq>
+    </packagelist>
+    <packagelist type="desktop_x86_64">
+        <packagereq>grub2-pc</packagereq>
+        <packagereq>grub2-pc-modules</packagereq>
+        <packagereq>grub2-efi-x64</packagereq>
+        <packagereq>grub2-efi-x64-modules</packagereq>
+    </packagelist>
+    <packagelist type="desktop_common">
+        <packagereq>kubeedge-cloudcore</packagereq>
+        <packagereq>kubeedge-edgecore</packagereq>
+        <packagereq>kubeedge-edgesite</packagereq>
+        <packagereq>kubeedge-keadm</packagereq>
+        <packagereq>grub2-common</packagereq>
+        <packagereq>grub2-tools-minimal</packagereq>
+        <packagereq>grub2-tools-extra</packagereq>
+        <packagereq>grub2-tools</packagereq>
+        <packagereq>grub2-help</packagereq>
+        <packagereq>lvm2-help</packagereq>
+        <packagereq>lvm2</packagereq>
+        <packagereq>shim</packagereq>
+        <packagereq>mdadm</packagereq>
+        <packagereq>mdadm-help</packagereq>
+        <packagereq>dosfstools-help</packagereq>
+        <packagereq>dosfstools</packagereq>
+        <packagereq>rpm-build</packagereq>
+        <packagereq>net-tools</packagereq>
+        <packagereq>sysstat</packagereq>
+        <packagereq>at</packagereq>
+        <packagereq>tpm-tools</packagereq>
+        <packagereq>expect</packagereq>
+        <packagereq>xinetd</packagereq>
+        <packagereq>httpd</packagereq>
+        <packagereq>vsftpd</packagereq>
+        <packagereq>acpid</packagereq>
+        <packagereq>aide</packagereq>
+        <packagereq>audit-devel</packagereq>
+        <packagereq>bridge-utils</packagereq>
+        <packagereq>cifs-utils</packagereq>
+        <packagereq>ftp</packagereq>
+        <packagereq>xinetd</packagereq>
+        <packagereq>tftp</packagereq>
+        <packagereq>tftp-server</packagereq>
+        <packagereq>mod_ssl</packagereq>
+        <packagereq>traceroute</packagereq>
+        <packagereq>mtr</packagereq>
+        <packagereq>libcgroup</packagereq>
+        <packagereq>lldpad</packagereq>
+        <packagereq>iotop</packagereq>
+        <packagereq>tcpdump</packagereq>
+        <packagereq>setools-console</packagereq>
+        <packagereq>strace</packagereq>
+        <packagereq>time</packagereq>
+        <packagereq>cockpit</packagereq>
+        <packagereq>openvswitch</packagereq>
+        <packagereq>docker</packagereq>
+        <packagereq>numactl</packagereq>
+        <packagereq>nfs4-acl-tools</packagereq>
+        <packagereq>perl</packagereq>
+        <packagereq>perf</packagereq>
+        <packagereq>rpmrebuild</packagereq>
+    </packagelist>
 </groups>
