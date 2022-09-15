@@ -1,0 +1,22 @@
+From bef0ee94d3b4a32b72aa86aca25cdda83a803dba Mon Sep 17 00:00:00 2001
+From: wangchong1995924 <15229716099@163.com>
+Date: Thu, 15 Sep 2022 16:26:23 +0800
+Subject: [PATCH] fix everything source grep error
+
+
+diff --git a/isomaker/rpm.sh b/isomaker/rpm.sh
+index d6ed0c8..d0affb3 100644
+--- a/isomaker/rpm.sh
++++ b/isomaker/rpm.sh
+@@ -240,7 +240,7 @@ function everything_rpms_download()
+ function everything_source_rpms_download()
+ {
+     mkdir ${EVERY_SRC_DIR}
+-    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep ".src" > ava_every_lst
++    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep "\.src" > ava_every_lst
+     parse_rpmlist_xml "src_exclude"
+     cat parsed_rpmlist_src_exclude
+     if [ -s parsed_rpmlist_src_exclude ];then
+-- 
+2.27.0
+
