@@ -6,12 +6,15 @@
 %global efi_x64 1
 %endif
 
+%ifarch loongarch64
+%global efi_loongarch64 1
+%endif
 Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        14
+Release:        15
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -31,8 +34,13 @@ Patch0004:	0004-bugfix-I3OGUT.patch
 Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0006:	0006-support-usb-flash-drive-mode.patch
 Patch0007:	0007-restore-env-after-selinux-status-changes.patch
-Patch0008:  0008-add-parse_everything_deb_exclude.patch
-Patch0009:  0009-automated-kickstart-function.patch
+Patch0008:	0008-add-parse_everything_deb_exclude.patch
+Patch0009:	0009-automated-kickstart-function.patch
+%ifarch loongarch64
+Patch0100:	0001-add-loongarch-support-for-oemaker.patch
+Patch0101:	0002-add-config-for-loongarch.patch
+Patch0102:	0003-delete-pkg-when-build-runtime-and-iso-for-loongarch.patch
+%endif
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -66,6 +74,9 @@ mkdir -p %{buildroot}/opt/oemaker
 mkdir -p %{buildroot}/opt/oemaker/config
 mkdir -p %{buildroot}/opt/oemaker/config/x86_64
 mkdir -p %{buildroot}/opt/oemaker/config/aarch64
+%ifarch loongarch64
+mkdir -p %{buildroot}/opt/oemaker/config/loongarch64
+%endif
 mkdir -p %{buildroot}/opt/oemaker/docs
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_sysconfdir}/isocut
@@ -83,6 +94,9 @@ install -m 700 %{name}/isomaker/env_restore.sh %{buildroot}/opt/oemaker/env_rest
 install -m 400 %{name}/isomaker/config/rpmlist.xml %{buildroot}/opt/oemaker/config/rpmlist.xml
 install -m 400 %{name}/isomaker/config/x86_64/* %{buildroot}/opt/oemaker/config/x86_64/
 install -m 400 %{name}/isomaker/config/aarch64/* %{buildroot}/opt/oemaker/config/aarch64/
+%ifarch loongarch64
+install -m 400 %{name}/isomaker/config/loongarch64/* %{buildroot}/opt/oemaker/config/loongarch64/
+%endif
 install -m 700 %{name}/isomaker/docs/* %{buildroot}/opt/oemaker/docs/
 cp -a %{name}/isomaker/80-openeuler %{buildroot}/opt/oemaker/
 
@@ -100,6 +114,10 @@ install -m 600 %{name}/isocut/config/repodata.template %{buildroot}/%{_sysconfdi
     install -m 600 %{name}/isocut/config/x86_64/anaconda-ks.cfg %{buildroot}/%{_sysconfdir}/isocut/
 %endif
 
+%if 0%{?efi_loongarch64}
+    install -m 600 %{name}/isocut/config/loongarch64/rpmlist %{buildroot}/%{_sysconfdir}/isocut/
+    install -m 600 %{name}/isocut/config/loongarch64/anaconda-ks.cfg %{buildroot}/%{_sysconfdir}/isocut/
+%endif
 %pre
 
 %post
@@ -136,6 +154,13 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Mar 28 2022 Wenlong Zhang <zhangwenlong@loongson.cn> - 2.0.3-15
+- ID:NA
+- SUG:NA
+- DESC: add loongarch support for oemaker
+        add config for loongarch
+        delete pkg when build runtime and iso for loongarch
+
 * Wed Apr 20 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.3-14
 - ID:NA
 - SUG:NA
