@@ -1,0 +1,924 @@
+From e917f361b4140b14b2a576148bea5c6547c7de0b Mon Sep 17 00:00:00 2001
+From: Wenlong Zhang <zhangwenlong@loongson.cn>
+Date: Thu, 27 Oct 2022 10:10:34 +0800
+Subject: [PATCH 3/3] delete pkg when build runtime and iso for loongarch
+
+---
+ isomaker/80-openeuler/runtime-install.tmpl |  21 +-
+ isomaker/config/rpmlist.xml                | 300 +--------------------
+ 2 files changed, 21 insertions(+), 300 deletions(-)
+
+diff --git a/isomaker/80-openeuler/runtime-install.tmpl b/isomaker/80-openeuler/runtime-install.tmpl
+index 1856aff..e7d594f 100644
+--- a/isomaker/80-openeuler/runtime-install.tmpl
++++ b/isomaker/80-openeuler/runtime-install.tmpl
+@@ -47,12 +47,17 @@ installpkg glibc-all-langpacks
+     installpkg syslinux
+     installpkg grub2-tools grub2-tools-minimal grub2-tools-extra
+ %endif
++%if basearch == "loongarch64":
++    installpkg efibootmgr
++    installpkg grub2-efi-loongarch64 grub2-efi-loongarch64-cdboot grub2-efi-loongarch64-modules 
++    installpkg grub2-tools grub2-tools-minimal grub2-tools-extra
++%endif
+ 
+ ## yay, plymouth
+ installpkg plymouth
+ 
+ ## extra dracut modules
+-installpkg anaconda-dracut dracut-network dracut-config-generic dracut-fips
++installpkg anaconda-dracut dracut-network dracut-config-generic
+ 
+ ## import-state.service for switchroot
+ installpkg initscripts
+@@ -70,10 +75,8 @@ installpkg tar xz curl bzip2
+ 
+ ## basic system stuff
+ installpkg systemd-sysv systemd-units
+-installpkg rsyslog
+ 
+ ## xorg/GUI packages
+-installpkg xorg-x11-drivers xorg-x11-server-Xorg
+ installpkg xorg-x11-server-utils xorg-x11-xauth
+ installpkg dbus-x11 metacity gsettings-desktop-schemas
+ installpkg nm-connection-editor
+@@ -86,7 +89,7 @@ installpkg xfsdump
+ 
+ ## extra storage packages
+ # hostname is needed for iscsi to work, see RHBZ#1593917
+-installpkg udisks2 hostname
++installpkg hostname
+ # udisks2-iscsi hostname
+ 
+ ## extra libblockdev plugins
+@@ -112,7 +115,7 @@ installpkg pciutils usbutils ipmitool
+ installpkg smartmontools
+ installpkg hdparm
+ ## see bug #1483278
+-%if basearch not in ("arm", "armhfp"):
++%if basearch not in ("arm", "armhfp", "loongarch64"):
+     installpkg libmlx4 rdma-core
+ %endif
+ installpkg rng-tools
+@@ -120,22 +123,22 @@ installpkg rng-tools
+ ## fonts & themes
+ installpkg xorg-x11-fonts-misc
+ installpkg abattis-cantarell-fonts
+-installpkg google-noto-sans-cjk-ttc-fonts
+ 
+ ## debugging/bug reporting tools
+-installpkg gdb-gdbserver
+ installpkg libreport
+ installpkg fpaste
+ installpkg python3-pyatspi
+ 
+ ## extra tools not required by anaconda
+-installpkg vim-minimal strace lsof xz less eject
++installpkg vim-minimal lsof xz less
+ installpkg wget rsync bind-utils ftp mtr vconfig
+-installpkg icfg spice-vdagent
++installpkg icfg
+ installpkg gdisk sg3_utils
+ 
+ ## satisfy libnotify's desktop-notification-daemon with the least crazy option
+ installpkg notification-daemon
+ 
++installpkg dosfstools
++
+ ## actually install all the requested packages
+ run_pkg_transaction
+diff --git a/isomaker/config/rpmlist.xml b/isomaker/config/rpmlist.xml
+index 639d74a..4bf4c0c 100644
+--- a/isomaker/config/rpmlist.xml
++++ b/isomaker/config/rpmlist.xml
+@@ -1,75 +1,27 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <groups>
+     <packagelist type="conflict">
+-        <packagereq>mariadb</packagereq>
+-        <packagereq>mariadb-server</packagereq>
+     </packagelist>
+     <packagelist type="everything_conflict">
+-        <packagereq>abrt-addon-ccpp</packagereq>
+-        <packagereq>podman-help</packagereq>
+         <packagereq>libcmpiCppImpl0</packagereq>
+-        <packagereq>libev-libevent-devel</packagereq>
+-        <packagereq>mariadb-devel</packagereq>
+-        <packagereq>mariadb-test</packagereq>
+-        <packagereq>podman-docker</packagereq>
+         <packagereq>python3-unversioned-command</packagereq>
+-        <packagereq>python3-abrt-container-addon</packagereq>
+     </packagelist>
+     <packagelist type="exclude">
+-        <packagereq>texlive-collection-bibtexextra</packagereq>
+-        <packagereq>texlive-collection-mathscience</packagereq>
+-        <packagereq>texlive-collection-latexextra</packagereq>
+-        <packagereq>texlive-collection-fontsextra</packagereq>
+-        <packagereq>texlive-ctanupload</packagereq>
+-        <packagereq>texlive-exceltex</packagereq>
+-        <packagereq>texlive-latexindent</packagereq>
+-        <packagereq>texlive-biblatex-apa</packagereq>
+-        <packagereq>texlive-collection-binextra</packagereq>
+-        <packagereq>texlive-collection-fontutils</packagereq>
+-        <packagereq>texlive-includernw</packagereq>
+-        <packagereq>texlive-oldstandard</packagereq>
+-        <packagereq>texlive-scheme-full</packagereq>
+-        <packagereq>texlive-scheme-gust</packagereq>
+-        <packagereq>texlive-scheme-medium</packagereq>
+-        <packagereq>texlive-scheme-tetex</packagereq>
+-        <packagereq>drbd</packagereq>
+-        <packagereq>drbd-bash-completion</packagereq>
+-        <packagereq>drbd-pacemaker</packagereq>
+-        <packagereq>drbd-rgmanager</packagereq>
+-        <packagereq>drbd-udev</packagereq>
+-        <packagereq>drbd-utils</packagereq>
+-        <packagereq>gnome-boxes</packagereq>
+-        <packagereq>nodejs-grunt-contrib-watch</packagereq>
+     </packagelist>
+     <packagelist type="src_exclude">
+-        <packagereq>drbd</packagereq>
+-        <packagereq>gnome-boxes</packagereq>
+-        <packagereq>nodejs-grunt-contrib-watch</packagereq>
+     </packagelist>
+     <packagelist type="everything_debug_exclude">
+-        <packagereq>drbd-debuginfo</packagereq>
+-        <packagereq>drbd-debugsource</packagereq>
+-        <packagereq>gnome-boxes-debuginfo</packagereq>
+-        <packagereq>gnome-boxes-debugsource</packagereq>
+     </packagelist>
+     <packagelist type="aarch64">
+-        <packagereq>edk2-aarch64</packagereq>
+-        <packagereq>grub2-efi-aa64</packagereq>
+-        <packagereq>grub2-efi-aa64-modules</packagereq>
+-        <packagereq>hisi_hpre</packagereq>
+-        <packagereq>hisi_trng_v2</packagereq>
+-        <packagereq>hisi_sec2</packagereq>
+-        <packagereq>hisi_zip</packagereq>
+         <packagereq>uadk_engine</packagereq>
+-        <packagereq>libwd</packagereq>
+-        <packagereq>shim-aa64</packagereq>
+         <packagereq>uacce</packagereq>
+     </packagelist>
+     <packagelist type="x86_64">
+-        <packagereq>edk2-ovmf</packagereq>
+-        <packagereq>grub2-efi-x64</packagereq>
+         <packagereq>grub2-efi-x64-modules</packagereq>
+-        <packagereq>shim</packagereq>
++    </packagelist>
++    <packagelist type="loongarch64">
++        <packagereq>grub2-efi-loongarch64</packagereq>
++        <packagereq>grub2-efi-loongarch64-modules</packagereq>
+     </packagelist>
+     <packagelist type="common">
+         <packagereq>abattis-cantarell-fonts</packagereq>
+@@ -79,15 +31,12 @@
+         <packagereq>accountsservice-libs</packagereq>
+         <packagereq>acl</packagereq>
+         <packagereq>acl-help</packagereq>
+-        <packagereq>acpid</packagereq>
+-        <packagereq>acpid-help</packagereq>
+         <packagereq>adcli</packagereq>
+         <packagereq>adcli-help</packagereq>
+         <packagereq>adobe-mappings-cmap</packagereq>
+         <packagereq>adobe-mappings-cmap-help</packagereq>
+         <packagereq>adobe-mappings-pdf</packagereq>
+         <packagereq>adobe-mappings-pdf-help</packagereq>
+-        <packagereq>adwaita-gtk2-theme</packagereq>
+         <packagereq>aide</packagereq>
+         <packagereq>aide-help</packagereq>
+         <packagereq>alsa-firmware</packagereq>
+@@ -96,7 +45,6 @@
+         <packagereq>apr-help</packagereq>
+         <packagereq>arptables</packagereq>
+         <packagereq>arptables-help</packagereq>
+-        <packagereq>arpwatch</packagereq>
+         <packagereq>arpwatch-help</packagereq>
+         <packagereq>asciidoc</packagereq>
+         <packagereq>asciidoc-help</packagereq>
+@@ -104,9 +52,6 @@
+         <packagereq>at-help</packagereq>
+         <packagereq>attr</packagereq>
+         <packagereq>attr-help</packagereq>
+-        <packagereq>atune</packagereq>
+-        <packagereq>atune-client</packagereq>
+-        <packagereq>atune-db</packagereq>
+         <packagereq>audiofile</packagereq>
+         <packagereq>audit</packagereq>
+         <packagereq>audit-help</packagereq>
+@@ -118,13 +63,11 @@
+         <packagereq>authselect-compat</packagereq>
+         <packagereq>authselect-help</packagereq>
+         <packagereq>authselect-libs</packagereq>
+-        <packagereq>authz</packagereq>
+         <packagereq>avahi</packagereq>
+         <packagereq>avahi-autoipd</packagereq>
+         <packagereq>avahi-compat-howl</packagereq>
+         <packagereq>avahi-compat-libdns_sd</packagereq>
+         <packagereq>avahi-dnsconfd</packagereq>
+-        <packagereq>avahi-gobject</packagereq>
+         <packagereq>avahi-libs</packagereq>
+         <packagereq>avahi-tools</packagereq>
+         <packagereq>basesystem</packagereq>
+@@ -135,7 +78,6 @@
+         <packagereq>bc</packagereq>
+         <packagereq>bc-help</packagereq>
+         <packagereq>bind-chroot</packagereq>
+-        <packagereq>bind-dyndb-ldap</packagereq>
+         <packagereq>bind-libs</packagereq>
+         <packagereq>bind-utils</packagereq>
+         <packagereq>binutils</packagereq>
+@@ -152,10 +94,8 @@
+         <packagereq>boost-chrono</packagereq>
+         <packagereq>boost-context</packagereq>
+         <packagereq>boost-date-time</packagereq>
+-        <packagereq>boost-devel</packagereq>
+         <packagereq>boost-filesystem</packagereq>
+         <packagereq>boost-graph</packagereq>
+-        <packagereq>boost-help</packagereq>
+         <packagereq>boost-iostreams</packagereq>
+         <packagereq>boost-locale</packagereq>
+         <packagereq>boost-math</packagereq>
+@@ -170,7 +110,6 @@
+         <packagereq>boost-timer</packagereq>
+         <packagereq>boost-wave</packagereq>
+         <packagereq>bridge-utils</packagereq>
+-        <packagereq>brltty-docs</packagereq>
+         <packagereq>brotli</packagereq>
+         <packagereq>btrfs-progs</packagereq>
+         <packagereq>btrfs-progs-help</packagereq>
+@@ -189,12 +128,8 @@
+         <packagereq>chrony</packagereq>
+         <packagereq>chrpath</packagereq>
+         <packagereq>chrpath-help</packagereq>
+-        <packagereq>cifs-utils</packagereq>
+-        <packagereq>cifs-utils-help</packagereq>
+         <packagereq>cjkuni-ukai-fonts</packagereq>
+         <packagereq>cjkuni-ukai-fonts-help</packagereq>
+-        <packagereq>clibcni-devel</packagereq>
+-        <packagereq>cloud-init</packagereq>
+         <packagereq>cloud-init-help</packagereq>
+         <packagereq>clutter</packagereq>
+         <packagereq>clutter-gst3</packagereq>
+@@ -202,13 +137,9 @@
+         <packagereq>clutter-gtk</packagereq>
+         <packagereq>clutter-gtk-help</packagereq>
+         <packagereq>clutter-help</packagereq>
+-        <packagereq>cockpit</packagereq>
+-        <packagereq>cockpit-help</packagereq>
+         <packagereq>cogl</packagereq>
+         <packagereq>cogl-help</packagereq>
+         <packagereq>color-filesystem</packagereq>
+-        <packagereq>containers-common</packagereq>
+-        <packagereq>container-selinux</packagereq>
+         <packagereq>coreutils</packagereq>
+         <packagereq>coreutils-help</packagereq>
+         <packagereq>cpio</packagereq>
+@@ -216,8 +147,6 @@
+         <packagereq>cracklib</packagereq>
+         <packagereq>cracklib-dicts</packagereq>
+         <packagereq>cracklib-help</packagereq>
+-        <packagereq>crash</packagereq>
+-        <packagereq>crash-help</packagereq>
+         <packagereq>createrepo_c</packagereq>
+         <packagereq>createrepo_c-help</packagereq>
+         <packagereq>cronie</packagereq>
+@@ -226,12 +155,9 @@
+         <packagereq>crontabs-help</packagereq>
+         <packagereq>crypto-policies</packagereq>
+         <packagereq>cryptsetup</packagereq>
+-        <packagereq>cryptsetup-help</packagereq>
+         <packagereq>cryptsetup-reencrypt</packagereq>
+         <packagereq>ctags</packagereq>
+         <packagereq>ctags-help</packagereq>
+-        <packagereq>cups</packagereq>
+-        <packagereq>cups-filters</packagereq>
+         <packagereq>cups-help</packagereq>
+         <packagereq>cups-libs</packagereq>
+         <packagereq>cups-pk-helper</packagereq>
+@@ -273,8 +199,6 @@
+         <packagereq>dnsmasq-utils</packagereq>
+         <packagereq>docbook-dtds</packagereq>
+         <packagereq>docbook-style-xsl</packagereq>
+-        <packagereq>docker-engine</packagereq>
+-        <packagereq>docker-runc</packagereq>
+         <packagereq>dos2unix</packagereq>
+         <packagereq>dosfstools</packagereq>
+         <packagereq>dosfstools-help</packagereq>
+@@ -293,8 +217,6 @@
+         <packagereq>e2fsprogs-devel</packagereq>
+         <packagereq>e2fsprogs-help</packagereq>
+         <packagereq>ed</packagereq>
+-        <packagereq>edk2-devel</packagereq>
+-        <packagereq>edk2-help</packagereq>
+         <packagereq>efibootmgr</packagereq>
+         <packagereq>efibootmgr-help</packagereq>
+         <packagereq>efivar</packagereq>
+@@ -303,7 +225,6 @@
+         <packagereq>elfutils-devel</packagereq>
+         <packagereq>ethtool</packagereq>
+         <packagereq>ethtool-help</packagereq>
+-        <packagereq>evolution-data-server</packagereq>
+         <packagereq>exempi</packagereq>
+         <packagereq>exempi-help</packagereq>
+         <packagereq>expat</packagereq>
+@@ -343,9 +264,6 @@
+         <packagereq>gdk-pixbuf2</packagereq>
+         <packagereq>gdk-pixbuf2-help</packagereq>
+         <packagereq>genisoimage</packagereq>
+-        <packagereq>geoclue2-libs</packagereq>
+-        <packagereq>geocode-glib</packagereq>
+-        <packagereq>geocode-glib-help</packagereq>
+         <packagereq>GeoIP</packagereq>
+         <packagereq>GeoIP-help</packagereq>
+         <packagereq>gettext</packagereq>
+@@ -353,7 +271,6 @@
+         <packagereq>gettext-libs</packagereq>
+         <packagereq>git</packagereq>
+         <packagereq>git-help</packagereq>
+-        <packagereq>gjs</packagereq>
+         <packagereq>glib2</packagereq>
+         <packagereq>glib2-help</packagereq>
+         <packagereq>glibc</packagereq>
+@@ -371,42 +288,24 @@
+         <packagereq>gnutls-help</packagereq>
+         <packagereq>gobject-introspection</packagereq>
+         <packagereq>gobject-introspection-help</packagereq>
+-        <packagereq>golang</packagereq>
+-        <packagereq>golang-devel</packagereq>
+-        <packagereq>golang-help</packagereq>
+-        <packagereq>gperftools</packagereq>
+-        <packagereq>gperftools-devel</packagereq>
+-        <packagereq>gperftools-libs</packagereq>
+         <packagereq>gpgme</packagereq>
+         <packagereq>gpgme-help</packagereq>
+         <packagereq>grep</packagereq>
+-        <packagereq>grilo</packagereq>
+-        <packagereq>grilo-help</packagereq>
+         <packagereq>groff</packagereq>
+         <packagereq>groff-help</packagereq>
+-        <packagereq>grpc</packagereq>
+-        <packagereq>grpc-devel</packagereq>
+-        <packagereq>grpc-plugins</packagereq>
+         <packagereq>grub2-common</packagereq>
+-        <packagereq>grub2-help</packagereq>
+         <packagereq>grub2-tools</packagereq>
+         <packagereq>grubby</packagereq>
+         <packagereq>grubby-help</packagereq>
+         <packagereq>gssproxy</packagereq>
+         <packagereq>gssproxy-help</packagereq>
+-        <packagereq>gvfs</packagereq>
+         <packagereq>gzip</packagereq>
+         <packagereq>gzip-help</packagereq>
+         <packagereq>haveged</packagereq>
+         <packagereq>haveged-help</packagereq>
+-        <packagereq>hdf5</packagereq>
+-        <packagereq>hdf5-devel</packagereq>
+         <packagereq>hdparm</packagereq>
+         <packagereq>hdparm-help</packagereq>
+         <packagereq>hostname</packagereq>
+-        <packagereq>httpd</packagereq>
+-        <packagereq>httpd-help</packagereq>
+-        <packagereq>httpd-tools</packagereq>
+         <packagereq>http-parser</packagereq>
+         <packagereq>http-parser-devel</packagereq>
+         <packagereq>http-parser-help</packagereq>
+@@ -436,7 +335,6 @@
+         <packagereq>ipset</packagereq>
+         <packagereq>ipset-help</packagereq>
+         <packagereq>ipset-libs</packagereq>
+-        <packagereq>iptables</packagereq>
+         <packagereq>iptraf-ng</packagereq>
+         <packagereq>iptraf-ng-help</packagereq>
+         <packagereq>iptstate</packagereq>
+@@ -447,8 +345,6 @@
+         <packagereq>ipvsadm-help</packagereq>
+         <packagereq>irqbalance</packagereq>
+         <packagereq>irqbalance-help</packagereq>
+-        <packagereq>iSulad</packagereq>
+-        <packagereq>iSulad-img</packagereq>
+         <packagereq>ivtv-firmware</packagereq>
+         <packagereq>iw</packagereq>
+         <packagereq>iw-help</packagereq>
+@@ -461,15 +357,12 @@
+         <packagereq>json-c-help</packagereq>
+         <packagereq>json-glib</packagereq>
+         <packagereq>json-glib-help</packagereq>
+-        <packagereq>kata-containers</packagereq>
+         <packagereq>kbd</packagereq>
+         <packagereq>kbd-help</packagereq>
+         <packagereq>kbd-legacy</packagereq>
+         <packagereq>kbd-misc</packagereq>
+-        <packagereq>keepalived</packagereq>
+         <packagereq>kernel</packagereq>
+         <packagereq>kernel-devel</packagereq>
+-        <packagereq>kernel-source</packagereq>
+         <packagereq>kernel-tools</packagereq>
+         <packagereq>kernel-tools-libs</packagereq>
+         <packagereq>kernel-tools-libs-devel</packagereq>
+@@ -483,9 +376,6 @@
+         <packagereq>kmod</packagereq>
+         <packagereq>kmod-help</packagereq>
+         <packagereq>kpartx</packagereq>
+-        <packagereq>kpatch</packagereq>
+-        <packagereq>kpatch-help</packagereq>
+-        <packagereq>kpatch-runtime</packagereq>
+         <packagereq>krb5</packagereq>
+         <packagereq>krb5-client</packagereq>
+         <packagereq>krb5-devel</packagereq>
+@@ -493,7 +383,6 @@
+         <packagereq>krb5-server</packagereq>
+         <packagereq>lapack</packagereq>
+         <packagereq>lapack-devel</packagereq>
+-        <packagereq>lcr</packagereq>
+         <packagereq>ldns</packagereq>
+         <packagereq>ldns-help</packagereq>
+         <packagereq>less</packagereq>
+@@ -511,8 +400,6 @@
+         <packagereq>libblkid</packagereq>
+         <packagereq>libbonobo</packagereq>
+         <packagereq>libbonobo-help</packagereq>
+-        <packagereq>libbonoboui</packagereq>
+-        <packagereq>libbonoboui-help</packagereq>
+         <packagereq>libcanberra-gtk2</packagereq>
+         <packagereq>libcanberra-help</packagereq>
+         <packagereq>libcap</packagereq>
+@@ -550,7 +437,6 @@
+         <packagereq>libedit</packagereq>
+         <packagereq>libedit-devel</packagereq>
+         <packagereq>libedit-help</packagereq>
+-        <packagereq>liberation-fonts</packagereq>
+         <packagereq>libesmtp</packagereq>
+         <packagereq>libesmtp-help</packagereq>
+         <packagereq>libestr</packagereq>
+@@ -568,14 +454,10 @@
+         <packagereq>libgcc</packagereq>
+         <packagereq>libgcrypt</packagereq>
+         <packagereq>libgcrypt-help</packagereq>
+-        <packagereq>libgdata</packagereq>
+-        <packagereq>libgdata-help</packagereq>
+         <packagereq>libgee</packagereq>
+         <packagereq>libgee-help</packagereq>
+-        <packagereq>libgnome</packagereq>
+         <packagereq>libgnomecanvas</packagereq>
+         <packagereq>libgnomecanvas-help</packagereq>
+-        <packagereq>libgnome-help</packagereq>
+         <packagereq>libgnomekbd</packagereq>
+         <packagereq>libgomp</packagereq>
+         <packagereq>libgpg-error</packagereq>
+@@ -583,8 +465,6 @@
+         <packagereq>libgsf-help</packagereq>
+         <packagereq>libgtop2</packagereq>
+         <packagereq>libgtop2-help</packagereq>
+-        <packagereq>libgweather</packagereq>
+-        <packagereq>libgweather-help</packagereq>
+         <packagereq>libgxps</packagereq>
+         <packagereq>libgxps-help</packagereq>
+         <packagereq>libical</packagereq>
+@@ -638,8 +518,6 @@
+         <packagereq>liboauth-help</packagereq>
+         <packagereq>libogg</packagereq>
+         <packagereq>libogg-help</packagereq>
+-        <packagereq>libosinfo</packagereq>
+-        <packagereq>libosinfo-help</packagereq>
+         <packagereq>libpath_utils</packagereq>
+         <packagereq>libpcap</packagereq>
+         <packagereq>libpcap-devel</packagereq>
+@@ -655,7 +533,6 @@
+         <packagereq>libpsl-help</packagereq>
+         <packagereq>libpwquality</packagereq>
+         <packagereq>libpwquality-help</packagereq>
+-        <packagereq>librados2</packagereq>
+         <packagereq>libref_array</packagereq>
+         <packagereq>librepo</packagereq>
+         <packagereq>libreport-filesystem</packagereq>
+@@ -683,11 +560,6 @@
+         <packagereq>libssh2</packagereq>
+         <packagereq>libssh2-help</packagereq>
+         <packagereq>libssh-help</packagereq>
+-        <packagereq>libsss_autofs</packagereq>
+-        <packagereq>libsss_certmap</packagereq>
+-        <packagereq>libsss_idmap</packagereq>
+-        <packagereq>libsss_nss_idmap</packagereq>
+-        <packagereq>libsss_sudo</packagereq>
+         <packagereq>libstdc++</packagereq>
+         <packagereq>libtalloc</packagereq>
+         <packagereq>libtalloc-help</packagereq>
+@@ -723,40 +595,8 @@
+         <packagereq>libverto-devel</packagereq>
+         <packagereq>libverto-glib</packagereq>
+         <packagereq>libverto-libevent</packagereq>
+-        <packagereq>libvirt</packagereq>
+-        <packagereq>libvirt-admin</packagereq>
+-        <packagereq>libvirt-bash-completion</packagereq>
+-        <packagereq>libvirt-client</packagereq>
+-        <packagereq>libvirt-daemon</packagereq>
+-        <packagereq>libvirt-daemon-config-network</packagereq>
+-        <packagereq>libvirt-daemon-config-nwfilter</packagereq>
+-        <packagereq>libvirt-daemon-driver-interface</packagereq>
+-        <packagereq>libvirt-daemon-driver-network</packagereq>
+-        <packagereq>libvirt-daemon-driver-nodedev</packagereq>
+-        <packagereq>libvirt-daemon-driver-nwfilter</packagereq>
+-        <packagereq>libvirt-daemon-driver-qemu</packagereq>
+-        <packagereq>libvirt-daemon-driver-secret</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-core</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-disk</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-gluster</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-iscsi</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-iscsi-direct</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-logical</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-mpath</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-rbd</packagereq>
+-        <packagereq>libvirt-daemon-driver-storage-scsi</packagereq>
+-        <packagereq>libvirt-daemon-kvm</packagereq>
+-        <packagereq>libvirt-daemon-qemu</packagereq>
+-        <packagereq>libvirt-devel</packagereq>
+-        <packagereq>libvirt-docs</packagereq>
+-        <packagereq>libvirt-libs</packagereq>
+-        <packagereq>libvirt-nss</packagereq>
+         <packagereq>libwacom</packagereq>
+         <packagereq>libwacom-data</packagereq>
+-        <packagereq>libwebsockets</packagereq>
+-        <packagereq>libwebsockets-devel</packagereq>
+-        <packagereq>libwebsockets-help</packagereq>
+         <packagereq>libwnck3</packagereq>
+         <packagereq>libwnck3-help</packagereq>
+         <packagereq>libX11</packagereq>
+@@ -772,7 +612,6 @@
+         <packagereq>libxkbcommon-x11</packagereq>
+         <packagereq>libxkbfile</packagereq>
+         <packagereq>libxklavier</packagereq>
+-        <packagereq>libxklavier-help</packagereq>
+         <packagereq>libxml2</packagereq>
+         <packagereq>libxml2-help</packagereq>
+         <packagereq>libxslt</packagereq>
+@@ -795,7 +634,6 @@
+         <packagereq>lm_sensors</packagereq>
+         <packagereq>lm_sensors-devel</packagereq>
+         <packagereq>lm_sensors-help</packagereq>
+-        <packagereq>lm_sensors-sensord</packagereq>
+         <packagereq>lockdev</packagereq>
+         <packagereq>lockdev-help</packagereq>
+         <packagereq>logrotate</packagereq>
+@@ -807,18 +645,12 @@
+         <packagereq>lsscsi</packagereq>
+         <packagereq>lsscsi-help</packagereq>
+         <packagereq>lua</packagereq>
+-        <packagereq>lua-expat</packagereq>
+         <packagereq>lua-expat-help</packagereq>
+         <packagereq>lua-help</packagereq>
+         <packagereq>lua-socket</packagereq>
+         <packagereq>lua-socket-help</packagereq>
+         <packagereq>lvm2</packagereq>
+         <packagereq>lvm2-help</packagereq>
+-        <packagereq>lxc</packagereq>
+-        <packagereq>lxc-devel</packagereq>
+-        <packagereq>lxcfs</packagereq>
+-        <packagereq>lxcfs-tools</packagereq>
+-        <packagereq>lxc-help</packagereq>
+         <packagereq>lz4</packagereq>
+         <packagereq>lz4-help</packagereq>
+         <packagereq>lz4-libs</packagereq>
+@@ -844,18 +676,12 @@
+         <packagereq>mdadm-help</packagereq>
+         <packagereq>mesa-filesystem</packagereq>
+         <packagereq>mesa-libGLES</packagereq>
+-        <packagereq>mesa-libxatracker</packagereq>
+         <packagereq>metacity</packagereq>
+         <packagereq>metacity-help</packagereq>
+         <packagereq>mlocate</packagereq>
+         <packagereq>mlocate-help</packagereq>
+         <packagereq>mobile-broadband-provider-info</packagereq>
+         <packagereq>mobile-broadband-provider-info-help</packagereq>
+-        <packagereq>mod_ldap</packagereq>
+-        <packagereq>mod_md</packagereq>
+-        <packagereq>mod_proxy_html</packagereq>
+-        <packagereq>mod_session</packagereq>
+-        <packagereq>mod_ssl</packagereq>
+         <packagereq>mozilla-filesystem</packagereq>
+         <packagereq>mpfr</packagereq>
+         <packagereq>mtdev</packagereq>
+@@ -865,11 +691,6 @@
+         <packagereq>mtr-help</packagereq>
+         <packagereq>multipath-tools</packagereq>
+         <packagereq>multipath-tools-help</packagereq>
+-        <packagereq>mutter</packagereq>
+-        <packagereq>mutter-help</packagereq>
+-        <packagereq>mysql</packagereq>
+-        <packagereq>nautilus</packagereq>
+-        <packagereq>nautilus-help</packagereq>
+         <packagereq>ncompress</packagereq>
+         <packagereq>ncompress-help</packagereq>
+         <packagereq>ncurses</packagereq>
+@@ -879,9 +700,6 @@
+         <packagereq>netcf</packagereq>
+         <packagereq>netcf-help</packagereq>
+         <packagereq>netconsole-service</packagereq>
+-        <packagereq>net-snmp</packagereq>
+-        <packagereq>net-snmp-devel</packagereq>
+-        <packagereq>net-snmp-help</packagereq>
+         <packagereq>nettle</packagereq>
+         <packagereq>nettle-help</packagereq>
+         <packagereq>net-tools</packagereq>
+@@ -913,8 +731,6 @@
+         <packagereq>nss-pam-ldapd-help</packagereq>
+         <packagereq>nss-pem</packagereq>
+         <packagereq>nss-softokn</packagereq>
+-        <packagereq>ntp</packagereq>
+-        <packagereq>ntp-help</packagereq>
+         <packagereq>numactl</packagereq>
+         <packagereq>numactl-devel</packagereq>
+         <packagereq>numactl-libs</packagereq>
+@@ -922,8 +738,6 @@
+         <packagereq>numad-help</packagereq>
+         <packagereq>oddjob</packagereq>
+         <packagereq>oddjob-help</packagereq>
+-        <packagereq>openblas-serial</packagereq>
+-        <packagereq>openblas-threads</packagereq>
+         <packagereq>openEuler-indexhtml</packagereq>
+         <packagereq>openEuler-logos</packagereq>
+         <packagereq>openEuler-release</packagereq>
+@@ -956,22 +770,16 @@
+         <packagereq>openvpn</packagereq>
+         <packagereq>openvpn-devel</packagereq>
+         <packagereq>openvpn-help</packagereq>
+-        <packagereq>openvswitch</packagereq>
+-        <packagereq>openvswitch-devel</packagereq>
+         <packagereq>opus</packagereq>
+         <packagereq>opus-help</packagereq>
+         <packagereq>ORBit2</packagereq>
+         <packagereq>orc</packagereq>
+         <packagereq>orc-help</packagereq>
+-        <packagereq>osinfo-db</packagereq>
+-        <packagereq>osinfo-db-tools</packagereq>
+-        <packagereq>osinfo-db-tools-help</packagereq>
+         <packagereq>os-prober</packagereq>
+         <packagereq>p11-kit</packagereq>
+         <packagereq>p11-kit-help</packagereq>
+         <packagereq>p11-kit-trust</packagereq>
+         <packagereq>pam</packagereq>
+-        <packagereq>pam_cifscreds</packagereq>
+         <packagereq>pam_ssh_agent_auth</packagereq>
+         <packagereq>pam-help</packagereq>
+         <packagereq>parted</packagereq>
+@@ -1034,8 +842,6 @@
+         <packagereq>perl-XML-Writer-help</packagereq>
+         <packagereq>pigz</packagereq>
+         <packagereq>pigz-help</packagereq>
+-        <packagereq>pinentry</packagereq>
+-        <packagereq>pinentry-help</packagereq>
+         <packagereq>pkcs11-helper</packagereq>
+         <packagereq>pkcs11-helper-devel</packagereq>
+         <packagereq>pkcs11-helper-help</packagereq>
+@@ -1050,27 +856,17 @@
+         <packagereq>polkit-libs</packagereq>
+         <packagereq>polkit-pkla-compat</packagereq>
+         <packagereq>polkit-pkla-compat-help</packagereq>
+-        <packagereq>poppler-cpp</packagereq>
+         <packagereq>poppler-data</packagereq>
+-        <packagereq>poppler-glib</packagereq>
+-        <packagereq>poppler-help</packagereq>
+         <packagereq>popt</packagereq>
+         <packagereq>popt-devel</packagereq>
+         <packagereq>popt-help</packagereq>
+-        <packagereq>postfix</packagereq>
+-        <packagereq>postfix-help</packagereq>
+         <packagereq>ppp</packagereq>
+         <packagereq>ppp-help</packagereq>
+-        <packagereq>pprof</packagereq>
+         <packagereq>procmail</packagereq>
+         <packagereq>procmail-help</packagereq>
+         <packagereq>procps-ng</packagereq>
+         <packagereq>procps-ng-devel</packagereq>
+         <packagereq>procps-ng-i18n</packagereq>
+-        <packagereq>protobuf</packagereq>
+-        <packagereq>protobuf-devel</packagereq>
+-        <packagereq>protobuf-lite</packagereq>
+-        <packagereq>protobuf-lite-devel</packagereq>
+         <packagereq>psmisc</packagereq>
+         <packagereq>publicsuffix-list</packagereq>
+         <packagereq>pulseaudio</packagereq>
+@@ -1087,7 +883,6 @@
+         <packagereq>python3-dmidecode</packagereq>
+         <packagereq>python3-dnf</packagereq>
+         <packagereq>python3-dnf-plugins-core</packagereq>
+-        <packagereq>python3-edk2-devel</packagereq>
+         <packagereq>python3-ethtool</packagereq>
+         <packagereq>python3-firewall</packagereq>
+         <packagereq>python3-flask</packagereq>
+@@ -1108,14 +903,11 @@
+         <packagereq>python3-librepo</packagereq>
+         <packagereq>python3-libs</packagereq>
+         <packagereq>python3-libselinux</packagereq>
+-        <packagereq>python3-libvirt</packagereq>
+         <packagereq>python3-libxml2</packagereq>
+         <packagereq>python3-linux-procfs</packagereq>
+-        <packagereq>python3-net-snmp</packagereq>
+         <packagereq>python3-newt</packagereq>
+         <packagereq>python3-numpy</packagereq>
+         <packagereq>python3-openipmi</packagereq>
+-        <packagereq>python3-pandas</packagereq>
+         <packagereq>python3-perf</packagereq>
+         <packagereq>python3-pip</packagereq>
+         <packagereq>python3-pyatspi</packagereq>
+@@ -1125,27 +917,16 @@
+         <packagereq>python3-pyudev</packagereq>
+         <packagereq>python3-pyxattr</packagereq>
+         <packagereq>python3-rpm</packagereq>
+-        <packagereq>python3-rtslib</packagereq>
+         <packagereq>python3-schedutils</packagereq>
+-        <packagereq>python3-scikit-learn</packagereq>
+         <packagereq>python3-scikit-optimize</packagereq>
+-        <packagereq>python3-scipy</packagereq>
+-        <packagereq>python3-setuptools</packagereq>
+         <packagereq>python3-six</packagereq>
+         <packagereq>python3-slip</packagereq>
+-        <packagereq>python3-sssdconfig</packagereq>
+         <packagereq>python3-talloc</packagereq>
+         <packagereq>python3-unbound</packagereq>
+         <packagereq>python3-urlgrabber</packagereq>
+         <packagereq>python3-werkzeug</packagereq>
+         <packagereq>python3-xgboost</packagereq>
+-        <packagereq>qemu</packagereq>
+-        <packagereq>qemu-guest-agent</packagereq>
+-        <packagereq>qemu-help</packagereq>
+-        <packagereq>qemu-img</packagereq>
+         <packagereq>qpdf</packagereq>
+-        <packagereq>qrencode</packagereq>
+-        <packagereq>qrencode-help</packagereq>
+         <packagereq>quota</packagereq>
+         <packagereq>quota-help</packagereq>
+         <packagereq>rarian</packagereq>
+@@ -1167,8 +948,6 @@
+         <packagereq>rpm-build-libs</packagereq>
+         <packagereq>rpm-cron</packagereq>
+         <packagereq>rpm-devel</packagereq>
+-        <packagereq>rpmdevtools</packagereq>
+-        <packagereq>rpmdevtools-help</packagereq>
+         <packagereq>rpm-help</packagereq>
+         <packagereq>rpm-libs</packagereq>
+         <packagereq>rpm-plugin-selinux</packagereq>
+@@ -1177,20 +956,8 @@
+         <packagereq>rpmrebuild-help</packagereq>
+         <packagereq>rsync</packagereq>
+         <packagereq>rsync-help</packagereq>
+-        <packagereq>rsyslog</packagereq>
+-        <packagereq>rsyslog-crypto</packagereq>
+-        <packagereq>rsyslog-elasticsearch</packagereq>
+-        <packagereq>rsyslog-help</packagereq>
+-        <packagereq>rsyslog-mmaudit</packagereq>
+-        <packagereq>rsyslog-mmjsonparse</packagereq>
+-        <packagereq>rsyslog-mmsnmptrapd</packagereq>
+-        <packagereq>rsyslog-mysql</packagereq>
+-        <packagereq>rsyslog-snmp</packagereq>
+-        <packagereq>rsyslog-gnutls</packagereq>
+         <packagereq>rtkit</packagereq>
+         <packagereq>rtkit-help</packagereq>
+-        <packagereq>samba-common-tools</packagereq>
+-        <packagereq>samba-help</packagereq>
+         <packagereq>sbc</packagereq>
+         <packagereq>sbc-help</packagereq>
+         <packagereq>screen</packagereq>
+@@ -1203,8 +970,6 @@
+         <packagereq>selinux-policy-minimum</packagereq>
+         <packagereq>selinux-policy-sandbox</packagereq>
+         <packagereq>selinux-policy-targeted</packagereq>
+-        <packagereq>sendmail</packagereq>
+-        <packagereq>sendmail-help</packagereq>
+         <packagereq>setools-console</packagereq>
+         <packagereq>setools-help</packagereq>
+         <packagereq>setserial</packagereq>
+@@ -1237,20 +1002,12 @@
+         <packagereq>sqlite</packagereq>
+         <packagereq>sqlite-help</packagereq>
+         <packagereq>squashfs-tools</packagereq>
+-        <packagereq>squid</packagereq>
+-        <packagereq>sssd</packagereq>
+-        <packagereq>sssd-client</packagereq>
+-        <packagereq>sssd-help</packagereq>
+-        <packagereq>sssd-nfs-idmap</packagereq>
+-        <packagereq>strace</packagereq>
+         <packagereq>strongswan</packagereq>
+         <packagereq>sudo</packagereq>
+         <packagereq>sudo-help</packagereq>
+         <packagereq>symlinks</packagereq>
+-        <packagereq>syscontainer-tools</packagereq>
+         <packagereq>sysfsutils</packagereq>
+         <packagereq>sysfsutils-help</packagereq>
+-        <packagereq>sysstat</packagereq>
+         <packagereq>systemd</packagereq>
+         <packagereq>systemd-devel</packagereq>
+         <packagereq>systemd-help</packagereq>
+@@ -1281,37 +1038,20 @@
+         <packagereq>telepathy-logger-help</packagereq>
+         <packagereq>telnet</packagereq>
+         <packagereq>telnet-help</packagereq>
+-        <packagereq>tftp</packagereq>
+-        <packagereq>tftp-help</packagereq>
+-        <packagereq>tftp-server</packagereq>
+         <packagereq>thin-provisioning-tools</packagereq>
+         <packagereq>thin-provisioning-tools-help</packagereq>
+         <packagereq>tigervnc</packagereq>
+         <packagereq>tigervnc-server-minimal</packagereq>
+-        <packagereq>time</packagereq>
+         <packagereq>timedatex</packagereq>
+         <packagereq>timedatex-help</packagereq>
+-        <packagereq>time-help</packagereq>
+-        <packagereq>tipcutils</packagereq>
+-        <packagereq>tipcutils-help</packagereq>
+         <packagereq>tk</packagereq>
+         <packagereq>tk-help</packagereq>
+         <packagereq>tmux</packagereq>
+         <packagereq>tmux-help</packagereq>
+-        <packagereq>totem-pl-parser</packagereq>
+-        <packagereq>totem-pl-parser-help</packagereq>
+-        <packagereq>tpm2-abrmd</packagereq>
+-        <packagereq>tpm2-abrmd-help</packagereq>
+         <packagereq>tpm2-tools</packagereq>
+         <packagereq>tpm2-tools-help</packagereq>
+         <packagereq>tpm2-tss</packagereq>
+         <packagereq>tpm2-tss-help</packagereq>
+-        <packagereq>traceroute</packagereq>
+-        <packagereq>traceroute-help</packagereq>
+-        <packagereq>tracker</packagereq>
+-        <packagereq>tracker-help</packagereq>
+-        <packagereq>tracker-miners</packagereq>
+-        <packagereq>tracker-miners-help</packagereq>
+         <packagereq>tree</packagereq>
+         <packagereq>tree-help</packagereq>
+         <packagereq>trousers</packagereq>
+@@ -1336,8 +1076,6 @@
+         <packagereq>util-linux</packagereq>
+         <packagereq>vim-enhanced</packagereq>
+         <packagereq>vim-minimal</packagereq>
+-        <packagereq>vino</packagereq>
+-        <packagereq>vino-help</packagereq>
+         <packagereq>virt-what</packagereq>
+         <packagereq>virt-what-help</packagereq>
+         <packagereq>vsftpd</packagereq>
+@@ -1347,9 +1085,6 @@
+         <packagereq>which</packagereq>
+         <packagereq>which-help</packagereq>
+         <packagereq>wpa_supplicant</packagereq>
+-        <packagereq>wpa_supplicant-help</packagereq>
+-        <packagereq>wqy-microhei-fonts</packagereq>
+-        <packagereq>wqy-microhei-fonts-help</packagereq>
+         <packagereq>wqy-zenhei-fonts</packagereq>
+         <packagereq>xfsprogs</packagereq>
+         <packagereq>xfsprogs-help</packagereq>
+@@ -1372,8 +1107,6 @@
+         <packagereq>xz-lzma-compat</packagereq>
+         <packagereq>ypbind</packagereq>
+         <packagereq>ypbind-help</packagereq>
+-        <packagereq>ypserv</packagereq>
+-        <packagereq>ypserv-help</packagereq>
+         <packagereq>yp-tools</packagereq>
+         <packagereq>yp-tools-help</packagereq>
+         <packagereq>yum</packagereq>
+@@ -1389,38 +1122,23 @@
+         <packagereq>zziplib-utils</packagereq>
+         <packagereq>unixODBC-devel</packagereq>
+         <packagereq>jemalloc-devel</packagereq>
+-        <packagereq>DCF</packagereq>
+-        <packagereq>opengauss</packagereq>
+     </packagelist>
+     <packagelist type="edge_aarch64">
+-        <packagereq>grub2-efi-aa64</packagereq>
+-        <packagereq>grub2-efi-aa64-cdboot</packagereq>
+-        <packagereq>grub2-efi-aa64-modules</packagereq>
+     </packagelist>
+     <packagelist type="edge_x86_64">
+-        <packagereq>grub2-pc</packagereq>
+-        <packagereq>grub2-pc-modules</packagereq>
++    </packagelist>
++    <packagelist type="edge_loongarch64">
++        <packagereq>grub2-efi-loongarch64</packagereq>
++        <packagereq>grub2-efi-loongarch64-cdboot</packagereq>
++        <packagereq>grub2-efi-loongarch64-modules</packagereq>
+     </packagelist>
+     <packagelist type="edge_common">
+-        <packagereq>kubernetes</packagereq>
+-        <packagereq>kubernetes-client</packagereq>
+-        <packagereq>kubernetes-help</packagereq>
+-        <packagereq>kubernetes-kubeadm</packagereq>
+-        <packagereq>kubernetes-kubelet</packagereq>
+-        <packagereq>kubernetes-master</packagereq>
+-        <packagereq>kubernetes-node</packagereq>
+-        <packagereq>kubeedge-cloudcore</packagereq>
+-        <packagereq>kubeedge-edgecore</packagereq>
+-        <packagereq>kubeedge-edgesite</packagereq>
+-        <packagereq>kubeedge-keadm</packagereq>
+         <packagereq>grub2-common</packagereq>
+         <packagereq>grub2-tools-minimal</packagereq>
+         <packagereq>grub2-tools-extra</packagereq>
+         <packagereq>grub2-tools</packagereq>
+-        <packagereq>grub2-help</packagereq>
+         <packagereq>lvm2-help</packagereq>
+         <packagereq>lvm2</packagereq>
+-        <packagereq>shim</packagereq>
+         <packagereq>mdadm</packagereq>
+         <packagereq>mdadm-help</packagereq>
+         <packagereq>dosfstools-help</packagereq>
+-- 
+2.33.0
+
