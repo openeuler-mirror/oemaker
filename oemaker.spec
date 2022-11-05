@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.0
-Release:        7
+Release:        8
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -126,6 +126,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Thu Oct 27 2022 caodongxia <caodongxia@h-partners.com> - 2.0.0-8
+- ID:NA
+- SUG:NA
+- DESC: add texlive-collection-humanities texlive-collection-langother to rpmlist exclude
+
 * Tue Mar 15 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.0-7
 - ID:NA
 - SUG:NA
