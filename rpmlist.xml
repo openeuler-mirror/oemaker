@@ -60,6 +60,10 @@
         <packagereq>rubygem-rspec-rails-help</packagereq>
         <packagereq>rubygem-rspec2-doc-</packagereq>
         <packagereq>rubygem-selenium-webdriver-doc-</packagereq>
+        <packagereq>texlive-babel-vietnamese</packagereq>
+        <packagereq>texlive-lexikon</packagereq>
+        <packagereq>texlive-collection-humanities</packagereq>
+        <packagereq>texlive-collection-langother</packagereq>
     </packagelist>
     <packagelist type="src_exclude">
         <packagereq>totem</packagereq>
