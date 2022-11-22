@@ -1,6 +1,6 @@
-From 50e167a8084b3130835cc18a6b67f448a1fe02f1 Mon Sep 17 00:00:00 2001
-From: miao_kaibo <miaokaibo@outlook.com>
-Date: Thu, 14 Oct 2021 09:18:30 +0800
+From f59ebdd0f2e8927dbb4662769ee99e3384e6e7ca Mon Sep 17 00:00:00 2001
+From: xyn-coder <xiangyuning@huawei.com>
+Date: Tue, 22 Nov 2022 16:01:13 +0800
 Subject: [PATCH] bugfix I3OGUT
 
 ---
@@ -8,13 +8,13 @@ Subject: [PATCH] bugfix I3OGUT
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/isomaker/img_repo.sh b/isomaker/img_repo.sh
-index 0865815..cfb35f8 100755
+index 3335183..eaf5c70 100755
 --- a/isomaker/img_repo.sh
 +++ b/isomaker/img_repo.sh
-@@ -30,7 +30,12 @@ function create_install_img()
-     done
+@@ -31,7 +31,12 @@ function create_install_img()
  
      echo "${tmprep}" > yumrepo.file
+     set +e
 -    lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
 +    if [ -n "${RELEASE}" ];then
 +        vertmp="${VERSION}-${RELEASE}"
@@ -26,5 +26,5 @@ index 0865815..cfb35f8 100755
      if [ $? != 0 ] ; then
          cat lorax.logfile
 -- 
-2.30.0
+2.33.0
 
