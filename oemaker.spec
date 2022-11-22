@@ -10,8 +10,8 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        2.0.3
-Release:        15
+Version:        2.0.4
+Release:        1
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -29,10 +29,7 @@ Patch0002:	0002-bugfix-I3QY98.patch
 Patch0003:	0003-change-for-edge-computing.patch
 Patch0004:	0004-bugfix-I3OGUT.patch
 Patch0005:	0005-add-fpi_tail-param-for-grub.patch
-Patch0006:	0006-support-usb-flash-drive-mode.patch
-Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
-Patch0009:	0009-automated-kickstart-function.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
 
 %description
@@ -137,6 +134,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Nov 22 2022 xiangyuning <xiangyuning@huawei.com> - 2.0.4-1
+- ID:NA
+- SUG:NA
+- DESC: upgrade to 2.0.4
+
 * Thu Jul 14 2022 wangchong <wangchong56@huawei.com> - 2.0.3-15
 - ID:NA
 - SUG:NA
