@@ -1,6 +1,6 @@
-From 5883a7f40fe7fc8cce44c7a709eaa890e1fe43d3 Mon Sep 17 00:00:00 2001
-From: miao_kaibo <miaokaibo@outlook.com>
-Date: Mon, 27 Sep 2021 15:31:58 +0800
+From 52641d22bc575c01a6fca0cafb5e9b5d0dec619d Mon Sep 17 00:00:00 2001
+From: xyn-coder <xiangyuning@huawei.com>
+Date: Tue, 22 Nov 2022 15:53:14 +0800
 Subject: [PATCH] change for edge computing
 
 ---
@@ -12,7 +12,7 @@ Subject: [PATCH] change for edge computing
  5 files changed, 57 insertions(+), 2 deletions(-)
 
 diff --git a/isomaker/img_repo.sh b/isomaker/img_repo.sh
-index 5403724..0865815 100755
+index 668ee76..3335183 100755
 --- a/isomaker/img_repo.sh
 +++ b/isomaker/img_repo.sh
 @@ -18,7 +18,18 @@
@@ -32,9 +32,9 @@ index 5403724..0865815 100755
 +    done
 +
 +    echo "${tmprep}" > yumrepo.file
+     set +e
      lorax --isfinal -p "${PRODUCT}" -v "${VERSION}${RELEASE}" -r "${RELEASE}" -t "${VARIANT}" --sharedir 80-openeuler --rootfs-size=4 --buildarch="$ARCH" $(cat yumrepo.file) --nomacboot --noupgrade "${BUILD}"/iso > lorax.logfile 2>&1
  
-     if [ $? != 0 ] ; then
 diff --git a/isomaker/init.sh b/isomaker/init.sh
 index 2603bfb..ca39d48 100755
 --- a/isomaker/init.sh
@@ -65,10 +65,10 @@ index 2603bfb..ca39d48 100755
  
      [ ! -d "${BUILD}" ] && mkdir -p "${BUILD}"
 diff --git a/isomaker/iso.sh b/isomaker/iso.sh
-index b15b394..20a6245 100755
+index 4152c57..38fa4ab 100755
 --- a/isomaker/iso.sh
 +++ b/isomaker/iso.sh
-@@ -47,6 +47,22 @@ function gen_standard_iso()
+@@ -48,6 +48,22 @@ function gen_standard_iso()
      return 0
  }
  
@@ -92,10 +92,10 @@ index b15b394..20a6245 100755
  function gen_src_iso()
  {
 diff --git a/isomaker/oemaker.sh b/isomaker/oemaker.sh
-index 74d923e..37196e5 100755
+index 98b1faa..c3d949f 100755
 --- a/isomaker/oemaker.sh
 +++ b/isomaker/oemaker.sh
-@@ -144,6 +144,13 @@ function mk_euleros_main()
+@@ -145,6 +145,13 @@ function mk_oe_main()
              return 1
          fi
          ls "${OUTPUT_DIR}/${EVE_SRC_ISO_NAME}"
@@ -147,5 +147,5 @@ index e3feaab..85b1042 100755
  {
      yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "\.noarch|\.${ARCH}" | grep -v "debuginfo" | grep -v "debugsource" > ava_every_lst
 -- 
-2.30.0
+2.33.0
 

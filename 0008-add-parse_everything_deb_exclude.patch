@@ -1,6 +1,6 @@
-From efcc2fd150f9fe625a03b4b5d9c492f6691b1ba1 Mon Sep 17 00:00:00 2001
-From: small_leek <xiasenlin1@huawei.com>
-Date: Fri, 18 Mar 2022 11:19:07 +0800
+From 6958c40cac406dc5636189b9cbd8635ebdbe72b3 Mon Sep 17 00:00:00 2001
+From: xyn-coder <xiangyuning@huawei.com>
+Date: Tue, 22 Nov 2022 16:16:38 +0800
 Subject: [PATCH] add parse_everything_deb_exclude
 
 ---
@@ -8,10 +8,10 @@ Subject: [PATCH] add parse_everything_deb_exclude
  1 file changed, 8 insertions(+)
 
 diff --git a/isomaker/rpm.sh b/isomaker/rpm.sh
-index e5fad1f..fa6167b 100644
+index 85b1042..0f77b34 100755
 --- a/isomaker/rpm.sh
 +++ b/isomaker/rpm.sh
-@@ -217,6 +217,14 @@ function everything_debug_rpms_download()
+@@ -242,6 +242,14 @@ function everything_debug_rpms_download()
  {
      mkdir ${EVERY_DEBUG_DIR}
      yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "debuginfo|debugsource" > ava_debug_lst
@@ -27,5 +27,5 @@ index e5fad1f..fa6167b 100644
      if [ $? != 0 ] || [ $(ls ${EVERY_DEBUG_DIR} | wc -l) == 0 ]; then
          echo "yumdownloader with --resolve failed, trying to yumdownloader without --resolve"
 -- 
-2.27.0
+2.33.0
 
