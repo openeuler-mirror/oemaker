@@ -31,7 +31,7 @@ Patch0004:	0004-bugfix-I3OGUT.patch
 Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
-Patch0011:  0011-change-rescue-parameter-with-new-anaconda.patch
+Patch0011:	0011-change-rescue-parameter-with-new-anaconda.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
