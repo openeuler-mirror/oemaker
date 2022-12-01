@@ -34,7 +34,7 @@ Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0009:	0009-automated-kickstart-function.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
-Patch0011:  0011-change-rescue-parameter-with-new-anaconda.patch
+Patch0011:	0011-change-rescue-parameter-with-new-anaconda.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
