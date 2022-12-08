@@ -135,7 +135,7 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
-* Tue Dec 08 2022 sunhai <sunhai10@huawei.com> - 2.0.4-3
+* Thu Dec 08 2022 sunhai <sunhai10@huawei.com> - 2.0.4-3
 - ID:NA
 - SUG:NA
 - DESC: change rescue parameter with legacy too
