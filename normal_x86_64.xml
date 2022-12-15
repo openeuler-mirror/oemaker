@@ -164,7 +164,6 @@
       <packagereq type="mandatory">psacct</packagereq>
       <packagereq type="mandatory">quota</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="mandatory">sudo</packagereq>
       <packagereq type="mandatory">symlinks</packagereq>
@@ -273,7 +272,6 @@
       <packagereq type="mandatory">openssh-server</packagereq>
       <packagereq type="mandatory">openssh-clients</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="mandatory">parted</packagereq>
       <packagereq type="mandatory">passwd</packagereq>
@@ -1229,7 +1227,6 @@
       <packagereq type="mandatory">polkit</packagereq>
       <packagereq type="mandatory">realmd</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="mandatory">timedatex</packagereq>
       <packagereq type="default">dhcp-client</packagereq>
@@ -1279,7 +1276,6 @@
       <packagereq type="mandatory">pciutils</packagereq>
       <packagereq type="mandatory">quota</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="mandatory">sudo</packagereq>
       <packagereq type="mandatory">symlinks</packagereq>
