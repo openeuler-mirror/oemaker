@@ -165,7 +165,6 @@
       <packagereq type="mandatory">psacct</packagereq>
       <packagereq type="mandatory">quota</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="mandatory">sudo</packagereq>
       <packagereq type="mandatory">symlinks</packagereq>
@@ -294,7 +293,6 @@
       <packagereq type="mandatory">yum</packagereq>
       <packagereq type="mandatory">wget</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">openEuler-latest-release</packagereq>
       <packagereq type="default">NetworkManager</packagereq>
       <packagereq type="default">NetworkManager-team</packagereq>
@@ -1230,7 +1228,6 @@
       <packagereq type="mandatory">polkit</packagereq>
       <packagereq type="mandatory">realmd</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">timedatex</packagereq>
       <packagereq type="default">dhcp-client</packagereq>
       <packagereq type="default">NetworkManager-config-server</packagereq>
@@ -1279,7 +1276,6 @@
       <packagereq type="mandatory">pciutils</packagereq>
       <packagereq type="mandatory">quota</packagereq>
       <packagereq type="mandatory">openEuler-release</packagereq>
-      <packagereq type="mandatory">openEuler-performance</packagereq>
       <packagereq type="mandatory">sudo</packagereq>
       <packagereq type="mandatory">symlinks</packagereq>
       <packagereq type="mandatory">systemd-udev</packagereq>
