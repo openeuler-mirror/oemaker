@@ -1,0 +1,25 @@
+From 40e9deb6d6ba1d8ad07c9903ce326d2053afdeff Mon Sep 17 00:00:00 2001
+From: sun_hai_10 <sunha10@huawei.com>
+Date: Mon, 19 Dec 2022 21:32:23 +0800
+Subject: [PATCH] enable eject in install.img
+
+---
+ isomaker/80-openeuler/runtime-cleanup.tmpl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/isomaker/80-openeuler/runtime-cleanup.tmpl b/isomaker/80-openeuler/runtime-cleanup.tmpl
+index 5bce798..256d013 100644
+--- a/isomaker/80-openeuler/runtime-cleanup.tmpl
++++ b/isomaker/80-openeuler/runtime-cleanup.tmpl
+@@ -305,7 +305,7 @@ removefrom sysvinit-tools /usr/bin/*
+ removefrom tar /usr/share/locale/*
+ removefrom usbutils /usr/bin/*
+ removefrom util-linux --allbut \
+-    /usr/bin/{dmesg,getopt,kill,login,lsblk,more,mount,umount,mountpoint,findmnt} \
++    /usr/bin/{dmesg,eject,getopt,kill,login,lsblk,more,mount,umount,mountpoint,findmnt} \
+     /etc/mtab /etc/pam.d/login /etc/pam.d/remote \
+     /usr/sbin/{agetty,blkid,blockdev,clock,fdisk,fsck,fstrim,hwclock,losetup} \
+     /usr/sbin/{mkswap,swaplabel,nologin,sfdisk,swapoff,swapon,wipefs,partx,fsfreeze} \
+-- 
+2.23.0
+
