@@ -1,12 +1,13 @@
-From 8a67d38e533dbbe114e4f7ca51fb24a854176239 Mon Sep 17 00:00:00 2001
+From 827754f12b73541273197eec7ba7a8a4b3eb2271 Mon Sep 17 00:00:00 2001
 From: sun_hai_10 <sunha10@huawei.com>
-Date: Tue, 29 Nov 2022 14:22:17 +0800
+Date: Thu, 8 Dec 2022 17:14:16 +0800
 Subject: [PATCH] change rescue parameter with new anaconda
 
 ---
- isomaker/80-openeuler/config_files/aarch64/grub2-efi.cfg    | 2 +-
- isomaker/80-openeuler/config_files/x86/grub2-efi.cfg    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ isomaker/80-openeuler/config_files/aarch64/grub2-efi.cfg | 2 +-
+ isomaker/80-openeuler/config_files/x86/grub2-efi.cfg     | 2 +-
+ isomaker/80-openeuler/config_files/x86/isolinux.cfg      | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/isomaker/80-openeuler/config_files/aarch64/grub2-efi.cfg b/isomaker/80-openeuler/config_files/aarch64/grub2-efi.cfg
 index 2d165e1..2cc19a8 100644
@@ -34,6 +35,19 @@ index fe2bc03..c7cb824 100644
  		initrdefi @INITRDPATH@
  	}
  }
+diff --git a/isomaker/80-openeuler/config_files/x86/isolinux.cfg b/isomaker/80-openeuler/config_files/x86/isolinux.cfg
+index 0471f42..1b3fae2 100644
+--- a/isomaker/80-openeuler/config_files/x86/isolinux.cfg
++++ b/isomaker/80-openeuler/config_files/x86/isolinux.cfg
+@@ -93,7 +93,7 @@ label rescue
+ 	and edit config files to try to get it booting again.
+   endtext
+   kernel vmlinuz
+-  append initrd=initrd.img @ROOT@ rescue quiet
++  append initrd=initrd.img @ROOT@ inst.rescue quiet
+ 
+ label memtest
+   menu label Run a ^memory test
 -- 
 2.23.0
 
