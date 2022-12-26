@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.4
-Release:        3
+Release:        5
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -34,7 +34,8 @@ Patch0005:	0005-add-fpi_tail-param-for-grub.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
 Patch0011:	0011-support-desktop-iso.patch
-Patch0012:      0012-change-rescue-parameter-with-new-anaconda.patch
+Patch0012:	0012-change-rescue-parameter-with-new-anaconda.patch
+Patch0013:	0013-enable-eject-in-install.img.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -142,6 +143,12 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Dec 26 2022 sunhai <sunhai10@huawei.com> - 2.0.4-5
+- ID:NA
+- SUG:NA
+- DESC: change rescue parameter with legacy too
+        Enable eject in install.img
+
 * Thu Dec 15 2022 wangkai <wangkai385@h-partners.com> - 2.0.4-3
 - ID:NA
 - SUG:NA
