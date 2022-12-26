@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        17
+Release:        18
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -35,6 +35,7 @@ Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0009:	0009-automated-kickstart-function.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
 Patch0011:	0011-change-rescue-parameter-with-new-anaconda.patch
+Patch0012:  0012-enable-eject-in-install.img.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -138,6 +139,12 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Dec 26 2022 sunhai <sunhai10@huawei.com> - 2.0.3-18
+- ID:NA
+- SUG:NA
+- DESC: change rescue parameter with legacy too
+        Enable eject in install.img
+
 * Thu Dec 15 2022 wangkai <wangkai385@h-partners.com> - 2.0.3-17
 - ID:NA
 - SUG:NA
