@@ -1,0 +1,33 @@
+From 7d7a3d41bfadd5bd77402fb0900c7670661b012a Mon Sep 17 00:00:00 2001
+From: htpeng <htpengc@isoftstone.com>
+Date: Fri, 23 Dec 2022 16:01:16 +0800
+Subject: [PATCH] Remove invalid memtest
+
+Signed-off-by: htpeng <htpengc@isoftstone.com>
+---
+ isomaker/80-openeuler/config_files/x86/isolinux.cfg | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/isomaker/80-openeuler/config_files/x86/isolinux.cfg b/isomaker/80-openeuler/config_files/x86/isolinux.cfg
+index 1b3fae2..84ad7bf 100644
+--- a/isomaker/80-openeuler/config_files/x86/isolinux.cfg
++++ b/isomaker/80-openeuler/config_files/x86/isolinux.cfg
+@@ -95,15 +95,6 @@ label rescue
+   kernel vmlinuz
+   append initrd=initrd.img @ROOT@ inst.rescue quiet
+ 
+-label memtest
+-  menu label Run a ^memory test
+-  text help
+-	If your system is having issues, a problem with your
+-	system's memory may be the cause. Use this utility to
+-	see if the memory is working correctly.
+-  endtext
+-  kernel memtest
+-
+ menu separator # insert an empty line
+ 
+ label local
+-- 
+2.34.1
+
