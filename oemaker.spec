@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        18
+Release:        19
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -139,6 +139,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Jan 3 2023 wangchong <wangchong56@huawei.com> - 2.0.3-19
+- ID:NA
+- SUG:NA
+- DESC: Remove authz and iSulad-img
+
 * Mon Dec 26 2022 sunhai <sunhai10@huawei.com> - 2.0.3-18
 - ID:NA
 - SUG:NA
