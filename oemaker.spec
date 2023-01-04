@@ -259,7 +259,7 @@ rm -rf $RPM_BUILD_DIR/%{name}
 - SUG:NA
 - DESC: change for edge computing iso
 
-* Tue Aug 26 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-9
+* Thu Aug 26 2021 miao_kaibo <miaokaibo@outlook.com> - 2.0.0-9
 - ID:NA
 - SUG:NA
 - DESC: change exclude list
@@ -304,7 +304,7 @@ rm -rf $RPM_BUILD_DIR/%{name}
 - SUG:NA
 - DESC: upgrade version
 
-* Sat Mar 17 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-7
+* Wed Mar 17 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-7
 - ID:NA
 - SUG:NA
 - DESC: delete or replace rpms which are not exist
@@ -319,17 +319,17 @@ rm -rf $RPM_BUILD_DIR/%{name}
 - SUG:NA
 - DESC: fix bug I3B7CH 
 
-* Thu MAR 10 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-4
+* Wed Mar 10 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-4
 - ID:NA
 - SUG:NA
 - DESC: add qemu-block-iscsi in virtualization-hypervisor group
 
-* Mon MAR 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-3
+* Mon Mar 08 2021 miao_kaibo <miaokaibo@outlook.com> - 1.1.2-3
 - ID:NA
 - SUG:NA
 - DESC: change method of creating source iso
 
-* Thu MAR 01 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-2
+* Mon Mar 01 2021 Chen Qun <kuhn.chenqun@huawei.com> - 1.1.2-2
 - ID:NA
 - SUG:NA
 - DESC: add stratovirt in virtualization-hypervisor group
