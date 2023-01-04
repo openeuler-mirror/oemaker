@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.4
-Release:        5
+Release:        6
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -36,6 +36,7 @@ Patch0010:	0010-do-not-cleanup-pkg.patch
 Patch0011:	0011-support-desktop-iso.patch
 Patch0012:	0012-change-rescue-parameter-with-new-anaconda.patch
 Patch0013:	0013-enable-eject-in-install.img.patch
+Patch0014:	0014-remove-invalid-memtest.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -143,6 +144,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue Dec 27 2022 penghaitao <htpengc@isoftstone.com> - 2.0.4-6
+- ID:NA
+- SUG:NA
+- DESC: Remove invalid memtest
+
 * Mon Dec 26 2022 sunhai <sunhai10@huawei.com> - 2.0.4-5
 - ID:NA
 - SUG:NA
