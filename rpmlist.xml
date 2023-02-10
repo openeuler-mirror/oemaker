@@ -228,7 +228,6 @@
         <packagereq>crypto-policies</packagereq>
         <packagereq>cryptsetup</packagereq>
         <packagereq>cryptsetup-help</packagereq>
-        <packagereq>cryptsetup-reencrypt</packagereq>
         <packagereq>ctags</packagereq>
         <packagereq>ctags-help</packagereq>
         <packagereq>cups</packagereq>
