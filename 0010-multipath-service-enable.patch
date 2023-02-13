@@ -1,0 +1,24 @@
+From ef658cbe96f1bfecd220e3ad2438da6797444337 Mon Sep 17 00:00:00 2001
+From: sun_hai_10 <sunha10@huawei.com>
+Date: Mon, 13 Feb 2023 19:41:27 +0800
+Subject: [PATCH]  multipath service enable
+
+---
+ isomaker/80-openeuler/runtime-postinstall.tmpl | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/isomaker/80-openeuler/runtime-postinstall.tmpl b/isomaker/80-openeuler/runtime-postinstall.tmpl
+index da1aa21..ea705f1 100644
+--- a/isomaker/80-openeuler/runtime-postinstall.tmpl
++++ b/isomaker/80-openeuler/runtime-postinstall.tmpl
+@@ -107,6 +107,7 @@ append etc/depmod.d/dd.conf "search updates built-in"
+ 
+ ## create multipath.conf so multipath gets auto-started
+ append etc/multipath.conf "defaults {\n\tfind_multipaths yes\n\tuser_friendly_names yes\n}\n"
++systemctl enable multipathd.service
+ 
+ ## make lvm auto-activate
+ remove etc/lvm/archive/*
+-- 
+2.23.0
+

@@ -14,7 +14,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        16
+Release:        17
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -36,6 +36,7 @@ Patch0006:	0006-support-usb-flash-drive-mode.patch
 Patch0007:	0007-restore-env-after-selinux-status-changes.patch
 Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0009:	0009-automated-kickstart-function.patch
+Patch0010:	0010-multipath-service-enable.patch
 %ifarch loongarch64
 Patch0100:	0001-add-loongarch-support-for-oemaker.patch
 Patch0101:	0002-add-config-for-loongarch.patch
@@ -154,6 +155,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Mon Feb 13 2023 sunhai <sunhai@huawei.com> - 2.0.3-17
+- ID:NA
+- SUG:NA
+- DESC: enable multipath service
+
 * Thu Dec 15 2022 wangkai <wangkai385@h-partners.com> - 2.0.3-16
 - ID:NA
 - SUG:NA
