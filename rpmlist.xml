@@ -119,7 +119,6 @@
         <packagereq>authselect-compat</packagereq>
         <packagereq>authselect-help</packagereq>
         <packagereq>authselect-libs</packagereq>
-        <packagereq>authz</packagereq>
         <packagereq>avahi</packagereq>
         <packagereq>avahi-autoipd</packagereq>
         <packagereq>avahi-compat-howl</packagereq>
@@ -447,7 +446,6 @@
         <packagereq>irqbalance</packagereq>
         <packagereq>irqbalance-help</packagereq>
         <packagereq>iSulad</packagereq>
-        <packagereq>iSulad-img</packagereq>
         <packagereq>ivtv-firmware</packagereq>
         <packagereq>iw</packagereq>
         <packagereq>iw-help</packagereq>
