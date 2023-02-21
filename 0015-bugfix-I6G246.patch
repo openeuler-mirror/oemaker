@@ -1,0 +1,22 @@
+From 413d2d7c86861f3481a3021d409e743e21a42328 Mon Sep 17 00:00:00 2001
+From: wangchong1995924 <15229716099@163.com>
+Date: Tue, 21 Feb 2023 10:19:14 +0800
+Subject: [PATCH] add raspberrypi-firmware in except
+
+
+diff --git a/isomaker/80-openeuler/runtime-install.tmpl b/isomaker/80-openeuler/runtime-install.tmpl
+index 1856aff..a6144bf 100644
+--- a/isomaker/80-openeuler/runtime-install.tmpl
++++ b/isomaker/80-openeuler/runtime-install.tmpl
+@@ -22,7 +22,7 @@ installpkg --optional *-firmware --except alsa* --except midisport-firmware \
+                        --except crystalhd-firmware --except ivtv-firmware \
+                        --except cx18-firmware --except iscan-firmware \
+                        --except uhd-firmware --except lulzbot-marlin-firmware \
+-                       --except arm-trusted-firmware
++                       --except arm-trusted-firmware --except raspberrypi-firmware
+ installpkg b43-openfwwf
+ 
+ ## install all of the glibc langpacks since otherwise we get no locales
+-- 
+2.27.0
+
