@@ -1,0 +1,81 @@
+From 97039822b6a6a621e7a2bd0790ae7481ffd02642 Mon Sep 17 00:00:00 2001
+From: Jingyun Hua <huajingyun@loongson.cn>
+Date: Thu, 16 Mar 2023 16:57:41 +0800
+Subject: [PATCH 2/3] add loongarch64 support for normal.xml
+
+Signed-off-by: Jingyun Hua <huajingyun@loongson.cn>
+---
+ isomaker/config/loongarch64/normal.xml | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/isomaker/config/loongarch64/normal.xml b/isomaker/config/loongarch64/normal.xml
+index fa7252c..d63041b 100644
+--- a/isomaker/config/loongarch64/normal.xml
++++ b/isomaker/config/loongarch64/normal.xml
+@@ -152,7 +152,6 @@
+       <packagereq type="mandatory">psacct</packagereq>
+       <packagereq type="mandatory">quota</packagereq>
+       <packagereq type="mandatory">openEuler-release</packagereq>
+-      <packagereq type="mandatory">openEuler-performance</packagereq>
+       <packagereq type="mandatory">openEuler-latest-release</packagereq>
+       <packagereq type="mandatory">sudo</packagereq>
+       <packagereq type="mandatory">symlinks</packagereq>
+@@ -161,7 +160,6 @@
+       <packagereq type="mandatory">tree</packagereq>
+       <packagereq type="mandatory">util-linux-user</packagereq>
+       <packagereq type="default">bash-completion</packagereq>
+-      <packagereq type="default">bpftool</packagereq>
+       <packagereq type="default">bzip2</packagereq>
+       <packagereq type="default">chrony</packagereq>
+       <packagereq type="default">cryptsetup</packagereq>
+@@ -270,7 +268,6 @@
+       <packagereq type="mandatory">yum</packagereq>
+       <packagereq type="mandatory">wget</packagereq>
+       <packagereq type="mandatory">openEuler-release</packagereq>
+-      <packagereq type="mandatory">openEuler-performance</packagereq>
+       <packagereq type="mandatory">openEuler-latest-release</packagereq>
+       <packagereq type="mandatory">bc</packagereq>
+       <packagereq type="default">NetworkManager</packagereq>
+@@ -677,7 +674,6 @@
+       <packagereq type="mandatory">numactl</packagereq>
+       <packagereq type="mandatory">numad</packagereq>
+       <packagereq type="default">hwloc</packagereq>
+-      <packagereq type="default">qperf</packagereq>
+     </packagelist>
+   </group>
+   <group>
+@@ -806,7 +802,6 @@
+       <packagereq type="optional">hdparm</packagereq>
+       <packagereq type="optional">tuned</packagereq>
+       <packagereq type="default">powertop</packagereq>
+-      <packagereq type="optional">fio</packagereq>
+       <packagereq type="optional">iperf3</packagereq>
+       <packagereq type="optional">libpfm</packagereq>
+       <packagereq type="optional">tuned-utils</packagereq>
+@@ -943,7 +938,6 @@
+       <packagereq type="mandatory">polkit</packagereq>
+       <packagereq type="mandatory">realmd</packagereq>
+       <packagereq type="mandatory">openEuler-release</packagereq>
+-      <packagereq type="mandatory">openEuler-performance</packagereq>
+       <packagereq type="mandatory">timedatex</packagereq>
+       <packagereq type="default">dhcp</packagereq>
+       <packagereq type="default">NetworkManager-config-server</packagereq>
+@@ -977,7 +971,6 @@
+       <packagereq type="mandatory">pciutils</packagereq>
+       <packagereq type="mandatory">quota</packagereq>
+       <packagereq type="mandatory">openEuler-release</packagereq>
+-      <packagereq type="mandatory">openEuler-performance</packagereq>
+       <packagereq type="mandatory">sudo</packagereq>
+       <packagereq type="mandatory">symlinks</packagereq>
+       <packagereq type="mandatory">systemd-udev</packagereq>
+@@ -985,7 +978,6 @@
+       <packagereq type="mandatory">tree</packagereq>
+       <packagereq type="mandatory">util-linux-user</packagereq>
+       <packagereq type="default">bash-completion</packagereq>
+-      <packagereq type="default">bpftool</packagereq>
+       <packagereq type="default">bzip2</packagereq>
+       <packagereq type="default">chrony</packagereq>
+       <packagereq type="default">cryptsetup</packagereq>
+-- 
+2.33.0
+
