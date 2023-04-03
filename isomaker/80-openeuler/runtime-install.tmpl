@@ -47,6 +47,11 @@ installpkg glibc-all-langpacks
     installpkg syslinux
     installpkg grub2-tools grub2-tools-minimal grub2-tools-extra
 %endif
+%if basearch == "loongarch64":
+    installpkg efibootmgr
+    installpkg grub2-efi-loongarch64 grub2-efi-loongarch64-cdboot grub2-efi-loongarch64-modules 
+    installpkg grub2-tools grub2-tools-minimal grub2-tools-extra
+%endif
 
 ## yay, plymouth
 installpkg plymouth
@@ -112,7 +117,7 @@ installpkg pciutils usbutils ipmitool
 installpkg smartmontools
 installpkg hdparm
 ## see bug #1483278
-%if basearch not in ("arm", "armhfp"):
+%if basearch not in ("arm", "armhfp", "loongarch64"):
     installpkg libmlx4 rdma-core
 %endif
 installpkg rng-tools
