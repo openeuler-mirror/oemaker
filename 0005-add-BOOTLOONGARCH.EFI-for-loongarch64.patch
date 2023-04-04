@@ -1,0 +1,25 @@
+From 4da4780ef5b27ef7f90830c6310a5d484ec0e3a9 Mon Sep 17 00:00:00 2001
+From: Jingyun Hua <huajingyun@loongson.cn>
+Date: Fri, 17 Mar 2023 11:40:50 +0800
+Subject: [PATCH] add BOOTLOONGARCH.EFI for loongarch64
+
+Signed-off-by: Jingyun Hua <huajingyun@loongson.cn>
+---
+ isomaker/80-openeuler/efi.tmpl | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/isomaker/80-openeuler/efi.tmpl b/isomaker/80-openeuler/efi.tmpl
+index e3f0d93..0b5e770 100644
+--- a/isomaker/80-openeuler/efi.tmpl
++++ b/isomaker/80-openeuler/efi.tmpl
+@@ -17,6 +17,7 @@ install boot/efi/EFI/*/gcd${efiarch32|lower}.efi ${EFIBOOTDIR}/grub${efiarch32|l
+ %endif
+ %if efiarch64 == 'LOONGARCH64':
+ install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
++install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/BOOTLOONGARCH.EFI
+ install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/grub${efiarch64|lower}.efi
+ %endif
+ install boot/efi/EFI/*/fonts/unicode.pf2 ${EFIBOOTDIR}/fonts/
+-- 
+2.33.0
+
