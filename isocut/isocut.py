@@ -34,7 +34,16 @@ NECESSARY_TOOLS = (
     'genisoimage',
     'mount',
     'umount',
-    'file')
+    'file',
+)
+
+PIXMAPS_FILES_LIST = (
+    'sidebar-bg.png',
+    'sidebar-logo.png',
+    'topbar-bg.png',
+)
+
+PIXMAPS_PATH = "usr/share/anaconda/pixmaps/"
 
 EXCLUDE_DIR_REPODATA = "repodata"
 EXCLUDE_DIR_PACKAGES = "Packages"
@@ -74,7 +83,10 @@ class IConfig(object):
         self.dest_iso = None
         self.iso_desc = None
         self.ks_file = None
+        self.grub_cfg_file = None
+        self.isolinux_cfg_file = None
         self.rpm_path = None
+        self.anaconda_pixmaps_path = None
         self.temp_path = None
         self.temp_path_old_image = None
         self.temp_path_new_image = None
@@ -138,14 +150,20 @@ def check_input():
     parser.add_argument("dest_iso", help="destination iso image")
     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
-    parser.add_argument("-k", metavar="file_path", help="kickstart file")
+    parser.add_argument("-a", metavar="anaconda_pixmaps_path", help="anaconda pixmaps path")
+    parser.add_argument("-k", metavar="kickstart_file_path", help="kickstart file path")
+    parser.add_argument("-g", metavar="grub_cfg_file_path", help="grub cfg file path")
+    parser.add_argument("-i", metavar="isolinux_cfg_file_path", help="isolinux cfg file path")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
     ICONFIG.dest_iso = args.dest_iso
     ICONFIG.temp_path = args.t
     ICONFIG.rpm_path = args.r
+    ICONFIG.anaconda_pixmaps_path = args.a
     ICONFIG.ks_file = args.k
+    ICONFIG.grub_cfg_file = args.g
+    ICONFIG.isolinux_cfg_file = args.i
 
     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
         print("Must specify source iso image and destination iso image")
@@ -161,11 +179,29 @@ def check_input():
             return 3
         ICONFIG.rpm_path = os.path.realpath(ICONFIG.rpm_path)
 
+    if ICONFIG.anaconda_pixmaps_path is not None:
+        if not os.path.exists(ICONFIG.anaconda_pixmaps_path):
+            print("The anaconda pixmaps path do not exist!!")
+            return 3
+        ICONFIG.anaconda_pixmaps_path = os.path.realpath(ICONFIG.anaconda_pixmaps_path)
+
     if ICONFIG.ks_file is not None:
         if not os.path.isfile(ICONFIG.ks_file):
-            print("Kickstart file do not exist!!")
+            print("The kickstart file do not exist!!")
             return 3
         ICONFIG.ks_file = os.path.realpath(ICONFIG.ks_file)
+
+    if ICONFIG.grub_cfg_file is not None:
+        if not os.path.isfile(ICONFIG.grub_cfg_file):
+            print("The grub cfg file do not exist!!")
+            return 3
+        ICONFIG.grub_cfg_file = os.path.realpath(ICONFIG.grub_cfg_file)
+
+    if ICONFIG.isolinux_cfg_file is not None:
+        if not os.path.isfile(ICONFIG.isolinux_cfg_file):
+            print("The isolinux cfg file do not exist!!")
+            return 3
+        ICONFIG.isolinux_cfg_file = os.path.realpath(ICONFIG.isolinux_cfg_file)
 
     if ICONFIG.temp_path and not os.path.exists(ICONFIG.temp_path):
         os.makedirs(ICONFIG.temp_path)
@@ -385,28 +421,154 @@ def check_deps():
 
     return 0
 
-def remake_iso():
-    if ICONFIG.ks_file is not None:
-        cmd = "cp {0} {1}/{2}".format(ICONFIG.ks_file, ICONFIG.temp_path_new_image, KS_NAME)
-        ret = ICONFIG.run_cmd(cmd)
-        if ret[0] != 0:
-            print("Copy kickstart file failed!!")
-            return 7
-        if os.uname()[-1].strip() == 'x86_64':
-            sed_cmd = r"sed -i '/append/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
-                " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
-            ret = ICONFIG.run_cmd(sed_cmd)
-            if ret[0] != 0:
-                print("Set kickstart file failed!!")
-                return 7
+def mount_rootfs_image(rootfs_image_path, liveos_path):
+    ret, out = ICONFIG.run_cmd("losetup -f")
+    loop_dev = out.strip()
+    if ret != 0:
+        return False
+    os.chdir(liveos_path)
+    cmd = "losetup {0} rootfs.img".format(loop_dev)
+    ICONFIG.run_cmd(cmd)
+    ICONFIG.run_cmd("kpartx -av rootfs.img")
+    cmd = "mount {0} {1}".format(loop_dev, rootfs_image_path)
+    ret = ICONFIG.run_cmd(cmd)
+    if ret[0] != 0:
+        print(f"Mount {loop_dev} failed!!")
+        return False
 
-        sed_cmd = r"sed -i '/inst.stage2/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
-            " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
+    return True
+
+def update_anaconda_pixmaps(rootfs_image_path):
+    for item in PIXMAPS_FILES_LIST:
+        cmd = "cp -af {0}/{1} {2}/{3}".format(ICONFIG.anaconda_pixmaps_path, item, rootfs_image_path, PIXMAPS_PATH)
+        ret = ICONFIG.run_cmd(cmd)
+        if not ret:
+            print(f"Copy {item} failed!!")
+            return False
+
+    return True
+
+def remake_install_img(install_image_path):
+    os.chdir(install_image_path)
+    if os.path.isfile("install.img"):
+        os.remove("install.img")
+
+    cmd = "mksquashfs {0}/squashfs-root install.img".format(install_image_path)
+    ret = ICONFIG.run_cmd(cmd)
+    if not ret:
+        print("Umount install.img failed!!")
+        return False
+
+    cmd = "cp -rf install.img {0}/images/".format(ICONFIG.temp_path_new_image)
+    ret = ICONFIG.run_cmd(cmd)
+    if not ret:
+        print("Copy install.img failed!!")
+        return False
+
+    return True
+
+def umount_rootfs_image(rootfs_image_path):
+    cmd = "umount {0}".format(rootfs_image_path)
+    ret = ICONFIG.run_cmd(cmd)
+    if not ret:
+        print(f"Umount {rootfs_image_path} failed!!")
+        return False
+
+    return True
+
+def replace_anaconda_pixmaps():
+    if ICONFIG.anaconda_pixmaps_path is None:
+        return 0
+
+    install_image_path = ICONFIG.temp_path + "/install_img/" + \
+                         next(tempfile._get_candidate_names())
+    liveos_path = install_image_path + "/squashfs-root/LiveOS"
+    rootfs_image_path = ICONFIG.temp_path + "/rootfs_img/" + \
+                        next(tempfile._get_candidate_names())
+    origin_dir = os.getcwd()
+    os.makedirs(install_image_path)
+    os.makedirs(rootfs_image_path)
+
+    cmd = "cp -af {0}/images/install.img {1}".format(ICONFIG.temp_path_old_image, install_image_path)
+    ret = ICONFIG.run_cmd(cmd)
+    if ret[0] != 0:
+        print("Copy install.img file failed!!")
+        return 10
+
+    os.chdir(install_image_path)
+    ICONFIG.run_cmd("unsquashfs install.img")
+
+    if not mount_rootfs_image(rootfs_image_path, liveos_path):
+        print("Mount rootfs.img failed!!")
+        return 10
+
+    if not update_anaconda_pixmaps(rootfs_image_path):
+        print("Update anaconda pixmaps failed!!")
+        return 10
+
+    if not umount_rootfs_image(rootfs_image_path):
+        print("Umount rootfs.img failed!!")
+        return 10
+
+    if not remake_install_img(install_image_path):
+        print("Remake install image failed!!")
+        return 10
+
+    os.chdir(origin_dir)
+    return 0
+
+def replace_grub_cfg_file():
+    if ICONFIG.grub_cfg_file is None:
+        return 0
+
+    cmd = "cp -af {0} {1}/{2}".format(ICONFIG.grub_cfg_file, ICONFIG.temp_path_new_image, EFILINUX_CFG)
+    ret = ICONFIG.run_cmd(cmd)
+    if not ret:
+        print("Copy grub.cfg failed!!")
+        return 11
+
+    return 0
+
+def replace_isolinux_cfg_file():
+    if ICONFIG.isolinux_cfg_file is None:
+        return 0
+
+    cmd = "cp -af {0} {1}/{2}".format(ICONFIG.isolinux_cfg_file, ICONFIG.temp_path_new_image, ISOLINUX_CFG)
+    ret = ICONFIG.run_cmd(cmd)
+    if not ret:
+        print("Copy isolinux.cfg failed!!")
+        return 12
+
+    return 0
+
+def replace_kickstart_file():
+    if ICONFIG.ks_file is None:
+        return 0
+
+    cmd = "cp {0} {1}/{2}".format(ICONFIG.ks_file, ICONFIG.temp_path_new_image, KS_NAME)
+    ret = ICONFIG.run_cmd(cmd)
+    if ret[0] != 0:
+        print("Copy kickstart file failed!!")
+        return 13
+
+    if os.uname()[-1].strip() == 'x86_64':
+        sed_cmd = r"sed -i '/append/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
+            " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
         ret = ICONFIG.run_cmd(sed_cmd)
         if ret[0] != 0:
-            print("Set efi kickstart file failed!!")
-            return 7
+            print("Set kickstart file failed!!")
+            return 13
 
+    sed_cmd = r"sed -i '/inst.stage2/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
+        " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
+    ret = ICONFIG.run_cmd(sed_cmd)
+    if ret[0] != 0:
+        print("Set efi kickstart file failed!!")
+        return 13
+
+    return 0
+
+def remake_iso():
     if os.uname()[-1].strip() == 'x86_64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\"" \
@@ -506,6 +668,22 @@ def main():
         print("Checking rpm deps ...")
         if check_deps():
             raise Exception('Check rpm deps failed')
+
+        print("Replacing anaconda pixmaps ...")
+        if replace_anaconda_pixmaps():
+            raise Exception('Replace anaconda pixmaps failed')
+
+        print("Replacing EFI config file ...")
+        if replace_grub_cfg_file():
+            raise Exception('Replace EFI config file failed')
+
+        print("Replacing legacy config file ...")
+        if replace_isolinux_cfg_file():
+            raise Exception('Replace legacy config file failed')
+
+        print("Customizing kickstart file ...")
+        if replace_kickstart_file():
+            raise Exception('Customize kickstart file failed')
 
         print("Getting the description of iso image ...")
         if get_iso_desc():
