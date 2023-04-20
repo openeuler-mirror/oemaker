@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.3
-Release:        19
+Release:        20
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -35,7 +35,8 @@ Patch0008:	0008-add-parse_everything_deb_exclude.patch
 Patch0009:	0009-automated-kickstart-function.patch
 Patch0010:	0010-do-not-cleanup-pkg.patch
 Patch0011:	0011-change-rescue-parameter-with-new-anaconda.patch
-Patch0012:  0012-enable-eject-in-install.img.patch
+Patch0012:	0012-enable-eject-in-install.img.patch
+Patch0013:	0013-fix-make-edge-iso-error.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -139,6 +140,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed Apr 19 2023 wangchong <wangchong56@huawei.com> - 2.0.3-20
+- ID:NA
+- SUG:NA
+- DESC: fix make edge iso error
+
 * Tue Jan 3 2023 wangchong <wangchong56@huawei.com> - 2.0.3-19
 - ID:NA
 - SUG:NA
