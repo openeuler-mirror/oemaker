@@ -28,41 +28,35 @@ dnf install -y isocut
 
 #### 使用方法
 
-##### oemaker
+oemaker <font color=#0000FF >_[OPTION...]_</font>
 
-oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
+  Common options:
 
-    optional arguments:
-    -t Type
-       ISO Type include standard debug source everything everything_debug everything_src and netinst
+    -c    Function select: isomaker or isocut
+    -h    Show the help message and exit
 
-    -p Product
-       Product Name, such as: openEuler
-    
-    -v Version
-       version identifier
-    
-    -r RELEASE
-       release information
-    
-    -s REPOSITORY
-       source dnf repository address link(may be listed multiple times)
-    
-    -h 
-       show the help message and exit
+  Make new ISO image selection options:
 
-##### isocut
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
 
-isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
+    -p    Product name, for example, openEuler
 
-  positional arguments:
+    -v    Version number
 
-    origin-iso    origin iso image
-    dest-iso      destination iso image
+    -r    Release information
 
-  optional arguments:
+    -s    Source dnf repository address link (may be listed multiple times)
 
-    -t    the temporary path which must be an absolute path and must be greater than 8g
-    -r    extern rpm packages path
-    -k    Kickstart file path
-    -h    show the help message and exit
+  Customize the ISO selection options:
+
+    -t    The temporary path, which must be an absolute path and must be greater than 8 GB
+
+    -r    The external RPM package path
+
+    -k    The kickstart file path
+
+    -i    The isolinux cfg file path
+
+    -g    The grub cfg file path
+
+    -p    The anaconda pixmaps file path

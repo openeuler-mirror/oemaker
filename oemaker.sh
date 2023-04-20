@@ -42,13 +42,13 @@ Customize the ISO selection options:
     -k The kickstart file path
     -i The isolinux cfg file path
     -g The grub cfg file path
-    -a The anaconda pixmaps file path
+    -p The anaconda pixmaps file path
 EOF
 }
 
 function oemaker_parse_func_class()
 {
-    while getopts "c:ht:p:v:r:s:k:i:g:a:" opt
+    while getopts "c:ht:p:v:r:s:k:i:g:" opt
     do
         case "$opt" in
             c)

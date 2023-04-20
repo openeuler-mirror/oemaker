@@ -150,7 +150,7 @@ def check_input():
     parser.add_argument("dest_iso", help="destination iso image")
     parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
-    parser.add_argument("-a", metavar="anaconda_pixmaps_path", help="anaconda pixmaps path")
+    parser.add_argument("-p", metavar="anaconda_pixmaps_path", help="anaconda pixmaps path")
     parser.add_argument("-k", metavar="kickstart_file_path", help="kickstart file path")
     parser.add_argument("-g", metavar="grub_cfg_file_path", help="grub cfg file path")
     parser.add_argument("-i", metavar="isolinux_cfg_file_path", help="isolinux cfg file path")
@@ -160,7 +160,7 @@ def check_input():
     ICONFIG.dest_iso = args.dest_iso
     ICONFIG.temp_path = args.t
     ICONFIG.rpm_path = args.r
-    ICONFIG.anaconda_pixmaps_path = args.a
+    ICONFIG.anaconda_pixmaps_path = args.p
     ICONFIG.ks_file = args.k
     ICONFIG.grub_cfg_file = args.g
     ICONFIG.isolinux_cfg_file = args.i

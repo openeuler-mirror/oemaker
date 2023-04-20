@@ -28,46 +28,35 @@ Generally, the disk space must be more than 50 GB.
 
 #### Usage
 
-##### oemaker
+oemaker <font color=#0000FF >_[OPTION...]_</font>
 
-oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
+  Common options:
 
-  Optional arguments:
-
-    -t Type
-       ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
-
-    -p Product
-       Product name, for example, openEuler
-
-    -v Version
-       Version number
-
-    -r RELEASE
-       Release information
-
-    -s REPOSITORY
-       Source dnf repository address link (may be listed multiple times)
-
-    -h 
-       Show the help message and exit
-
-##### isocut
-
-isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
-
-  Positional arguments:
-
-    origin-iso    Origin ISO image
-    dest-iso      Destination ISO image
-
-  Optional arguments:
-
-    -t    Temporary path, which must be an absolute path and must be greater than 8 GB
-    -r    External RPM package path
-    -k    Kickstart file path
+    -c    Function select: isomaker or isocut
     -h    Show the help message and exit
 
-  isocut 详细文档请查看《镜像裁剪定制工具使用指南》：
-  
-    https://gitee.com/openeuler/docs/blob/9d89e4e41e7824f984ebc7a00b5f1241b84d1f85/docs/zh/docs/Isocut/%E9%95%9C%E5%83%8F%E8%A3%81%E5%89%AA%E5%AE%9A%E5%88%B6%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.md
+  Make new ISO image selection options:
+
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
+
+    -p    Product name, for example, openEuler
+
+    -v    Version number
+
+    -r    Release information
+
+    -s    Source dnf repository address link (may be listed multiple times)
+
+  Customize the ISO selection options:
+
+    -t    The temporary path, which must be an absolute path and must be greater than 8 GB
+
+    -r    The external RPM package path
+
+    -k    The kickstart file path
+
+    -i    The isolinux cfg file path
+
+    -g    The grub cfg file path
+
+    -p    The anaconda pixmaps file path
