@@ -28,14 +28,11 @@ dnf install -y isocut
 
 #### 使用方法
 
-oemaker <font color=#0000FF >_[OPTION...]_</font>
+##### oemaker
 
-  Common options:
+oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
-    -c    Function select: isomaker or isocut
-    -h    Show the help message and exit
-
-  Make new ISO image selection options:
+  Optional arguments:
 
     -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
 
@@ -47,7 +44,18 @@ oemaker <font color=#0000FF >_[OPTION...]_</font>
 
     -s    Source dnf repository address link (may be listed multiple times)
 
-  Customize the ISO selection options:
+    -h    Show the help message and exit
+
+##### isocut
+
+isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
+
+  Positional arguments:
+
+    origin-iso    origin iso image
+    dest-iso      destination iso image
+
+  Optional arguments:
 
     -t    The temporary path, which must be an absolute path and must be greater than 8 GB
 
@@ -60,3 +68,5 @@ oemaker <font color=#0000FF >_[OPTION...]_</font>
     -g    The grub cfg file path
 
     -p    The anaconda pixmaps file path
+
+    -h    Show the help message and exit

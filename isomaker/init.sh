@@ -16,7 +16,7 @@
 #!/bin/bash
 
 set -e
-function isomaker_usage()
+function oemaker_usage()
 {
     cat << EOF
 Usage: oemaker [-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]
@@ -67,12 +67,12 @@ function parse_cmd_line()
                 ISO_TYPE="$OPTARG"
             ;;
             h)
-                isomaker_usage
+                oemaker_usage
                 exit 0
             ;;
             ?)
                 echo "error: please check the params."
-                isomaker_usage
+                oemaker_usage
                 return 1
             ;;
         esac
