@@ -376,6 +376,8 @@ def regen_repodata():
                 pack.text = pack.text.split(".x86_64")[0]
             elif os.uname()[-1].strip() == 'aarch64':
                 pack.text = pack.text.split(".aarch64")[0]
+            elif os.uname()[-1].strip() == 'loongarch64':
+                pack.text = pack.text.split(".loongarch64")[0]
             pack.text = pack.text.split(".noarch")[0]
         fp_rpm.close()
 
@@ -577,6 +579,11 @@ def remake_iso():
                        "-e images/efiboot.img -no-emul-boot \"%s\"" % (
                            ICONFIG.iso_desc, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
     elif os.uname()[-1].strip() == 'aarch64':
+        make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
+                       "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
+                       "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
+                           ICONFIG.iso_desc, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
+    elif os.uname()[-1].strip() == 'loongarch64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (

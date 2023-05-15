@@ -26,7 +26,7 @@ function gen_debug_iso()
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DBG_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
-    elif [ "$ARCH" == "aarch64" ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DBG_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
@@ -40,7 +40,7 @@ function gen_standard_iso()
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
         isohybrid -u "${OUTPUT_DIR}/${STANDARD_ISO_NAME}"
-    elif [ "$ARCH" == "aarch64" ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${STANDARD_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
@@ -57,7 +57,7 @@ function gen_edge_iso()
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${EDGE_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
-    elif [ "$ARCH" == "aarch64" ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${EDGE_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
@@ -74,7 +74,7 @@ function gen_desktop_iso()
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
-    elif [ "$ARCH" == "aarch64" ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
@@ -91,7 +91,7 @@ function gen_src_iso()
     if [ "$ARCH" == "x86_64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
-    elif [ "$ARCH" == "aarch64" ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0 ] && return 1
     fi
@@ -110,7 +110,7 @@ function gen_everything_iso()
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
         isohybrid -u /result/"${EVE_ISO_NAME}"
-    elif [ "$ARCH" == "aarch64"  ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
     fi
@@ -129,7 +129,7 @@ function gen_everything_debug_iso()
     if [ "$ARCH" == "x86_64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_DEBUG_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
-    elif [ "$ARCH" == "aarch64"  ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_DEBUG_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
     fi
@@ -148,7 +148,7 @@ function gen_everything_src_iso()
     if [ "$ARCH" == "x86_64"  ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_SRC_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
-    elif [ "$ARCH" == "aarch64"  ]; then
+    elif [ "$ARCH" == "aarch64"  ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${EVE_SRC_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
     fi
@@ -162,7 +162,7 @@ function gen_netinst_iso()
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
         [ $? != 0  ] && return 1
         isohybrid -u /result/"${NETINST_ISO_NAME}"
-    elif [ "$ARCH" == "aarch64"  ]; then
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "loongarch64" ]; then
         mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o /result/"${NETINST_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
     fi
     implantisomd5 /result/"${NETINST_ISO_NAME}"

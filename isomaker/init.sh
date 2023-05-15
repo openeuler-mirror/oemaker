@@ -35,7 +35,7 @@ function parse_cmd_line()
 {
     #param init
     ARCH="$(uname -m)"
-    if [ "${ARCH}" = "aarch64" ] || [ "${ARCH}" = "x86_64" ];then
+    if [ "${ARCH}" = "aarch64" ] || [ "${ARCH}" = "x86_64" ] || [ "${ARCH}" = "loongarch64" ];then
         CONFIG_FILE="${CPATH}/config/${ARCH}/standard.conf"
         source "${CONFIG_FILE}"
     else
