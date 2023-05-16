@@ -41,3 +41,9 @@ function env_record()
     echo "If oemaker run failed, run the following cmd restore current env"
     echo "sh ${CPATH}/env_restore.sh"
 }
+
+
+function env_restore()
+{
+	sh "${CPATH}"/env_restore.sh
+}
