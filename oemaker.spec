@@ -10,8 +10,8 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        2.0.3
-Release:        20
+Version:        2.0.5
+Release:        1
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -24,19 +24,6 @@ Source5:        edge_normal_x86_64.xml
 Requires:       createrepo dnf-plugins-core genisoimage isomd5sum grep bash libselinux-utils libxml2
 Requires:       lorax >= 19.6.78-1
 
-Patch0001:	0001-rename-source-iso.patch
-Patch0002:	0002-bugfix-I3QY98.patch
-Patch0003:	0003-change-for-edge-computing.patch
-Patch0004:	0004-bugfix-I3OGUT.patch
-Patch0005:	0005-add-fpi_tail-param-for-grub.patch
-Patch0006:	0006-support-usb-flash-drive-mode.patch
-Patch0007:	0007-restore-env-after-selinux-status-changes.patch
-Patch0008:	0008-add-parse_everything_deb_exclude.patch
-Patch0009:	0009-automated-kickstart-function.patch
-Patch0010:	0010-do-not-cleanup-pkg.patch
-Patch0011:	0011-change-rescue-parameter-with-new-anaconda.patch
-Patch0012:	0012-enable-eject-in-install.img.patch
-Patch0013:	0013-fix-make-edge-iso-error.patch
 
 %description
 a building tool for DVD ISO making and ISO cutting
@@ -48,6 +35,14 @@ BuildRequires: bash
 
 %description -n isocut
 a building tool for ISO cutting
+
+%package -n envmaker
+Summary: a building tool for compile_env making
+Requires: yum dnf-utils createrepo file util-linux genisoimage isomd5sum grep bash libselinux-utils libxml2
+BuildRequires: bash
+
+%description -n envmaker
+a building tool for compile_env making
 
 %prep
 %setup -c
@@ -62,7 +57,7 @@ cp %{SOURCE4} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/aarch64/ed
 rm -rf  %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/edge_normal.xml
 cp %{SOURCE5} %{_builddir}/%{name}-%{version}/%{name}/isomaker/config/x86_64/edge_normal.xml
 cd %{_builddir}/%{name}-%{version}/%{name}
-%autopatch -p1
+
 
 %install
 mkdir -p %{buildroot}/opt/
@@ -104,6 +99,20 @@ install -m 600 %{name}/isocut/config/repodata.template %{buildroot}/%{_sysconfdi
     install -m 600 %{name}/isocut/config/x86_64/anaconda-ks.cfg %{buildroot}/%{_sysconfdir}/isocut/
 %endif
 
+mkdir -p %{buildroot}/opt/envmaker
+mkdir -p %{buildroot}/opt/envmaker/config
+mkdir -p %{buildroot}/opt/envmaker/config/x86_64
+mkdir -p %{buildroot}/opt/envmaker/config/aarch64
+mkdir -p %{buildroot}/opt/envmaker/utils
+
+install -m 700 %{name}/envmaker/envmaker.sh %{buildroot}/opt/envmaker/envmaker.sh
+install -m 700 %{name}/envmaker/utils/chroot.sh %{buildroot}/opt/envmaker/utils/chroot.sh
+install -m 700 %{name}/envmaker/utils/common_fun.sh %{buildroot}/opt/envmaker/utils/common_fun.sh
+install -m 700 %{name}/envmaker/utils/parse_rpmlist_xml.sh %{buildroot}/opt/envmaker/utils/parse_rpmlist_xml.sh
+install -m 400 %{name}/envmaker/config/aarch64/openEuler_repo.conf %{buildroot}/opt/envmaker/config/aarch64/openEuler_repo.conf
+install -m 400 %{name}/envmaker/config/x86_64/openEuler_repo.conf %{buildroot}/opt/envmaker/config/x86_64/openEuler_repo.conf
+install -m 400 %{name}/envmaker/config/compile_env_rpmlist.xml %{buildroot}/opt/envmaker/config/compile_env_rpmlist.xml
+
 %pre
 
 %post
@@ -133,6 +142,11 @@ fi
 %dir %{_sysconfdir}/isocut
 %{_sysconfdir}/isocut/*
 
+%files -n envmaker
+%defattr(-,root,root)
+%dir /opt
+%dir /opt/envmaker
+/opt/envmaker/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT/*
@@ -140,6 +154,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue May 16 2023 chenhuihan <chenhuihan@huawei.com> - 2.0.5-1
+- ID:NA
+- SUG:NA
+- DESC: support envmaker
+
 * Wed Apr 19 2023 wangchong <wangchong56@huawei.com> - 2.0.3-20
 - ID:NA
 - SUG:NA
