@@ -202,8 +202,11 @@ function get_everything_rpms()
     if [ -s parsed_rpmlist_conflict ];then
         for rpmname in $(cat parsed_rpmlist_conflict)
         do
-            sed -i "/^${rpmname}\./d" ava_every_lst
-            echo "${rpmname}" >> conflict_list
+	    cat ava_every_lst | grep "^${rpmname}\."
+	    if [ $? -eq 0 ];then
+		sed -i "/^${rpmname}\./d" ava_every_lst
+		echo "${rpmname}" >> conflict_list
+	    fi
         done
     fi 
     parse_rpmlist_xml "everything_conflict"
@@ -211,8 +214,11 @@ function get_everything_rpms()
     if [ -s parsed_rpmlist_everything_conflict ];then
         for rpmname in $(cat parsed_rpmlist_everything_conflict)
         do
-            sed -i "/^${rpmname}\./d" ava_every_lst
-            echo "${rpmname}" >> conflict_list
+	    cat ava_every_lst | grep "^${rpmname}\."
+	    if [ $? -eq 0 ];then
+		sed -i "/^${rpmname}\./d" ava_every_lst
+		echo "${rpmname}" >> conflict_list
+	    fi
         done
     fi 
 }
@@ -234,7 +240,7 @@ function everything_rpms_download()
 function everything_source_rpms_download()
 {
     mkdir ${EVERY_SRC_DIR}
-    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep ".src" > ava_every_lst
+    yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep "\.src" > ava_every_lst
     parse_rpmlist_xml "src_exclude"
     cat parsed_rpmlist_src_exclude
     if [ -s parsed_rpmlist_src_exclude ];then
@@ -254,6 +260,14 @@ function everything_debug_rpms_download()
 {
     mkdir ${EVERY_DEBUG_DIR}
     yum list --installroot="${BUILD}"/tmp --available | awk '{print $1}' | grep -E "debuginfo|debugsource" > ava_debug_lst
+    parse_rpmlist_xml "everything_debug_exclude"
+    cat parsed_rpmlist_everything_debug_exclude
+    if [ -s parsed_rpmlist_everything_debug_exclude ];then
+        for rpmname in $(cat parsed_rpmlist_everything_debug_exclude)
+        do
+            sed -i "/^${rpmname}\./d" ava_debug_lst
+        done
+    fi
     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${EVERY_DEBUG_DIR}" $(cat ava_debug_lst | tr '\n' ' ')
     if [ $? != 0 ] || [ $(ls ${EVERY_DEBUG_DIR} | wc -l) == 0 ]; then
         echo "yumdownloader with --resolve failed, trying to yumdownloader without --resolve"
