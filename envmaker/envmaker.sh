@@ -102,7 +102,7 @@ function make_output() {
         tar -cf - "${COMPILE_ENV_ROOT}/" | pigz > "${output_name}.tar.gz" &
         wait;chroot "${COMPILE_ENV_ROOT}" /bin/bash -c "rpm -qai|grep 'Source RPM'" > tmp;cat tmp|awk '{print $4}'|sort|uniq > "${output_name}"_source.rpmlist
         chroot "${COMPILE_ENV_ROOT}" /bin/bash -c "rpm -qa" > tmp;cat tmp|sort|uniq > "${output_name}"_binary.rpmlist
-        local mkiso_time=$(data +%Y-%m-%d-%H-%M)
+        local mkiso_time=$(date +%Y-%m-%d-%H-%M)
         result_path="${BUILD_ROOT}/result/${mkiso_time}"
         copy_file_to_result -t ${result_path} "${output_name}.tar.gz" "${output_name}"_binary.rpmlist "${output_name}"_source.rpmlist
     popd
