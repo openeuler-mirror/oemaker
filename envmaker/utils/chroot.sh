@@ -22,14 +22,14 @@ Usage: sh $0 [option]
 
 Warning: This script cannot be used in compile_env
 Options:
-        init            init compile_env and mount the required directories
-                         no option default to init
-        umount    clean up compile_env
+        init         init compile_env and mount the required directories
+                     no option default to init
+        umount       clean up compile_env
         --help       Display help information
 Example:
         enter     compile_env: sh $0
                                            sh $0 init
-        umount compile_env: sh $0 umaout
+        umount compile_env: sh $0 umount
 "
 
 function fn_umount() {
@@ -39,7 +39,7 @@ function fn_umount() {
         while read line;
         do
             if echo $line | grep ${CHROOT_DIR} &> /dev/null; then
-                dir=$(echo $line | awk 'print $2')
+                dir=$(echo $line | awk '{print $2}')
                 umount --lazy $dir
             fi
         done < /proc/mounts
@@ -52,19 +52,19 @@ function fn_umount() {
 
 function fn_init() {
     tac /proc/mounts | grep "${CHROOT_DIR}/dev" &> /dev/null
-    if [[ $? -no 0 ]]; then
+    if [[ $? -ne 0 ]]; then
         mount --bind /dev ${CHROOT_DIR}/dev/
     fi
     tac /proc/mounts | grep "${CHROOT_DIR}/sys" &> /dev/null
-    if [[ $? -no 0 ]]; then
+    if [[ $? -ne 0 ]]; then
         mount --bind /sys ${CHROOT_DIR}/sys/
     fi
     tac /proc/mounts | grep "${CHROOT_DIR}/proc" &> /dev/null
-    if [[ $? -no 0 ]]; then
+    if [[ $? -ne 0 ]]; then
         mount --bind /proc ${CHROOT_DIR}/proc
     fi
     tac /proc/mounts | grep "${CHROOT_DIR}/dev/pts" &> /dev/null
-    if [[ $? -no 0 ]]; then
+    if [[ $? -ne 0 ]]; then
         mount -n -tdevpts -omode=0620,gid=5 none ${CHROOT_DIR}/dev/pts
     fi
 
