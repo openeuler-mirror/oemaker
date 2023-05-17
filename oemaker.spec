@@ -11,7 +11,7 @@ Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
 Version:        2.0.5
-Release:        1
+Release:        2
 BuildRoot:      %{_tmppath}/%{name}
 
 Source:         https://gitee.com/openeuler/oemaker/repository/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -38,7 +38,7 @@ a building tool for ISO cutting
 
 %package -n envmaker
 Summary: a building tool for compile_env making
-Requires: yum dnf-utils createrepo file util-linux genisoimage isomd5sum grep bash libselinux-utils libxml2
+Requires: yum dnf-utils createrepo file util-linux genisoimage isomd5sum grep bash libselinux-utils libxml2 pigz
 BuildRequires: bash
 
 %description -n envmaker
@@ -154,6 +154,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Wed May 17 2023 chenhuihan <chenhuihan@huawei.com> - 2.0.5-2
+- ID:NA
+- SUG:NA
+- DESC: add pigz Requires
+
 * Tue May 16 2023 chenhuihan <chenhuihan@huawei.com> - 2.0.5-1
 - ID:NA
 - SUG:NA
