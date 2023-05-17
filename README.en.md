@@ -2,29 +2,36 @@
 
 #### Description
 
-The source package `oemaker` has two functions: iso making and iso cutting. Correspondingly, two binary RPM packages are generated: `oemaker` and `isocut`.
+The source package `oemaker` has three functions: ISO making and splitting and compile_env making. Accordingly, three software packages are generated: `oemaker` and `isocut` and `envmaker`.
 
-The generated binary RPM package `oemaker` is a building tool for making DVD iso, include standard iso, debug iso, source iso, everything iso, everything source iso,everything debug iso, edge computing iso and netinst iso.
+The generated binary RPM `oemaker` is a build tool for making DVD ISOs, including the Standard ISO, Debug ISO, Source ISO, Everything ISO, Everything Source ISO, Everything Debug ISO, and Netinstall ISO.
 
-The generated binary RPM package `isocut` is a building tool for iso cutting which supports only RPM package-level.
+The generated binary RPM `isocut` is a build tool for ISO splitting, which supports only package-level RPM.
+
+The generated binary RPM `envmaker` is a build tool for making compile_env.
 
 #### Installation
 
-To install `oemaker` and `isocut`, you can use `rpm` or `dnf` package manager command with openEuler repository.
+To install `oemaker` and `isocut` and `envmaker`, you can use the `rpm` or `dnf` package manager command with the openEuler repository.
 
-Install `oemaker` with dnf
+Install `oemaker` with `dnf`
 ```sh
 dnf install -y oemaker
 ```
 
-Install `isocut` with dnf
+Install `isocut` with `dnf`
 ```sh
 dnf install -y isocut
 ```
 
-#### Instructions
+使用 `dnf` 安装 `envmaker`
+```sh
+dnf install -y envmaker
+```
 
-Generally, the disk space is more than 50g.
+#### Instruction
+
+Generally, the disk space must be more than 50 GB.
 
 #### Usage
 
@@ -32,37 +39,55 @@ Generally, the disk space is more than 50g.
 
 oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
-  optional arguments:
-    -t Type
-       ISO Type include standard debug source everything everything_debug everything_src and netinst
+  Optional arguments:
 
-    -p Product
-       Product Name, such as: openEuler
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
 
-    -v Version
-       version identifier
+    -p    Product name, for example, openEuler
 
-    -r RELEASE
-       release information
+    -v    Version number
 
-    -s REPOSITORY
-       source dnf repository address link(may be listed multiple times)
+    -r    Release information
 
-    -h 
-       show the help message and exit
+    -s    Source dnf repository address link (may be listed multiple times)
+
+    -h    Show the help message and exit
 
 ##### isocut
 
 isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
 
-  positional arguments:
+  Positional arguments:
 
-    origin-iso    origin iso image
-    dest-iso      destination iso image
+    origin-iso    Origin ISO image
+    dest-iso      Destination ISO image
 
-  optional arguments:
+  Optional arguments:
 
-    -t    the temporary path which must be an absolute path and must be greater than 8g
-    -r    extern rpm packages path
-    -k    Kickstart file path
-    -h    show the help message and exit
+    -t    The temporary path, which must be an absolute path and must be greater than 8 GB
+
+    -r    The external RPM package path
+
+    -k    The kickstart file path
+
+    -i    The isolinux cfg file path
+
+    -g    The grub cfg file path
+
+    -p    The anaconda pixmaps file path
+
+    -h    Show the help message and exit
+
+  isocut 详细文档请查看《镜像裁剪定制工具使用指南》：
+  
+    https://gitee.com/openeuler/docs/blob/9d89e4e41e7824f984ebc7a00b5f1241b84d1f85/docs/zh/docs/Isocut/%E9%95%9C%E5%83%8F%E8%A3%81%E5%89%AA%E5%AE%9A%E5%88%B6%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.md
+
+##### envmaker
+
+envmaker <font color=#0000FF >_[-p Product] [-v Version]_</font>
+
+  Optional arguments:
+  
+    -p    Product name,for example, openEuler_compile_env
+
+    -v    Version identifier
