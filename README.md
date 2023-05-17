@@ -2,30 +2,36 @@
 
 #### 介绍
 
-源码包oemaker包括两部分功能：iso制作和iso裁剪。相应的，会构建生成两个二进制RPM包：oemaker和isocut.
+`oemaker`源码包拥有三部分功能：iso 格式光盘映像的制作和裁剪和通用编译环境制作。相应地，`oemaker` 源码包会生成三个软件包：`oemaker` 和 `isocut` 和 `envmaker`。
 
-生成的二进制RPM包oemaker是一款用于构建DVD iso的工具，包括标准iso，debug iso, source iso, everything iso, everything debug iso, everything source, edge computing iso and netinst iso等
+生成的二进制 RPM 包 `oemaker` 是用于制作 DVD 光盘映像的构建工具，可制作的映像包括 standard iso、debug iso、source iso、everything iso、everything source iso、everything debug iso 和 netinst iso。
 
-生成的二进制RPM包isocut是一款用于iso裁剪的构建工具，支持RPM包级别的裁剪。
+生成的二进制 RPM 包 `isocut` 是用于裁剪光盘映像的构建工具，支持在 RPM 包级别进行裁剪。
+
+生成的二进制 RPM 包 `envmaker` 是用于制作通用编译环境的构建工具。
 
 #### 安装教程
 
-可以用`rpm`或`dnf`命令通过openEuler repository来安装`oemaker`和`isocut`包。
+可以使用 `rpm` 或 `dnf` 软件包管理器命令通过 openEuler repository 来安装 `oemaker` 和 `isocut` 和 `envmaker`。
 
-用dnf命令安装`oemaker`方式：
+使用 `dnf` 安装 `oemaker`
 ```sh
 dnf install -y oemaker
 ```
 
-用dnf命令安装`isocut`方式：
+使用 `dnf` 安装 `isocut`
 ```sh
 dnf install -y isocut
 ```
 
+使用 `dnf` 安装 `envmaker`
+```sh
+dnf install -y envmaker
+```
+
 #### 使用说明
 
-一般要求磁盘空间大于50G
-
+一般要求磁盘空间大于 50G。
 
 #### 使用方法
 
@@ -33,37 +39,51 @@ dnf install -y isocut
 
 oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
-    optional arguments:
-    -t Type
-       ISO Type include standard debug source everything everything_debug everything_src and netinst
+  Optional arguments:
 
-    -p Product
-       Product Name, such as: openEuler
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
 
-    -v Version
-       version identifier
+    -p    Product name, for example, openEuler
 
-    -r RELEASE
-       release information
+    -v    Version number
 
-    -s REPOSITORY
-       source dnf repository address link(may be listed multiple times)
+    -r    Release information
 
-    -h 
-       show the help message and exit
+    -s    Source dnf repository address link (may be listed multiple times)
+
+    -h    Show the help message and exit
 
 ##### isocut
 
 isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
 
-  positional arguments:
+  Positional arguments:
 
     origin-iso    origin iso image
     dest-iso      destination iso image
 
-  optional arguments:
+  Optional arguments:
 
-    -t    the temporary path which must be an absolute path and must be greater than 8g
-    -r    extern rpm packages path
-    -k    Kickstart file path
-    -h    show the help message and exit
+    -t    The temporary path, which must be an absolute path and must be greater than 8 GB
+
+    -r    The external RPM package path
+
+    -k    The kickstart file path
+
+    -i    The isolinux cfg file path
+
+    -g    The grub cfg file path
+
+    -p    The anaconda pixmaps file path
+
+    -h    Show the help message and exit
+
+##### envmaker
+
+envmaker <font color=#0000FF >_[-p Product] [-v Version]_</font>
+
+  Optional arguments:
+  
+    -p    Product name,for example, openEuler_compile_env
+
+    -v    Version identifier
