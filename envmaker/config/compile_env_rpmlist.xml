@@ -14,8 +14,6 @@
     </packagelist>
 
     <packagelist type="x86_64">
-        <packagereq>coreutils</packagereq>
-        <packagereq>dliso-config</packagereq>
         <packagereq>grub2-efi-x64-modules</packagereq>
     </packagelist>
 
