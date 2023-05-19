@@ -70,11 +70,11 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -k    The kickstart file path
 
-    -i    The isolinux cfg file path
+    -p    The product name
 
-    -g    The grub cfg file path
+    -v    The version number
 
-    -p    The anaconda pixmaps file path
+    -a    The anaconda pixmaps file path
 
     -h    Show the help message and exit
 
