@@ -49,6 +49,7 @@ EXCLUDE_DIR_REPODATA = "repodata"
 EXCLUDE_DIR_PACKAGES = "Packages"
 ISOLINUX_CFG = "isolinux/isolinux.cfg"
 EFILINUX_CFG = "EFI/BOOT/grub.cfg"
+TREEINFO_FILE = ".treeinfo"
 KS_NAME = "_custom.ks"
 DUMMY_FILES = ('images/boot.iso', 'extra')
 LOCK_FILE = "/var/lock/isocut.lock"
@@ -81,10 +82,17 @@ class IConfig(object):
         self.mkdir_flag = False
         self.src_iso = None
         self.dest_iso = None
-        self.iso_desc = None
+        self.old_product_name = None
+        self.input_product_name = None
+        self.old_version_number = None
+        self.input_version_number = None
+        self.old_iso_name = None
+        self.new_iso_name = None
+        self.old_install_title = None
+        self.new_install_title = None
+        self.old_rescue_system_name = None
+        self.new_rescue_system_name = None
         self.ks_file = None
-        self.grub_cfg_file = None
-        self.isolinux_cfg_file = None
         self.rpm_path = None
         self.anaconda_pixmaps_path = None
         self.temp_path = None
@@ -113,13 +121,40 @@ def split_string(start_char, end_char, instring):
     if end_char >= 0:
         return instring[char_start:end_char].strip()
 
-def get_iso_desc():
-    cmd = "file {0}".format(ICONFIG.src_iso)
-    ret = ICONFIG.run_cmd(cmd)
-    if ret[0] != 0:
-        return 1
+def parse_old_treeinfo():
+    old_treeinfo_path = ICONFIG.temp_path_old_image + "/" + TREEINFO_FILE
+    treeinfo_file = open(old_treeinfo_path, "r")
+    treeinfo_content = treeinfo_file.readlines()
 
-    ICONFIG.iso_desc = split_string("'", "'", ret[1])
+    #treeinfo文件第2行为family信息
+    family_line = treeinfo_content[2].strip()
+    ICONFIG.old_product_name = family_line.split('=')[1].strip()
+
+    #treeinfo文件第3行为version信息
+    version_line = treeinfo_content[3].strip()
+    ICONFIG.old_version_number = version_line.split('=')[1].strip()
+
+    return 0
+
+def get_iso_desc():
+    parse_old_treeinfo()
+
+    new_product_name = ICONFIG.input_product_name
+    new_version_number = ICONFIG.input_version_number
+    if ICONFIG.input_product_name is None:
+        new_product_name = ICONFIG.old_product_name
+
+    if ICONFIG.input_version_number is None:
+        new_version_number = ICONFIG.old_version_number
+
+    ICONFIG.old_iso_name = "{0}-{1}".format(ICONFIG.old_product_name, ICONFIG.old_version_number)
+    ICONFIG.old_install_title = "{0} {1}".format(ICONFIG.old_product_name, ICONFIG.old_version_number)
+    ICONFIG.old_rescue_system_name = "{0} system".format(ICONFIG.old_product_name)
+
+    ICONFIG.new_iso_name = "{0}-{1}".format(new_product_name, new_version_number)
+    ICONFIG.new_install_title = "{0} {1}".format(new_product_name, new_version_number)
+    ICONFIG.new_rescue_system_name = "{0} system".format(new_product_name)
+
     return 0
 
 def check_user():
@@ -152,8 +187,8 @@ def check_input():
     parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
     parser.add_argument("-a", metavar="anaconda_pixmaps_path", help="anaconda pixmaps path")
     parser.add_argument("-k", metavar="kickstart_file_path", help="kickstart file path")
-    parser.add_argument("-g", metavar="grub_cfg_file_path", help="grub cfg file path")
-    parser.add_argument("-i", metavar="isolinux_cfg_file_path", help="isolinux cfg file path")
+    parser.add_argument("-p", metavar="input_product_name", help="input product name")
+    parser.add_argument("-v", metavar="input_version_number", help="input version number")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
@@ -162,8 +197,8 @@ def check_input():
     ICONFIG.rpm_path = args.r
     ICONFIG.anaconda_pixmaps_path = args.a
     ICONFIG.ks_file = args.k
-    ICONFIG.grub_cfg_file = args.g
-    ICONFIG.isolinux_cfg_file = args.i
+    ICONFIG.input_product_name = args.p
+    ICONFIG.input_version_number = args.v
 
     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
         print("Must specify source iso image and destination iso image")
@@ -190,18 +225,6 @@ def check_input():
             print("The kickstart file do not exist!!")
             return 3
         ICONFIG.ks_file = os.path.realpath(ICONFIG.ks_file)
-
-    if ICONFIG.grub_cfg_file is not None:
-        if not os.path.isfile(ICONFIG.grub_cfg_file):
-            print("The grub cfg file do not exist!!")
-            return 3
-        ICONFIG.grub_cfg_file = os.path.realpath(ICONFIG.grub_cfg_file)
-
-    if ICONFIG.isolinux_cfg_file is not None:
-        if not os.path.isfile(ICONFIG.isolinux_cfg_file):
-            print("The isolinux cfg file do not exist!!")
-            return 3
-        ICONFIG.isolinux_cfg_file = os.path.realpath(ICONFIG.isolinux_cfg_file)
 
     if ICONFIG.temp_path and not os.path.exists(ICONFIG.temp_path):
         os.makedirs(ICONFIG.temp_path)
@@ -519,27 +542,52 @@ def replace_anaconda_pixmaps():
     os.chdir(origin_dir)
     return 0
 
-def replace_grub_cfg_file():
-    if ICONFIG.grub_cfg_file is None:
+def update_grub_cfg_file():
+    if ICONFIG.input_product_name is None and ICONFIG.input_version_number is None:
         return 0
 
-    cmd = "cp -af {0} {1}/{2}".format(ICONFIG.grub_cfg_file, ICONFIG.temp_path_new_image, EFILINUX_CFG)
-    ret = ICONFIG.run_cmd(cmd)
-    if not ret:
-        print("Copy grub.cfg failed!!")
-        return 11
+    grub_cfg_file_path = ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
+    with open(grub_cfg_file_path, "r") as file:
+        file_content = file.read()
+        file_content = file_content.replace(ICONFIG.old_iso_name, ICONFIG.new_iso_name)
+        file_content = file_content.replace(ICONFIG.old_install_title, ICONFIG.new_install_title)
+        file_content = file_content.replace(ICONFIG.old_rescue_system_name, ICONFIG.new_rescue_system_name)
+    with open(grub_cfg_file_path, "w") as file:
+        file.write(file_content)
+        file.close()
 
     return 0
 
-def replace_isolinux_cfg_file():
-    if ICONFIG.isolinux_cfg_file is None:
+def update_isolinux_cfg_file():
+    if ICONFIG.input_product_name is None and ICONFIG.input_version_number is None:
         return 0
 
-    cmd = "cp -af {0} {1}/{2}".format(ICONFIG.isolinux_cfg_file, ICONFIG.temp_path_new_image, ISOLINUX_CFG)
-    ret = ICONFIG.run_cmd(cmd)
-    if not ret:
-        print("Copy isolinux.cfg failed!!")
-        return 12
+    isolinux_cfg_file_path = ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
+    with open(isolinux_cfg_file_path, "r") as file:
+        file_content = file.read()
+        file_content = file_content.replace(ICONFIG.old_iso_name, ICONFIG.new_iso_name)
+        file_content = file_content.replace(ICONFIG.old_install_title, ICONFIG.new_install_title)
+        file_content = file_content.replace(ICONFIG.old_rescue_system_name, ICONFIG.new_rescue_system_name)
+    with open(isolinux_cfg_file_path, "w") as file:
+        file.write(file_content)
+        file.close()
+
+    return 0
+
+def update_treeinfo_file():
+    if ICONFIG.input_product_name is None and ICONFIG.input_version_number is None:
+        return 0
+
+    treeinfo_file_path = ICONFIG.temp_path_new_image + "/" + TREEINFO_FILE
+    with open(treeinfo_file_path, "r") as file:
+        file_content = file.read()
+        if ICONFIG.input_product_name is not None:
+            file_content = file_content.replace(ICONFIG.old_product_name, ICONFIG.input_product_name)
+        if ICONFIG.input_version_number is not None:
+            file_content = file_content.replace(ICONFIG.old_version_number, ICONFIG.input_version_number)
+    with open(treeinfo_file_path, "w") as file:
+        file.write(file_content)
+        file.close()
 
     return 0
 
@@ -577,17 +625,17 @@ def remake_iso():
                        " -o \"%s\" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot " \
                        "-boot-load-size 4 -boot-info-table -eltorito-alt-boot " \
                        "-e images/efiboot.img -no-emul-boot \"%s\"" % (
-                           ICONFIG.iso_desc, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
+                           ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
     elif os.uname()[-1].strip() == 'aarch64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
-                           ICONFIG.iso_desc, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
+                           ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
     elif os.uname()[-1].strip() == 'loongarch64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
-                           ICONFIG.iso_desc, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
+                           ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
     dest_iso_path = os.path.dirname(ICONFIG.dest_iso)
     if not (dest_iso_path is None or dest_iso_path ==
             "") and not os.path.exists(dest_iso_path):
@@ -676,25 +724,29 @@ def main():
         if check_deps():
             raise Exception('Check rpm deps failed')
 
+        print("Getting the description of iso image ...")
+        if get_iso_desc():
+            raise Exception('Get the description of iso image failed')
+
         print("Replacing anaconda pixmaps ...")
         if replace_anaconda_pixmaps():
             raise Exception('Replace anaconda pixmaps failed')
 
-        print("Replacing EFI config file ...")
-        if replace_grub_cfg_file():
-            raise Exception('Replace EFI config file failed')
+        print("Updating EFI config file ...")
+        if update_grub_cfg_file():
+            raise Exception('Update EFI config file failed')
 
-        print("Replacing legacy config file ...")
-        if replace_isolinux_cfg_file():
-            raise Exception('Replace legacy config file failed')
+        print("Updating legacy config file ...")
+        if update_isolinux_cfg_file():
+            raise Exception('Update legacy config file failed')
+
+        print("Updating treeinfo file ...")
+        if update_treeinfo_file():
+            raise Exception('Update treeinfo file failed')
 
         print("Customizing kickstart file ...")
         if replace_kickstart_file():
             raise Exception('Customize kickstart file failed')
-
-        print("Getting the description of iso image ...")
-        if get_iso_desc():
-            raise Exception('Get the description of iso image failed')
 
         print("Remaking iso ...")
         if remake_iso():
