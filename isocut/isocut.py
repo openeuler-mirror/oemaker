@@ -547,6 +547,9 @@ def update_grub_cfg_file():
         return 0
 
     grub_cfg_file_path = ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
+    if not os.path.isfile(grub_cfg_file_path):
+        return 0
+
     with open(grub_cfg_file_path, "r") as file:
         file_content = file.read()
         file_content = file_content.replace(ICONFIG.old_iso_name, ICONFIG.new_iso_name)
@@ -563,6 +566,9 @@ def update_isolinux_cfg_file():
         return 0
 
     isolinux_cfg_file_path = ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
+    if not os.path.isfile(isolinux_cfg_file_path):
+        return 0
+
     with open(isolinux_cfg_file_path, "r") as file:
         file_content = file.read()
         file_content = file_content.replace(ICONFIG.old_iso_name, ICONFIG.new_iso_name)
