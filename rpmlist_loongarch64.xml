@@ -827,6 +827,7 @@
         <packagereq>multipath-tools</packagereq>
         <packagereq>multipath-tools-help</packagereq>
         <packagereq>mysql</packagereq>
+        <packagereq>mysql-selinux</packagereq>
         <packagereq>nautilus</packagereq>
         <packagereq>nautilus-help</packagereq>
         <packagereq>ncompress</packagereq>
@@ -1236,6 +1237,7 @@
         <packagereq>thin-provisioning-tools-help</packagereq>
         <packagereq>tigervnc</packagereq>
         <packagereq>tigervnc-server-minimal</packagereq>
+        <packagereq>tigervnc-selinux</packagereq>
         <packagereq>time</packagereq>
         <packagereq>timedatex</packagereq>
         <packagereq>timedatex-help</packagereq>
@@ -1249,6 +1251,7 @@
         <packagereq>totem-pl-parser</packagereq>
         <packagereq>totem-pl-parser-help</packagereq>
         <packagereq>tpm2-abrmd</packagereq>
+        <packagereq>tpm2-abrmd-selinux</packagereq>
         <packagereq>tpm2-abrmd-help</packagereq>
         <packagereq>tpm2-tools</packagereq>
         <packagereq>tpm2-tools-help</packagereq>
