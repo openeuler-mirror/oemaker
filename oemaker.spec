@@ -10,7 +10,7 @@ Name:           oemaker
 Summary:        a duilding tool for DVD ISO making and ISO cutting
 License:        Mulan PSL v2
 Group:          System/Management
-Version:        3.0.1
+Version:        3.0.2
 Release:        1
 BuildRoot:      %{_tmppath}/%{name}
 
@@ -154,6 +154,11 @@ rm -rf %{buildroot}
 rm -rf $RPM_BUILD_DIR/%{name}
 
 %changelog
+* Tue May 23 2023 chenhuihan <chenhuihan@huawei.com> - 3.0.2-1
+- ID:NA
+- SUG:NA
+- DESC: fix isocut
+
 * Mon May 22 2023 chenhuihan <chenhuihan@huawei.com> - 3.0.1-1
 - ID:NA
 - SUG:NA
