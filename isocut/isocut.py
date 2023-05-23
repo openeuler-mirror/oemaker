@@ -50,6 +50,7 @@ EXCLUDE_DIR_PACKAGES = "Packages"
 ISOLINUX_CFG = "isolinux/isolinux.cfg"
 EFILINUX_CFG = "EFI/BOOT/grub.cfg"
 TREEINFO_FILE = ".treeinfo"
+OS_RELEASE_FILE = "etc/os-release"
 KS_NAME = "_custom.ks"
 DUMMY_FILES = ('images/boot.iso', 'extra')
 LOCK_FILE = "/var/lock/isocut.lock"
@@ -86,6 +87,8 @@ class IConfig(object):
         self.input_product_name = None
         self.old_version_number = None
         self.input_version_number = None
+        self.executor_arch = None
+        self.src_iso_arch = None
         self.old_iso_name = None
         self.new_iso_name = None
         self.old_install_title = None
@@ -94,7 +97,7 @@ class IConfig(object):
         self.new_rescue_system_name = None
         self.ks_file = None
         self.rpm_path = None
-        self.anaconda_pixmaps_path = None
+        self.install_pic_path = None
         self.temp_path = None
         self.temp_path_old_image = None
         self.temp_path_new_image = None
@@ -134,10 +137,19 @@ def parse_old_treeinfo():
     version_line = treeinfo_content[3].strip()
     ICONFIG.old_version_number = version_line.split('=')[1].strip()
 
+    #treeinfo文件第6行为arch信息
+    version_line = treeinfo_content[6].strip()
+    ICONFIG.src_iso_arch = version_line.split('=')[1].strip()
+
     return 0
 
 def get_iso_desc():
     parse_old_treeinfo()
+
+    ICONFIG.executor_arch = os.uname()[-1].strip()
+    if ICONFIG.executor_arch != ICONFIG.src_iso_arch:
+        print("The ISO architecture is inconsistent with the executor architecture, please check.")
+        return 1
 
     new_product_name = ICONFIG.input_product_name
     new_version_number = ICONFIG.input_version_number
@@ -147,12 +159,18 @@ def get_iso_desc():
     if ICONFIG.input_version_number is None:
         new_version_number = ICONFIG.old_version_number
 
-    ICONFIG.old_iso_name = "{0}-{1}".format(ICONFIG.old_product_name, ICONFIG.old_version_number)
-    ICONFIG.old_install_title = "{0} {1}".format(ICONFIG.old_product_name, ICONFIG.old_version_number)
+    ICONFIG.old_iso_name = "{0}-{1}-{2}".format(ICONFIG.old_product_name,
+                                                ICONFIG.old_version_number,
+                                                ICONFIG.src_iso_arch)
+    ICONFIG.old_install_title = "{0} {1}".format(ICONFIG.old_product_name,
+                                                 ICONFIG.old_version_number)
     ICONFIG.old_rescue_system_name = "{0} system".format(ICONFIG.old_product_name)
 
-    ICONFIG.new_iso_name = "{0}-{1}".format(new_product_name, new_version_number)
-    ICONFIG.new_install_title = "{0} {1}".format(new_product_name, new_version_number)
+    ICONFIG.new_iso_name = "{0}-{1}-{2}".format(new_product_name,
+                                                new_version_number,
+                                                ICONFIG.src_iso_arch)
+    ICONFIG.new_install_title = "{0} {1}".format(new_product_name,
+                                                 new_version_number)
     ICONFIG.new_rescue_system_name = "{0} system".format(new_product_name)
 
     return 0
@@ -183,22 +201,22 @@ def check_input():
     parser = argparse.ArgumentParser(description='Cut openEuler iso to small one')
     parser.add_argument("source_iso", help="source iso image")
     parser.add_argument("dest_iso", help="destination iso image")
-    parser.add_argument("-t", metavar="temporary_path", default="/tmp", help="temporary path")
-    parser.add_argument("-r", metavar="rpm_path", help="extern rpm packages path")
-    parser.add_argument("-a", metavar="anaconda_pixmaps_path", help="anaconda pixmaps path")
-    parser.add_argument("-k", metavar="kickstart_file_path", help="kickstart file path")
-    parser.add_argument("-p", metavar="input_product_name", help="input product name")
-    parser.add_argument("-v", metavar="input_version_number", help="input version number")
+    parser.add_argument("-temp", metavar="temporary_workspace", default="/tmp", help="temporary path")
+    parser.add_argument("-rpms", metavar="rpm_path", help="extern rpm packages path")
+    parser.add_argument("-install_pic", metavar="install_picture_path", help="install bg picture path")
+    parser.add_argument("-kickstart", metavar="kickstart_file_path", help="kickstart file path")
+    parser.add_argument("-product", metavar="product_name", help="product name")
+    parser.add_argument("-version", metavar="version_number", help="version number")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
     ICONFIG.dest_iso = args.dest_iso
-    ICONFIG.temp_path = args.t
-    ICONFIG.rpm_path = args.r
-    ICONFIG.anaconda_pixmaps_path = args.a
-    ICONFIG.ks_file = args.k
-    ICONFIG.input_product_name = args.p
-    ICONFIG.input_version_number = args.v
+    ICONFIG.temp_path = args.temp
+    ICONFIG.rpm_path = args.rpms
+    ICONFIG.install_pic_path = args.install_pic
+    ICONFIG.ks_file = args.kickstart
+    ICONFIG.input_product_name = args.product
+    ICONFIG.input_version_number = args.version
 
     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
         print("Must specify source iso image and destination iso image")
@@ -214,11 +232,11 @@ def check_input():
             return 3
         ICONFIG.rpm_path = os.path.realpath(ICONFIG.rpm_path)
 
-    if ICONFIG.anaconda_pixmaps_path is not None:
-        if not os.path.exists(ICONFIG.anaconda_pixmaps_path):
+    if ICONFIG.install_pic_path is not None:
+        if not os.path.exists(ICONFIG.install_pic_path):
             print("The anaconda pixmaps path do not exist!!")
             return 3
-        ICONFIG.anaconda_pixmaps_path = os.path.realpath(ICONFIG.anaconda_pixmaps_path)
+        ICONFIG.install_pic_path = os.path.realpath(ICONFIG.install_pic_path)
 
     if ICONFIG.ks_file is not None:
         if not os.path.isfile(ICONFIG.ks_file):
@@ -465,7 +483,7 @@ def mount_rootfs_image(rootfs_image_path, liveos_path):
 
 def update_anaconda_pixmaps(rootfs_image_path):
     for item in PIXMAPS_FILES_LIST:
-        cmd = "cp -af {0}/{1} {2}/{3}".format(ICONFIG.anaconda_pixmaps_path, item, rootfs_image_path, PIXMAPS_PATH)
+        cmd = "cp -af {0}/{1} {2}/{3}".format(ICONFIG.install_pic_path, item, rootfs_image_path, PIXMAPS_PATH)
         ret = ICONFIG.run_cmd(cmd)
         if not ret:
             print(f"Copy {item} failed!!")
@@ -501,8 +519,8 @@ def umount_rootfs_image(rootfs_image_path):
 
     return True
 
-def replace_anaconda_pixmaps():
-    if ICONFIG.anaconda_pixmaps_path is None:
+def replace_install_pic():
+    if ICONFIG.install_pic_path is None:
         return 0
 
     install_image_path = ICONFIG.temp_path + "/install_img/" + \
@@ -625,19 +643,19 @@ def replace_kickstart_file():
     return 0
 
 def remake_iso():
-    if os.uname()[-1].strip() == 'x86_64':
+    if ICONFIG.src_iso_arch == 'x86_64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\"" \
                        " -o \"%s\" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot " \
                        "-boot-load-size 4 -boot-info-table -eltorito-alt-boot " \
                        "-e images/efiboot.img -no-emul-boot \"%s\"" % (
                            ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
-    elif os.uname()[-1].strip() == 'aarch64':
+    elif ICONFIG.src_iso_arch == 'aarch64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
                            ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
-    elif os.uname()[-1].strip() == 'loongarch64':
+    elif ICONFIG.src_iso_arch == 'loongarch64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
@@ -718,6 +736,10 @@ def main():
         if init_workspace():
             raise Exception('Init workspace failed')
 
+        print("Getting the description of iso image ...")
+        if get_iso_desc():
+            raise Exception('Get the description of iso image failed')
+
         print("Downloading rpms ...")
         if select_rpm():
             raise Exception('Download rpms failed')
@@ -730,13 +752,9 @@ def main():
         if check_deps():
             raise Exception('Check rpm deps failed')
 
-        print("Getting the description of iso image ...")
-        if get_iso_desc():
-            raise Exception('Get the description of iso image failed')
-
-        print("Replacing anaconda pixmaps ...")
-        if replace_anaconda_pixmaps():
-            raise Exception('Replace anaconda pixmaps failed')
+        print("Replacing install background pictures ...")
+        if replace_install_pic():
+            raise Exception('Replace install background pictures failed')
 
         print("Updating EFI config file ...")
         if update_grub_cfg_file():
