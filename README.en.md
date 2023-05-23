@@ -74,7 +74,7 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -v    The version number
 
-    -a    The anaconda pixmaps file path
+    -i    The path of background pictures during the installation
 
     -h    Show the help message and exit
 
