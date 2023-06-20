@@ -140,12 +140,11 @@ function global_var_init()
         YUMREPO="$CONFIG_YUM_REPOS"
         CONFIG="$CONFIG_PACKAGES_LIST_FILE"
     else
-        YUMREPO="-s $YUM_REPO"
+        YUMREPO="$YUM_REPO"
         CONFIG=""
     fi
     REPOS=$(echo "$REPOS1")
     if [ "X$REPOS" != "X" ];then
-        REPOS=$(echo " ""${REPOS}" | sed 's/ / -s /g')
         YUMREPO="${REPOS}"
     fi
     set -e
