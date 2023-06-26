@@ -19,7 +19,7 @@ set -e
 function create_install_img()
 {
     tmprep=''
-    repos=($(echo "$YUMREPO" | sed 's/-s//g'))
+    repos=($(echo "$YUMREPO"))
     for rep in  ${repos[@]}
     do
         if [[ "${rep}" =~ "Epol" ]];then
