@@ -20,7 +20,7 @@ function env_restore()
 {
     # 使用环境变量执行恢复
     source /etc/profile >> /dev/null
-    if [ "$SELINUX_FLAG" -eq 0 ] || [ "$SELINUX_FLAG" -eq 1 ]; then
+    if [ "x$SELINUX_FLAG" == "x0" ] || [ "x$SELINUX_FLAG" == "x1" ]; then
         setenforce "${SELINUX_FLAG}"
     else
         echo "/etc/profile have no value: SELINUX_FLAG"
