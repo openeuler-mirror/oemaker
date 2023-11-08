@@ -4,7 +4,7 @@
 
 The source package `oemaker` has three functions: ISO making and splitting and compile_env making. Accordingly, three software packages are generated: `oemaker` and `isocut` and `envmaker`.
 
-The generated binary RPM `oemaker` is a build tool for making DVD ISOs, including the Standard ISO, Debug ISO, Source ISO, Everything ISO, Everything Source ISO, Everything Debug ISO, and Netinstall ISO.
+The generated binary RPM `oemaker` is a build tool for making DVD ISOs, including the Standard ISO, Debug ISO, Source ISO, Everything ISO, Everything Source ISO, Everything Debug ISO, LiveCD ISO, and Netinstall ISO.
 
 The generated binary RPM `isocut` is a build tool for ISO splitting, which supports only package-level RPM.
 
@@ -41,7 +41,7 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
   Optional arguments:
 
-    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, livecd, and netinst 
 
     -p    Product name, for example, openEuler
 

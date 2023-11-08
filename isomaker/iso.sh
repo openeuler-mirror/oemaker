@@ -168,3 +168,59 @@ function gen_netinst_iso()
     implantisomd5 /result/"${NETINST_ISO_NAME}"
     return 0
 }
+
+function gen_livecd_iso() {
+    #pre
+    yum install -y anaconda libselinux-utils
+    export LD_PRELOAD=libgomp.so.1
+    rm -rf /etc/yum.repos.d/EnCloudOS.repo || true
+
+    root_pwd=$(cat config/common/livecd/root_pwd)
+    if [[ "x${root_pwd}" == "x" ]];then
+        echo "error: password config is empty, please check password config in file config/common/livecd/root_pwd"
+        return 1
+    fi
+    rpmlist=$(cat config/${ARCH}/livecd/rpmlist)
+    if [[ "x${rpmlist}" == "x" ]];then
+        echo "error: rpmlist is empty, please check rpmlist in file config/${ARCH}/livecd/rpmlist"
+        return 1
+    fi
+    work_dir="$(pwd)/workspace/"
+    cfg_dir="${work_dir}/config"
+
+    if [ -d "${work_dir}" ]; then rm -rf "$work_dir";fi
+    mkdir -p $work_dir
+
+    if [ -d "${cfg_dir}" ]; then rm -rf "${cfg_dir}";fi
+    mkdir -p "${cfg_dir}"
+    mkdir -p /var/adm/fillup-templates/
+    cp config/${ARCH}/livecd/livecd_${ARCH}.ks ${cfg_dir}
+    sed -i 's#ROOT_PWD#'${root_pwd}'#' ${cfg_dir}/livecd_${ARCH}.ks
+    sed -i 's#INSTALL_REPO#'${REPOS1}'#' ${cfg_dir}/livecd_${ARCH}.ks
+    for rpm_name in ${rpmlist}
+    do
+        sed -i '/@core/a '${rpm_name}'' ${cfg_dir}/livecd_${ARCH}.ks
+    done
+    rm -rf /usr/share/lorax/templates.d/99-generic/live
+    cp -r config/common/livecd/live /usr/share/lorax/templates.d/99-generic/
+    cp -r config/${ARCH}/livecd/config_files /usr/share/lorax/templates.d/99-generic/live
+    # build
+
+    livemedia-creator --make-iso --ks=${cfg_dir}/livecd_"${ARCH}".ks --nomacboot --no-virt --project "${LIVE_CD_ISO_NAME}" --releasever "${VERSION}${RELEASE}" --tmp "${work_dir}" --anaconda-arg="--nosave=all_ks" --dracut-arg="--xz" --dracut-arg="--add livenet dmsquash-live convertfs pollcdrom qemu qemu-net" --dracut-arg="--omit" --dracut-arg="plymouth" --dracut-arg="--no-hostonly" --dracut-arg="--debug" --dracut-arg="--no-early-microcode" --dracut-arg="--nostrip"
+    cd ${work_dir}/*/images
+    LIVECD_TAR=$(ls *.iso)
+    livecd_source_list=$(echo "$LIVE_CD_ISO_NAME"|sed 's/.iso//g')_source.rpmlist
+    livecd_binary_list=$(echo "$LIVE_CD_ISO_NAME"|sed 's/.iso//g')_binary.rpmlist
+    mv "${LIVECD_TAR}" "${LIVE_CD_ISO_NAME}"
+    mkdir -p {rootfs,squa};mount ../LiveOS/squashfs.img squa/;mount squa/LiveOS/rootfs.img rootfs/
+    chroot rootfs/ /bin/bash -c "rpm -qai|grep 'Source RPM'" > tmp;cat tmp|awk '{print $4}'|sort|uniq > "$livecd_source_list"
+    chroot rootfs/ /bin/bash -c "rpm -qa" > tmp;cat tmp|sort|uniq > "$livecd_binary_list"
+    umount rootfs squa
+    mkdir -p /result/;rm -rf /result/*;mv "${LIVE_CD_ISO_NAME}" /result
+    mv "$livecd_source_list" /result
+    mv "$livecd_binary_list" /result
+    cd -
+    rm -rf ${work_dir}
+    implantisomd5 /result/"${LIVE_CD_ISO_NAME}" --force
+    return 0
+}
