@@ -98,7 +98,7 @@ class IConfig(object):
         self.ks_file = None
         self.rpm_path = None
         self.install_pic_path = None
-        self.auto_cut = None
+        self.cut_packages = None
         self.temp_path = None
         self.temp_path_old_image = None
         self.temp_path_new_image = None
@@ -208,7 +208,7 @@ def check_input():
     parser.add_argument("-kickstart", metavar="kickstart_file_path", help="kickstart file path")
     parser.add_argument("-product", metavar="product_name", help="product name")
     parser.add_argument("-version", metavar="version_number", help="version number")
-    parser.add_argument("-auto_cut", metavar="auto_cut", help="auto cut, yes/no, default is no")
+    parser.add_argument("-cut_packages", metavar="cut_packages", help="cut packages, yes/no, default is yes")
 
     args = parser.parse_args()
     ICONFIG.src_iso = args.source_iso
@@ -219,7 +219,7 @@ def check_input():
     ICONFIG.ks_file = args.kickstart
     ICONFIG.input_product_name = args.product
     ICONFIG.input_version_number = args.version
-    ICONFIG.auto_cut = args.auto_cut
+    ICONFIG.cut_packages = args.cut_packages
 
     if ICONFIG.src_iso is None or ICONFIG.dest_iso is None:
         print("Must specify source iso image and destination iso image")
@@ -229,10 +229,10 @@ def check_input():
         print("Source iso image not exist!!")
         return 3
 
-    if ICONFIG.auto_cut and ICONFIG.auto_cut.upper() == "YES":
-        ICONFIG.auto_cut = True
+    if not ICONFIG.cut_packages or ICONFIG.cut_packages == "yes":
+        ICONFIG.cut_packages = True
     else:
-        ICONFIG.auto_cut = False
+        ICONFIG.cut_packages = False
 
     if ICONFIG.rpm_path is not None:
         if not os.path.exists(ICONFIG.rpm_path):
@@ -362,7 +362,7 @@ def create_repo_conf():
 
 # 安装额外的RPM包
 def select_rpm():
-    if not ICONFIG.auto_cut:
+    if not ICONFIG.cut_packages:
         cmd = "cp -ar {}/Packages/ {}".format(ICONFIG.temp_path_old_image, ICONFIG.temp_path_new_image)
         ret = ICONFIG.run_cmd(cmd)
         if ret[0] != 0:
@@ -415,7 +415,7 @@ def indent(elem, level=0):
             elem.tail = i
 
 def regen_repodata():
-    if not ICONFIG.auto_cut:
+    if not ICONFIG.cut_packages:
         cmd = "cp -ar {}/repodata/ {}".format(ICONFIG.temp_path_old_image, ICONFIG.temp_path_new_image)
         ret = ICONFIG.run_cmd(cmd)
         if ret[0] != 0:
@@ -467,7 +467,7 @@ def regen_repodata():
 
 # 检查裁剪的ISO所需的rpm包的依赖关系
 def check_deps():
-    if not ICONFIG.auto_cut:
+    if not ICONFIG.cut_packages:
         print("Skip checking rpm deps!!")
         return 0
 
