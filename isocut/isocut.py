@@ -229,7 +229,7 @@ def check_input():
         print("Source iso image not exist!!")
         return 3
 
-    if not ICONFIG.cut_packages or ICONFIG.cut_packages == "yes":
+    if ICONFIG.cut_packages and ICONFIG.cut_packages.upper() == "YES":
         ICONFIG.cut_packages = True
     else:
         ICONFIG.cut_packages = False
@@ -239,7 +239,6 @@ def check_input():
             print("RPM path do not exist!!")
             return 3
         ICONFIG.rpm_path = os.path.realpath(ICONFIG.rpm_path)
-
 
     if ICONFIG.install_pic_path is not None:
         if not os.path.exists(ICONFIG.install_pic_path):
@@ -368,6 +367,8 @@ def select_rpm():
         if ret[0] != 0:
             print("Package list replication failed!!")
             return 5
+        print("Package list replication skipped!!")
+        return 0
 
     cmd = "rm -rf {0}".format(ICONFIG.cache_path)
     ret = ICONFIG.run_cmd(cmd)
@@ -419,8 +420,10 @@ def regen_repodata():
         cmd = "cp -ar {}/repodata/ {}".format(ICONFIG.temp_path_old_image, ICONFIG.temp_path_new_image)
         ret = ICONFIG.run_cmd(cmd)
         if ret[0] != 0:
-            print('repodata replication failed')
+            print('repodata replication failed!!')
             return 6
+        print('repodata replication skipped!!')
+        return 0
 
     product_xml = ICONFIG.temp_path_new_image + \
         "/" + EXCLUDE_DIR_REPODATA + "/product.xml"
