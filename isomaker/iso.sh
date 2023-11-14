@@ -171,13 +171,12 @@ function gen_netinst_iso()
 
 function gen_livecd_iso() {
     #pre
-    yum install -y anaconda libselinux-utils
     export LD_PRELOAD=libgomp.so.1
     rm -rf /etc/yum.repos.d/EnCloudOS.repo || true
 
-    root_pwd=$(cat config/common/livecd/root_pwd)
+    root_pwd=$(cat config/${ARCH}/livecd/root_pwd)
     if [[ "x${root_pwd}" == "x" ]];then
-        echo "error: password config is empty, please check password config in file config/common/livecd/root_pwd"
+        echo "error: password config is empty, please check password config in file config/${ARCH}/livecd/root_pwd"
         return 1
     fi
     rpmlist=$(cat config/${ARCH}/livecd/rpmlist)
@@ -202,8 +201,7 @@ function gen_livecd_iso() {
         sed -i '/@core/a '${rpm_name}'' ${cfg_dir}/livecd_${ARCH}.ks
     done
     rm -rf /usr/share/lorax/templates.d/99-generic/live
-    cp -r config/common/livecd/live /usr/share/lorax/templates.d/99-generic/
-    cp -r config/${ARCH}/livecd/config_files /usr/share/lorax/templates.d/99-generic/live
+    cp -r config/${ARCH}/livecd/live /usr/share/lorax/templates.d/99-generic/
     # build
 
     livemedia-creator --make-iso --ks=${cfg_dir}/livecd_"${ARCH}".ks --nomacboot --no-virt --project "${LIVE_CD_ISO_NAME}" --releasever "${VERSION}${RELEASE}" --tmp "${work_dir}" --anaconda-arg="--nosave=all_ks" --dracut-arg="--xz" --dracut-arg="--add livenet dmsquash-live convertfs pollcdrom qemu qemu-net" --dracut-arg="--omit" --dracut-arg="plymouth" --dracut-arg="--no-hostonly" --dracut-arg="--debug" --dracut-arg="--no-early-microcode" --dracut-arg="--nostrip"
