@@ -229,10 +229,7 @@ def check_input():
         print("Source iso image not exist!!")
         return 3
 
-    if ICONFIG.cut_packages and ICONFIG.cut_packages.upper() == "YES":
-        ICONFIG.cut_packages = True
-    else:
-        ICONFIG.cut_packages = False
+    ICONFIG.cut_packages = (ICONFIG.cut_packages == "yes")  # yes-裁剪ISO变小；no/默认空-不裁剪
 
     if ICONFIG.rpm_path is not None:
         if not os.path.exists(ICONFIG.rpm_path):
