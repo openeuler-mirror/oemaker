@@ -171,6 +171,7 @@ function gen_netinst_iso()
 
 function gen_livecd_iso() {
     #pre
+    set +e
     export LD_PRELOAD=libgomp.so.1
     rm -rf /etc/yum.repos.d/EnCloudOS.repo || true
 
@@ -198,13 +199,14 @@ function gen_livecd_iso() {
     sed -i 's#INSTALL_REPO#'${REPOS1}'#' ${cfg_dir}/livecd_${ARCH}.ks
     for rpm_name in ${rpmlist}
     do
-        sed -i '/@core/a '${rpm_name}'' ${cfg_dir}/livecd_${ARCH}.ks
+        sed -i '/%packages/a '${rpm_name}'' ${cfg_dir}/livecd_${ARCH}.ks
     done
     rm -rf /usr/share/lorax/templates.d/99-generic/live
     cp -r config/${ARCH}/livecd/live /usr/share/lorax/templates.d/99-generic/
     # build
 
     livemedia-creator --make-iso --ks=${cfg_dir}/livecd_"${ARCH}".ks --nomacboot --no-virt --project "${LIVE_CD_ISO_NAME}" --releasever "${VERSION}${RELEASE}" --tmp "${work_dir}" --anaconda-arg="--nosave=all_ks" --dracut-arg="--xz" --dracut-arg="--add livenet dmsquash-live convertfs pollcdrom qemu qemu-net" --dracut-arg="--omit" --dracut-arg="plymouth" --dracut-arg="--no-hostonly" --dracut-arg="--debug" --dracut-arg="--no-early-microcode" --dracut-arg="--nostrip"
+    [ $? != 0  ] && return 1
     cd ${work_dir}/*/images
     LIVECD_TAR=$(ls *.iso)
     livecd_source_list=$(echo "$LIVE_CD_ISO_NAME"|sed 's/.iso//g')_source.rpmlist

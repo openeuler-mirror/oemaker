@@ -67,5 +67,4 @@ rm /etc/pki/ca-trust/extracted/java/cacerts
 %end
 
 %packages --excludedocs
-@core --nodefaults
 %end
