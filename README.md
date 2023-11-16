@@ -78,6 +78,8 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -h    Show the help message and exit
 
+    -c    cut packages, yes/no, default is yes
+
   isocut 详细文档请查看《镜像裁剪定制工具使用指南》：
   
     https://gitee.com/openeuler/docs/blob/9d89e4e41e7824f984ebc7a00b5f1241b84d1f85/docs/zh/docs/Isocut/%E9%95%9C%E5%83%8F%E8%A3%81%E5%89%AA%E5%AE%9A%E5%88%B6%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.md
