@@ -71,6 +71,16 @@ function mk_oe_main()
         return 0
     fi
 
+    if [ "${ISO_TYPE}" == "livecd" ]; then
+        gen_livecd_iso
+        if [ $? -ne 0 ]; then
+            echo "create livecd iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${LIVE_CD_ISO_NAME}"
+        return 0
+    fi
+
     create_install_img
 
     echo "Creating repos..."

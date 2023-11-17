@@ -22,7 +22,7 @@ function oemaker_usage()
 Usage: oemaker [-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]
 
 optional arguments:
-    -t Type        ISO Type, include standard debug source everything everything_debug everything_src and netinst
+    -t Type        ISO Type, include standard debug source everything everything_debug everything_src livecd and netinst
     -p Product     Product Name, such as: openEuler
     -v Version     version identifier
     -r RELEASE     release information
@@ -78,7 +78,7 @@ function parse_cmd_line()
         esac
     done
 
-    for typename in standard source debug everything_debug everything everything_src netinst edge desktop
+    for typename in standard source debug everything_debug everything everything_src netinst edge desktop livecd
     do
         if [ "${typename}" == "${ISO_TYPE}" ];then
             return 0
@@ -116,6 +116,7 @@ function global_var_init()
         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-netinst-${ARCH}-dvd.iso"
         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-edge-${ARCH}-dvd.iso"
         DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${RELEASE}-${ARCH}-dvd.iso"
+        LIVE_CD_ISO_NAME="${PRODUCT}-livecd-${VERSION}-${RELEASE}-${ARCH}.iso"
     else
         RELEASE_NAME="${PRODUCT}-${VERSION}-${ARCH}"
         STANDARD_ISO_NAME="${PRODUCT}-${VERSION}-${ARCH}-dvd.iso"
@@ -127,6 +128,7 @@ function global_var_init()
         NETINST_ISO_NAME="${PRODUCT}-${VERSION}-netinst-${ARCH}-dvd.iso"
         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-edge-${ARCH}-dvd.iso"
         DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${ARCH}-dvd.iso"
+        LIVE_CD_ISO_NAME="${PRODUCT}-livecd-${VERSION}-${ARCH}.iso"
     fi
 
     [ ! -d "${BUILD}" ] && mkdir -p "${BUILD}"

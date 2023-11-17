@@ -4,7 +4,7 @@
 
 `oemaker`源码包拥有三部分功能：iso 格式光盘映像的制作和裁剪和通用编译环境制作。相应地，`oemaker` 源码包会生成三个软件包：`oemaker` 和 `isocut` 和 `envmaker`。
 
-生成的二进制 RPM 包 `oemaker` 是用于制作 DVD 光盘映像的构建工具，可制作的映像包括 standard iso、debug iso、source iso、everything iso、everything source iso、everything debug iso 和 netinst iso。
+生成的二进制 RPM 包 `oemaker` 是用于制作 DVD 光盘映像的构建工具，可制作的映像包括 standard iso、debug iso、source iso、everything iso、everything source iso、everything debug iso livecd iso 和 netinst iso。
 
 生成的二进制 RPM 包 `isocut` 是用于裁剪光盘映像的构建工具，支持在 RPM 包级别进行裁剪。
 
@@ -41,7 +41,7 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
   Optional arguments:
 
-    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, and netinst 
+    -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, livecd, and netinst 
 
     -p    Product name, for example, openEuler
 
