@@ -78,6 +78,8 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -h    Show the help message and exit
 
+    -c    cut packages, yes/no, default is yes
+
 ##### envmaker
 
 envmaker <font color=#0000FF >_[-p Product] [-v Version]_</font>
