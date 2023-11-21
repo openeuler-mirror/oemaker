@@ -275,7 +275,7 @@
         <packagereq>docbook-dtds</packagereq>
         <packagereq>docbook-style-xsl</packagereq>
         <packagereq>docker-engine</packagereq>
-        <packagereq>docker-runc</packagereq>
+        <packagereq>runc</packagereq>
         <packagereq>dos2unix</packagereq>
         <packagereq>dosfstools</packagereq>
         <packagereq>dosfstools-help</packagereq>
