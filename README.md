@@ -78,7 +78,7 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -h    Show the help message and exit
 
-    -c    cut packages, yes/no, default is yes
+    -c    Cut packages, yes/no, default is yes
 
   isocut 详细文档请查看《镜像裁剪定制工具使用指南》：
   
