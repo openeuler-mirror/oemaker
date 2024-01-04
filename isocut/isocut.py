@@ -653,14 +653,26 @@ def replace_kickstart_file():
         return 13
 
     if os.uname()[-1].strip() == 'x86_64':
-        sed_cmd = r"sed -i '/append/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
+        get_stage2_cmd = r"sed -n '0,/^.*inst.stage2=\([^ ]*\) .*$/ s/^.*inst.stage2=\([^ ]*\) .*$/\1/p' " + \
+            ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
+        ret, sout = ICONFIG.run_cmd(get_stage2_cmd)
+        if ret != 0:
+            print("Set kickstart file failed!!")
+            return 13
+        sed_cmd = r"sed -i '/append/ s/$/ inst.ks=" + sout.rstrip() + ":\/" + KS_NAME + \
             " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
         ret = ICONFIG.run_cmd(sed_cmd)
         if ret[0] != 0:
             print("Set kickstart file failed!!")
             return 13
 
-    sed_cmd = r"sed -i '/inst.stage2/ s/$/ inst.ks=cdrom:\/dev\/cdrom:\/" + KS_NAME + \
+    get_stage2_cmd = r"sed -n '0,/^.*inst.stage2=\([^ ]*\) .*$/ s/^.*inst.stage2=\([^ ]*\) .*$/\1/p' " + \
+        ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
+    ret, sout = ICONFIG.run_cmd(get_stage2_cmd)
+    if ret != 0:
+        print("Set efi kickstart file failed!!")
+        return 13
+    sed_cmd = r"sed -i '/inst.stage2/ s/$/ inst.ks=" + sout.rstrip() + ":\/" + KS_NAME + \
         " inst.multilib/g' " + ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
     ret = ICONFIG.run_cmd(sed_cmd)
     if ret[0] != 0:
