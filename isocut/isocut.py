@@ -640,7 +640,7 @@ def replace_kickstart_file():
             return 13
 
     get_stage2_cmd = r"sed -n '0,/^.*inst.stage2=\([^ ]*\) .*$/ s/^.*inst.stage2=\([^ ]*\) .*$/\1/p' " + \
-        ICONFIG.temp_path_new_image + "/" + ISOLINUX_CFG
+        ICONFIG.temp_path_new_image + "/" + EFILINUX_CFG
     ret, sout = ICONFIG.run_cmd(get_stage2_cmd)
     if ret != 0:
         print("Set efi kickstart file failed!!")
