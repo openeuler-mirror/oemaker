@@ -17,6 +17,10 @@
         <packagereq>grub2-efi-x64-modules</packagereq>
     </packagelist>
 
+    <packagelist type="riscv64">
+        <packagereq>grub2-efi-riscv64-modules</packagereq>
+    </packagelist>
+
     <packagelist type="common">
         <packagereq>acl</packagereq>
         <packagereq>acpica-tools</packagereq>
