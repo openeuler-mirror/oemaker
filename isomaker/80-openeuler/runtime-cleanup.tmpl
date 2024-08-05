@@ -337,8 +337,10 @@ runcmd chroot ${root} find /boot \! -name "vmlinuz*" \
 ## (broken systemd service links lead to confusing noise at boot)
 ## NOTE: not checking /var because we want to keep /var/run
 ## NOTE: Excluding /etc/mtab which links to /proc/self/mounts for systemd
+%if basearch != 'riscv64':
 runcmd chroot ${root} find -L /etc /usr -xdev -type l -and \! -name "mtab" \
                 -printf "removing broken symbolic link %p -> %l\n" -delete
+%endif
 
 ## Clean up some of the mess pulled in by webkitgtk via yelp
 ## libwebkit2gtk links to a handful of libraries in gstreamer and

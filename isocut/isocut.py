@@ -442,6 +442,8 @@ def regen_repodata():
                 pack.text = pack.text.split(".aarch64")[0]
             elif os.uname()[-1].strip() == 'loongarch64':
                 pack.text = pack.text.split(".loongarch64")[0]
+            elif os.uname()[-1].strip() == 'riscv64':
+                pack.text = pack.text.split(".riscv64")[0]
             pack.text = pack.text.split(".noarch")[0]
         fp_rpm.close()
 
@@ -689,12 +691,7 @@ def remake_iso():
                        "-boot-load-size 4 -boot-info-table -eltorito-alt-boot " \
                        "-e images/efiboot.img -no-emul-boot \"%s\"" % (
                            ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
-    elif ICONFIG.src_iso_arch == 'aarch64':
-        make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
-                       "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
-                       "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
-                           ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
-    elif ICONFIG.src_iso_arch == 'loongarch64':
+    elif ICONFIG.src_iso_arch == 'aarch64' or ICONFIG.src_iso_arch == 'loongarch64' or ICONFIG.src_iso_arch == 'riscv64':
         make_iso_cmd = "genisoimage -R -J -T -r -l -d -input-charset utf-8 " \
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (

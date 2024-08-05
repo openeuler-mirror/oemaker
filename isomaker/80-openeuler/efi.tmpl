@@ -10,6 +10,9 @@ mkdir ${EFIBOOTDIR}/fonts/
 install boot/efi/EFI/*/grubloongarch64.efi  ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
 install boot/efi/EFI/*/grubloongarch64.efi  ${EFIBOOTDIR}/BOOTLOONGARCH.EFI
 install boot/efi/EFI/*/grubloongarch64.efi  ${EFIBOOTDIR}/grub${efiarch64|lower}.efi
+%elif efiarch64 == 'RISCV64':
+install boot/efi/EFI/openEuler/gcd${efiarch64|lower}.efi  ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
+install boot/efi/EFI/openEuler/gcd${efiarch64|lower}.efi  ${EFIBOOTDIR}/grub${efiarch64|lower}.EFI
 %else:
 install boot/efi/EFI/*/shim${efiarch64|lower}.efi ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
 install boot/efi/EFI/*/mm${efiarch64|lower}.efi ${EFIBOOTDIR}/
