@@ -33,6 +33,7 @@
       <packagereq type="mandatory">libcurl-devel</packagereq>
       <packagereq type="mandatory">libffi-devel</packagereq>
       <packagereq type="mandatory">libgcrypt-devel</packagereq>
+      <packagereq type="mandatory">libhugetlbfs-devel</packagereq>
       <packagereq type="mandatory">libnl3-devel</packagereq>
       <packagereq type="mandatory">libselinux-devel</packagereq>
       <packagereq type="mandatory">libusbx-devel</packagereq>
@@ -113,13 +114,10 @@
       <packagereq type="mandatory">dosfstools</packagereq>
       <packagereq type="mandatory">dracut-network</packagereq>
       <packagereq type="mandatory">e2fsprogs</packagereq>
-      <packagereq type="mandatory">efibootmgr</packagereq>
       <packagereq type="mandatory">fcoe-utils</packagereq>
       <packagereq type="mandatory">firewalld</packagereq>
       <packagereq type="mandatory">gfs2-utils</packagereq>
       <packagereq type="mandatory">glibc-all-langpacks</packagereq>
-      <packagereq type="mandatory">grub2-efi-riscv64</packagereq>
-      <packagereq type="mandatory">grub2-efi-riscv64-cdboot</packagereq>
       <packagereq type="mandatory">grub2-tools</packagereq>
       <packagereq type="mandatory">grub2-tools-extra</packagereq>
       <packagereq type="mandatory">iscsi-initiator-utils</packagereq>
@@ -362,9 +360,10 @@
       <packagereq type="default">patchutils</packagereq>
       <packagereq type="default">perl-Fedora-VSP</packagereq>
       <packagereq type="default">perl-generators</packagereq>
-      <packagereq type="default">pesign</packagereq>
       <packagereq type="default">source-highlight</packagereq>
       <packagereq type="default">systemtap</packagereq>
+      <packagereq type="default">valgrind</packagereq>
+      <packagereq type="default">valgrind-devel</packagereq>
       <packagereq type="optional">babel</packagereq>
       <packagereq type="optional">chrpath</packagereq>
       <packagereq type="optional">expect</packagereq>
@@ -379,7 +378,7 @@
       <packagereq type="optional">rpmlint</packagereq>
     </packagelist>
   </group>
- <group>
+  <group>
     <id>dial-up</id>
     <name>Dial-up Networking Support</name>
     <name xml:lang="zh_CN">拨号网络支持</name>
@@ -427,6 +426,7 @@
       <packagereq type="optional">krb5-pkinit</packagereq>
       <packagereq type="optional">krb5-workstation</packagereq>
       <packagereq type="optional">luksmeta</packagereq>
+      <packagereq type="optional">nscd</packagereq>
       <packagereq type="optional">nss-pam-ldapd</packagereq>
       <packagereq type="optional">openldap-clients</packagereq>
       <packagereq type="optional">samba-winbind</packagereq>
@@ -451,28 +451,6 @@
       <packagereq type="mandatory">nfs4-acl-tools</packagereq>
       <packagereq type="mandatory">samba</packagereq>
       <packagereq type="optional">open-isns</packagereq>
-    </packagelist>
-  </group>
-  <group>
-    <id>opengauss-server</id>
-    <name>openGauss Server</name>
-    <name xml:lang="zh_CN">openGauss数据库</name>
-    <description>openGauss is an open source relational database management system.</description>
-    <description xml:lang="zh_CN">openGauss一款开源的关系数据库管理系统。</description>
-    <default>true</default>
-    <uservisible>false</uservisible>
-    <packagelist>
-      <packagereq type="mandatory">lz4-devel</packagereq>
-      <packagereq type="mandatory">protobuf-devel</packagereq>
-      <packagereq type="mandatory">snappy-devel</packagereq>
-      <packagereq type="mandatory">zstd-devel</packagereq>
-      <packagereq type="mandatory">boost-devel</packagereq>
-      <packagereq type="mandatory">libcgroup-devel</packagereq>
-      <packagereq type="mandatory">unixODBC-devel</packagereq>
-      <packagereq type="mandatory">jemalloc-devel</packagereq>
-      <packagereq type="mandatory">java-1.8.0-openjdk-devel</packagereq>
-      <packagereq type="mandatory">libedit-devel</packagereq>
-      <packagereq type="mandatory">libaio-devel</packagereq>
     </packagelist>
   </group>
   <group>
@@ -615,6 +593,40 @@
     <packagelist>
     </packagelist>
   </group>
+    <group>
+    <id>gnome-desktop</id>
+    <name>GNOME</name>
+    <name xml:lang="zh_CN">GNOME</name>
+    <description>GNOME is a highly intuitive and user friendly desktop environment.</description>
+    <description xml:lang="zh_CN">GNOME 是一个非常直观且用户友好的桌面环境。</description>
+    <default>false</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">at-spi2-atk</packagereq>
+      <packagereq type="mandatory">at-spi2-core</packagereq>
+      <packagereq type="mandatory">avahi</packagereq>
+      <packagereq type="mandatory">dconf</packagereq>
+      <packagereq type="mandatory">firewall-config</packagereq>
+      <packagereq type="mandatory">fprintd-pam</packagereq>
+      <packagereq type="mandatory">glib-networking</packagereq>
+      <packagereq type="mandatory">gnome-dictionary</packagereq>
+      <packagereq type="mandatory">gnome-packagekit</packagereq>
+      <packagereq type="mandatory">gnome-packagekit-updater</packagereq>
+      <packagereq type="mandatory">libcanberra-gtk2</packagereq>
+      <packagereq type="mandatory">libcanberra-gtk3</packagereq>
+      <packagereq type="mandatory">librsvg2</packagereq>
+      <packagereq type="mandatory">metacity</packagereq>
+      <packagereq type="mandatory">nm-connection-editor</packagereq>
+      <packagereq type="mandatory">PackageKit-command-not-found</packagereq>
+      <packagereq type="mandatory">PackageKit-gtk3-module</packagereq>
+      <packagereq type="mandatory">sane-backends-drivers-scanners</packagereq>
+      <packagereq type="mandatory">vinagre</packagereq>
+      <packagereq type="mandatory">vino</packagereq>
+      <packagereq type="mandatory">xdg-user-dirs-gtk</packagereq>
+      <packagereq type="mandatory">yelp</packagereq>
+      <packagereq type="optional">vim-X11</packagereq>
+    </packagelist>
+  </group>
   <group>
     <id>guest-desktop-agents</id>
     <name>Guest Desktop Agents</name>
@@ -669,6 +681,7 @@
     <uservisible>true</uservisible>
     <packagelist>
       <packagereq type="mandatory">PackageKit</packagereq>
+      <packagereq type="mandatory">cockpit</packagereq>
       <packagereq type="mandatory">cockpit</packagereq>
       <packagereq type="mandatory">openssh-server</packagereq>
       <packagereq type="default">sscg</packagereq>
@@ -733,7 +746,6 @@
     <default>true</default>
     <uservisible>false</uservisible>
     <packagelist>
-      <packagereq type="mandatory">firefox</packagereq>
     </packagelist>
   </group>
     <group>
@@ -760,8 +772,11 @@
       <packagereq type="mandatory">numactl</packagereq>
       <packagereq type="mandatory">numad</packagereq>
       <packagereq type="default">hwloc</packagereq>
+      <packagereq type="default">libhugetlbfs</packagereq>
+      <packagereq type="default">libhugetlbfs-utils</packagereq>
       <packagereq type="default">mstflint</packagereq>
       <packagereq type="default">qperf</packagereq>
+      <packagereq type="optional">libvma</packagereq>
     </packagelist>
   </group>
   <group>
@@ -854,6 +869,7 @@
       <packagereq type="optional">freeradius</packagereq>
       <packagereq type="optional">libreswan</packagereq>
       <packagereq type="optional">radvd</packagereq>
+      <packagereq type="optional">rsyslog-gnutls</packagereq>
       <packagereq type="optional">rsyslog</packagereq>
       <packagereq type="optional">rsyslog-mysql</packagereq>
       <packagereq type="optional">rsyslog-pgsql</packagereq>
@@ -879,6 +895,7 @@
       <packagereq type="optional">freeradius</packagereq>
       <packagereq type="optional">libreswan</packagereq>
       <packagereq type="optional">radvd</packagereq>
+      <packagereq type="optional">rsyslog-gnutls</packagereq>
       <packagereq type="optional">rsyslog</packagereq>
       <packagereq type="optional">rsyslog-mysql</packagereq>
       <packagereq type="optional">rsyslog-pgsql</packagereq>
@@ -918,7 +935,6 @@
       <packagereq type="mandatory">sysstat</packagereq>
       <packagereq type="default">pcp</packagereq>
       <packagereq type="default">pcp-conf</packagereq>
-      <packagereq type="default">pcp-devel</packagereq>
       <packagereq type="default">pcp-doc</packagereq>
       <packagereq type="default">pcp-export-pcp2graphite</packagereq>
       <packagereq type="default">pcp-export-pcp2influxdb</packagereq>
@@ -1093,9 +1109,7 @@
       <packagereq type="default">cockpit</packagereq>
       <packagereq type="default">net-snmp</packagereq>
       <packagereq type="default">net-snmp-utils</packagereq>
-      <packagereq type="default">openwsman-client</packagereq>
       <packagereq type="default">tog-pegasus</packagereq>
-      <packagereq type="optional">openwsman-server</packagereq>
     </packagelist>
   </group>
   <group>
@@ -1245,6 +1259,7 @@
       <packagereq type="default">libstoragemgmt</packagereq>
       <packagereq type="default">nano</packagereq>
       <packagereq type="default">rng-tools</packagereq>
+      <packagereq type="mandatory">rsyslog-gnutls</packagereq>
       <packagereq type="mandatory">rsyslog</packagereq>
       <packagereq type="mandatory">rsyslog-relp</packagereq>
       <packagereq type="default">nmap</packagereq>
@@ -1295,6 +1310,7 @@
       <packagereq type="optional">net-snmp-utils</packagereq>
       <packagereq type="optional">oddjob</packagereq>
       <packagereq type="optional">oddjob-mkhomedir</packagereq>
+      <packagereq type="optional">rear</packagereq>
       <packagereq type="optional">sysstat</packagereq>
       <packagereq type="optional">x3270-x11</packagereq>
     </packagelist>
@@ -1309,6 +1325,7 @@
     <uservisible>false</uservisible>
     <packagelist>
       <packagereq type="mandatory">libvirt</packagereq>
+      <packagereq type="mandatory">libvirt-admin</packagereq>
       <packagereq type="mandatory">libvirt-client</packagereq>
       <packagereq type="mandatory">libvirt-daemon</packagereq>
       <packagereq type="mandatory">libvirt-daemon-config-network</packagereq>
@@ -1330,11 +1347,11 @@
       <packagereq type="mandatory">libvirt-daemon-driver-storage-rbd</packagereq>
       <packagereq type="mandatory">libvirt-daemon-driver-storage-scsi</packagereq>
       <packagereq type="mandatory">libvirt-daemon-kvm</packagereq>
-      <packagereq type="mandatory">libvirt-daemon-plugin-sanlock</packagereq>
       <packagereq type="mandatory">libvirt-daemon-qemu</packagereq>
       <packagereq type="mandatory">libvirt-devel</packagereq>
       <packagereq type="mandatory">libvirt-docs</packagereq>
       <packagereq type="mandatory">libvirt-libs</packagereq>
+      <packagereq type="mandatory">libvirt-lock-sanlock</packagereq>
       <packagereq type="mandatory">libvirt-nss</packagereq>
       <packagereq type="mandatory">python3-libvirt</packagereq>
       <packagereq type="mandatory">qemu-help</packagereq>
@@ -1366,6 +1383,17 @@
       <packagereq type="optional">freerdp</packagereq>
       <packagereq type="optional">tigervnc</packagereq>
       <packagereq type="optional">vinagre</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>smart-card</id>
+    <name>Smart Card Support</name>
+    <name xml:lang="zh_CN">智能卡支持</name>
+    <description>Support for using smart card authentication.</description>
+    <description xml:lang="zh_CN">支持使用智能卡验证。</description>
+    <default>true</default>
+    <uservisible>true</uservisible>
+    <packagelist>
     </packagelist>
   </group>
   <group>
@@ -1535,7 +1563,6 @@
       <groupid>smb-server</groupid>
       <groupid>virtualization-hypervisor</groupid>
       <groupid>web-server</groupid>
-      <groupid>opengauss-server</groupid>
     </optionlist>
   </environment>
   <environment>
@@ -1560,6 +1587,7 @@
   <langpacks>
     <match install="aspell-%s" name="aspell"/>
     <match install="autocorr-%s" name="autocorr-en"/>
+    <match install="gnome-getting-started-docs-%s" name="gnome-getting-started-docs"/>
     <match install="hunspell-%s" name="hunspell"/>
     <match install="hyphen-%s" name="hyphen"/>
     <match install="libreoffice-help-%s" name="libreoffice-core"/>

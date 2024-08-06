@@ -54,6 +54,7 @@ OS_RELEASE_FILE = "etc/os-release"
 KS_NAME = "_custom.ks"
 DUMMY_FILES = ('images/boot.iso', 'extra')
 LOCK_FILE = "/var/lock/isocut.lock"
+SYSID_PPC = "PPC"
 RESULT = 0
 
 # 锁处理
@@ -324,7 +325,7 @@ def create_yum_conf():
 
 def create_repo_conf():
     if ICONFIG.rpm_path is not None:
-        cmd = "createrepo {0}".format(ICONFIG.rpm_path)
+        cmd = "createrepo -d {0}".format(ICONFIG.rpm_path)
         ret = ICONFIG.run_cmd(cmd)
         if ret[0] != 0:
             print("Create extern rpm repo failed!!")
@@ -444,6 +445,8 @@ def regen_repodata():
                 pack.text = pack.text.split(".loongarch64")[0]
             elif os.uname()[-1].strip() == 'riscv64':
                 pack.text = pack.text.split(".riscv64")[0]
+            elif os.uname()[-1].strip() == 'ppc64le'[0]:
+                pack.text = pack.text.split(".ppc64le")[0]
             pack.text = pack.text.split(".noarch")[0]
         fp_rpm.close()
 
@@ -458,7 +461,7 @@ def regen_repodata():
         f_product.seek(0, 0)
         f_product.write(contents_str)
         f_product.close()
-    cmd = "createrepo -g {0} {1}".format(product_xml, ICONFIG.temp_path_new_image)
+    cmd = "createrepo -d -g {0} {1}".format(product_xml, ICONFIG.temp_path_new_image)
     ret = ICONFIG.run_cmd(cmd)
     if ret[0] != 0:
         print("Regenerate repodata failed!!")
@@ -696,6 +699,11 @@ def remake_iso():
                        "-joliet-long -allow-multidot -allow-leading-dots -no-bak -V \"%s\" " \
                        "-o \"%s\" -e images/efiboot.img -no-emul-boot \"%s\"" % (
                            ICONFIG.new_iso_name, ICONFIG.dest_iso, ICONFIG.temp_path_new_image)
+    elif os.uname()[-1].strip() == 'ppc64le':
+        make_iso_cmd = "genisoimage -joliet-long -U  -J  -R -T -part -hfs -r -l -sysid \"%s\" " \
+                       "-V \"%s\" -o \"%s\" -chrp-boot -hfs-bless boot/grub/powerpc-ieee1275 " \
+                       "-no-desktop -allow-multidot " % (
+                           SYSID_PPC, ICONFIG.iso_desc, ICONFIG.dest_iso)
     dest_iso_path = os.path.dirname(ICONFIG.dest_iso)
     if not (dest_iso_path is None or dest_iso_path ==
             "") and not os.path.exists(dest_iso_path):

@@ -1,0 +1,103 @@
+<%page args="kernels, runtime_img, basearch, libdir, inroot, outroot, product, isolabel"/>
+<%
+configdir="tmp/config_files/ppc"
+BOOTDIR="ppc"
+GRUBDIR="boot/grub"
+STAGE2IMG="images/install.img"
+LORAXDIR="usr/share/lorax/"
+
+## Don't allow spaces or escape characters in the iso label
+def valid_label(ch):
+    return ch.isalnum() or ch == '_'
+
+isolabel = ''.join(ch if valid_label(ch) else '-' for ch in isolabel)
+
+import os
+from os.path import basename
+from pylorax.sysutils import joinpaths
+
+# Test the runtime_img, if it is > 4GiB we need to set -iso-level to 3
+if os.stat(joinpaths(inroot, runtime_img)).st_size >= 4*1024**3:
+    isoargs = "-iso-level 3"
+else:
+    isoargs = ""
+%>
+
+mkdir images
+install ${runtime_img} ${STAGE2IMG}
+treeinfo stage2 mainimage ${STAGE2IMG}
+
+## install the bootloaders
+##   ppc/chrp: for normal PPC systems.
+##             uses /ppc/bootinfo.txt   in the iso root
+##             uses /boot/grub/grub.cfg in the iso root
+mkdir ${BOOTDIR}
+## boot stuff for normal (CHRP/PREP) PPC systems
+install ${configdir}/bootinfo.txt ${BOOTDIR}
+
+mkdir ${GRUBDIR}/powerpc-ieee1275
+## "()" means the current device to grub2
+runcmd grub2-mkimage --format=powerpc-ieee1275 --directory=/usr/lib/grub/powerpc-ieee1275 --prefix="()/"${GRUBDIR} \
+--output=${outroot}/${GRUBDIR}/powerpc-ieee1275/core.elf iso9660 ext2 ofnet net tftp http
+install /usr/lib/grub/powerpc-ieee1275/*.mod ${GRUBDIR}/powerpc-ieee1275
+install /usr/lib/grub/powerpc-ieee1275/*.lst ${GRUBDIR}/powerpc-ieee1275
+
+install ${configdir}/grub.cfg.in     ${GRUBDIR}/grub.cfg
+replace @PRODUCT@ '${product.name}'  ${GRUBDIR}/grub.cfg
+replace @VERSION@ ${product.version} ${GRUBDIR}/grub.cfg
+replace @ROOT@ 'inst.stage2=hd:LABEL=${isolabel|udev}' ${GRUBDIR}/grub.cfg
+
+## Install kernel and bootloader config (in separate places for each arch)
+%for kernel in kernels:
+    <%
+      bits = 64
+      ## separate dirs/images for each arch
+      KERNELDIR=BOOTDIR+"/ppc%s" % bits
+    %>
+    ## install kernel
+    mkdir ${KERNELDIR}
+    installkernel images-${kernel.arch} ${kernel.path} ${KERNELDIR}/vmlinuz
+    installinitrd images-${kernel.arch} ${kernel.initrd.path} ${KERNELDIR}/initrd.img
+
+    treeinfo images-${kernel.arch} zimage
+%endfor
+
+# Create optional product.img and updates.img
+<% filegraft=""; images=["product", "updates"] %>
+%for img in images:
+    %if exists("%s/%s/" % (LORAXDIR, img)):
+        installimg ${LORAXDIR}/${img}/ images/${img}.img
+        treeinfo images-${basearch} ${img}.img images/${img}.img
+        <% filegraft += " images/{0}.img={1}/images/{0}.img".format(img, outroot) %>
+    %endif
+%endfor
+
+# Inherit iso-graft/ if it exists from external templates
+<%
+    import os
+    if os.path.exists(workdir + "/iso-graft"):
+        filegraft += " " + workdir + "/iso-graft"
+%>
+
+# Add the license files
+%for f in glob("/usr/share/licenses/*-release/*"):
+    install ${f} ${f|basename}
+    <% filegraft += " {0}={1}/{0}".format(basename(f), outroot) %>
+%endfor
+
+## make boot.iso
+runcmd xorrisofs -v -U -J -R ${isoargs} \
+        -o ${outroot}/images/boot.iso \
+        -r -l -sysid PPC \
+        -A "${product.name} ${product.version}" -V '${isolabel}' \
+        -volset "${product.version}" -volset-size 1 -volset-seqno 1 \
+        -chrp-boot \
+        -graft-points \
+        .discinfo=${outroot}/.discinfo \
+        ${BOOTDIR}=${outroot}/${BOOTDIR} \
+        ${GRUBDIR}=${outroot}/${GRUBDIR} \
+        ${STAGE2IMG}=${outroot}/${STAGE2IMG} ${filegraft}
+
+%for kernel in kernels:
+    treeinfo images-${kernel.arch} boot.iso images/boot.iso
+%endfor

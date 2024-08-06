@@ -11,15 +11,19 @@ mkdir ${EFIBOOTDIR}/fonts/
 	install usr/share/shim/lockdown.efi ${EFIBOOTDIR}/
 %endif
 %if efiarch64:
-%if efiarch64 == 'RISCV64':
-install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
-install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/grub${efiarch64}.EFI
-%else:
-install boot/efi/EFI/*/shim${efiarch64|lower}.efi ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
-install boot/efi/EFI/*/mm${efiarch64|lower}.efi ${EFIBOOTDIR}/
-install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/grub${efiarch64|lower}.efi
+    %if efiarch64 == 'LOONGARCH64':
+        install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
+        install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/BOOTLOONGARCH.EFI
+        install boot/efi/EFI/openEuler/grubloongarch64.efi  ${EFIBOOTDIR}/grub${efiarch64|lower}.efi
+    %elif efiarch64 == 'RISCV64':
+        install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
+        install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/grub${efiarch64}.EFI
+    %else:
+        install boot/efi/EFI/*/shim${efiarch64|lower}.efi ${EFIBOOTDIR}/BOOT${efiarch64}.EFI
+        install boot/efi/EFI/*/mm${efiarch64|lower}.efi ${EFIBOOTDIR}/
+        install boot/efi/EFI/*/gcd${efiarch64|lower}.efi ${EFIBOOTDIR}/grub${efiarch64|lower}.efi
+    %endif
 %endif
-$endif
 install boot/efi/EFI/*/fonts/unicode.pf2 ${EFIBOOTDIR}/fonts/
 
 ## actually make the EFI images

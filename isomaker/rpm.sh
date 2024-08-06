@@ -138,7 +138,7 @@ function download_rpms()
 
     mkdir -p "${BUILD}"/iso/repodata
     cp "$CONFIG" "${BUILD}"/iso/repodata/
-    createrepo -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    createrepo -d -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
     return 0
 }
 
