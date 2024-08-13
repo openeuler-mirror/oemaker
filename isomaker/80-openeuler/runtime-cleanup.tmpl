@@ -106,7 +106,7 @@ removekmod sound drivers/media drivers/hwmon \
 removekmod drivers/char --allbut virtio_console hw_random \
                                   virtio-rng ipmi hmcdrv
 removekmod drivers/hid --allbut hid-logitech-dj hid-logitech-hidpp
-removekmod drivers/video --allbut hyperv_fb syscopyarea sysfillrect sysimgblt fb_sys_fops
+removekmod drivers/video --allbut hyperv_fb syscopyarea sysfillrect sysimgblt fb_sys_fops ls2k500sfb
 remove lib/modules/*/{build,source,*.map}
 ## NOTE: depmod gets re-run after cleanup finishes
 
@@ -254,7 +254,9 @@ removefrom ncurses /usr/bin/captoinfo /usr/bin/infocmp /usr/bin/infotocap
 removefrom ncurses /usr/bin/reset /usr/bin/tabs /usr/bin/tic /usr/bin/toe
 removefrom ncurses /usr/bin/tput /usr/bin/tset
 removefrom ncurses-libs /usr/${libdir}/libform*
+%if basearch != 'ppc64le':
 removefrom ncurses-libs /usr/${libdir}/libmenu*
+%endif
 removefrom ncurses-libs /usr/${libdir}/libpanel.* /usr/${libdir}/libtic*
 removefrom net-tools */bin/netstat */sbin/ether-wake */sbin/ipmaddr
 removefrom net-tools */sbin/iptunnel */sbin/mii-diag */sbin/mii-tool

@@ -35,7 +35,7 @@ function parse_cmd_line()
 {
     #param init
     ARCH="$(uname -m)"
-    if [ "${ARCH}" = "aarch64" ] || [ "${ARCH}" = "x86_64" ] || [ "${ARCH}" = "loongarch64" ] || [ "${ARCH}" = "riscv64" ];then
+    if [ "${ARCH}" = "aarch64" ] || [ "${ARCH}" = "x86_64" ] || [ "${ARCH}" = "loongarch64" ] || [ "${ARCH}" = "riscv64" ] || [ "${ARCH}" = "ppc64le" ];then
         CONFIG_FILE="${CPATH}/config/${ARCH}/standard.conf"
         source "${CONFIG_FILE}"
     else
@@ -104,6 +104,7 @@ function global_var_init()
     EVERY_DIR="$OUTPUT_DIR"/tmp/everything
     EVERY_SRC_DIR="$OUTPUT_DIR"/tmp/everything_src
     EVERY_DEBUG_DIR="$OUTPUT_DIR"/tmp/everything_debug
+    SYSID_PPC="PPC"
 
     if [ -n "${RELEASE}" ];then
         RELEASE_NAME="${PRODUCT}-${VERSION}-${RELEASE}-${ARCH}"

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE comps
+  PUBLIC '-//openEuler//DTD Comps info//EN'
+  'comps.dtd'>
+<comps>
+  <group>
+    <id>core</id>
+    <name>Core</name>
+    <name xml:lang="zh_CN">核心</name>
+    <description>Smallest possible installation</description>
+    <description xml:lang="zh_CN">最小安装</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">audit</packagereq>
+      <packagereq type="mandatory">kernel</packagereq>
+      <packagereq type="mandatory">basesystem</packagereq>
+      <packagereq type="mandatory">bash</packagereq>
+      <packagereq type="mandatory">coreutils</packagereq>
+      <packagereq type="mandatory">cronie</packagereq>
+      <packagereq type="mandatory">curl</packagereq>
+      <packagereq type="mandatory">dnf</packagereq>
+      <packagereq type="mandatory">e2fsprogs</packagereq>
+      <packagereq type="mandatory">filesystem</packagereq>
+      <packagereq type="mandatory">glibc</packagereq>
+      <packagereq type="mandatory">grubby</packagereq>
+      <packagereq type="mandatory">hostname</packagereq>
+      <packagereq type="mandatory">initscripts</packagereq>
+      <packagereq type="mandatory">iproute</packagereq>
+      <packagereq type="mandatory">kbd</packagereq>
+      <packagereq type="mandatory">less</packagereq>
+      <packagereq type="mandatory">man-db</packagereq>
+      <packagereq type="mandatory">ncurses</packagereq>
+      <packagereq type="mandatory">openssh</packagereq>
+      <packagereq type="mandatory">openssh-server</packagereq>
+      <packagereq type="mandatory">openssh-clients</packagereq>
+      <packagereq type="mandatory">passwd</packagereq>
+      <packagereq type="mandatory">procps-ng</packagereq>
+      <packagereq type="mandatory">rootfiles</packagereq>
+      <packagereq type="mandatory">rpm</packagereq>
+      <packagereq type="mandatory">setup</packagereq>
+      <packagereq type="mandatory">shadow</packagereq>
+      <packagereq type="mandatory">sudo</packagereq>
+      <packagereq type="mandatory">systemd</packagereq>
+      <packagereq type="mandatory">util-linux</packagereq>
+      <packagereq type="mandatory">vim-minimal</packagereq>
+      <packagereq type="mandatory">yum</packagereq>
+      <packagereq type="mandatory">openEuler-latest-release</packagereq>
+      <packagereq type="default">NetworkManager</packagereq>
+      <packagereq type="default">NetworkManager-config-server</packagereq>
+      <packagereq type="default">authselect</packagereq>
+      <packagereq type="default">dracut-config-rescue</packagereq>
+      <packagereq type="default">sysfsutils</packagereq>
+      <packagereq type="default">linux-firmware</packagereq>
+      <packagereq type="default">rsyslog</packagereq>
+      <packagereq type="optional">dracut-config-generic</packagereq>
+      <packagereq type="optional">dracut-network</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>large-systems</id>
+    <name>Large Systems Performance</name>
+    <name xml:lang="zh_CN">大系统性能</name>
+    <description>Performance support tools for large systems.</description>
+    <description xml:lang="zh_CN">用于大型系统的性能支持工具。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">numactl</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>legacy-x</id>
+    <name>Legacy X Window System Compatibility</name>
+    <name xml:lang="zh_CN">传统 X Windows 系统的兼容性</name>
+    <description>Compatibility programs for migration from or working with legacy X Window System environments.</description>
+    <description xml:lang="zh_CN">用于从继承 X Windows 环境中迁移或者可用于该环境的兼容程序。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="default">libXmu</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>mail-server</id>
+    <name>Mail Server</name>
+    <name xml:lang="zh_CN">邮件服务器</name>
+    <description>These packages allow you to configure an IMAP or SMTP mail server.</description>
+    <description xml:lang="zh_CN">这些软件包允许您配置 IMAP 或 Postfix 邮件服务器。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="default">cyrus-sasl</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>network-server</id>
+    <name>Network Servers</name>
+    <name xml:lang="zh_CN">网络服务器</name>
+    <description>These packages include network-based servers such as DHCP, Kerberos and NIS.</description>
+    <description xml:lang="zh_CN">这些软件包包括基于网络的服务器，例如 DHCP、Kerberos 和 NIS。</description>
+    <default>true</default>
+    <uservisible>true</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">krb5-server</packagereq>
+      <packagereq type="optional">rsyslog</packagereq>
+      <packagereq type="optional">rsyslog-mysql</packagereq>
+      <packagereq type="optional">rsyslog-pgsql</packagereq>
+      <packagereq type="optional">rsyslog-relp</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>network-tools</id>
+    <name>Networking Tools</name>
+    <name xml:lang="zh_CN">联网工具</name>
+    <description>Tools for configuring and analyzing computer networks.</description>
+    <description xml:lang="zh_CN">配置和分析计算机网络的工具。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="optional">rsyslog</packagereq>
+      <packagereq type="optional">rsyslog-mysql</packagereq>
+      <packagereq type="optional">rsyslog-pgsql</packagereq>
+      <packagereq type="optional">rsyslog-relp</packagereq>
+    </packagelist>
+  </group>
+  <group>
+    <id>networkmanager-submodules</id>
+    <name>Common NetworkManager submodules</name>
+    <description>This group contains NetworkManager submodules that are commonly used, but may not be wanted in some streamlined configurations.</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="default">NetworkManager-bluetooth</packagereq>
+      <packagereq type="default">NetworkManager-wifi</packagereq>
+      <packagereq type="default">NetworkManager-wwan</packagereq>
+      <packagereq type="default">iptables</packagereq>
+    </packagelist>
+  </group>
+   <group>
+    <id>standard</id>
+    <name>Standard</name>
+    <name xml:lang="zh_CN">标准</name>
+    <description>The standard installation.</description>
+    <description xml:lang="zh_CN">标准安装。</description>
+    <default>true</default>
+    <uservisible>false</uservisible>
+    <packagelist>
+      <packagereq type="mandatory">acl</packagereq>
+      <packagereq type="mandatory">attr</packagereq>
+      <packagereq type="mandatory">bc</packagereq>
+      <packagereq type="mandatory">cpio</packagereq>
+      <packagereq type="mandatory">cyrus-sasl</packagereq>
+      <packagereq type="mandatory">crontabs</packagereq>
+      <packagereq type="mandatory">file</packagereq>
+      <packagereq type="mandatory">logrotate</packagereq>
+      <packagereq type="mandatory">lsof</packagereq>
+      <packagereq type="mandatory">net-tools</packagereq>
+      <packagereq type="mandatory">pciutils</packagereq>
+      <packagereq type="mandatory">quota</packagereq>
+      <packagereq type="mandatory">openEuler-release</packagereq>
+      <packagereq type="mandatory">sudo</packagereq>
+      <packagereq type="mandatory">systemd-udev</packagereq>
+      <packagereq type="mandatory">tar</packagereq>
+      <packagereq type="mandatory">util-linux-user</packagereq>
+      <packagereq type="default">bpftool</packagereq>
+      <packagereq type="default">bzip2</packagereq>
+      <packagereq type="default">chrony</packagereq>
+      <packagereq type="default">cryptsetup</packagereq>
+      <packagereq type="default">dosfstools</packagereq>
+      <packagereq type="default">ethtool</packagereq>
+      <packagereq type="default">gnupg2</packagereq>
+      <packagereq type="default">lvm2</packagereq>
+      <packagereq type="default">mdadm</packagereq>
+      <packagereq type="default">mtr</packagereq>
+      <packagereq type="default">realmd</packagereq>
+      <packagereq type="default">rsync</packagereq>
+      <packagereq type="default">smartmontools</packagereq>
+      <packagereq type="default">strace</packagereq>
+      <packagereq type="default">libteam</packagereq>
+      <packagereq type="default">unzip</packagereq>
+      <packagereq type="default">usbutils</packagereq>
+      <packagereq type="default">which</packagereq>
+      <packagereq type="default">xfsdump</packagereq>
+      <packagereq type="default">zip</packagereq>
+      <packagereq type="optional">ima-evm-utils</packagereq>
+      <packagereq type="optional">nfs-utils</packagereq>
+      <packagereq type="default">rng-tools</packagereq>
+      <packagereq type="mandatory">rsyslog-gnutls</packagereq>
+      <packagereq type="mandatory">rsyslog</packagereq>
+      <packagereq type="mandatory">rsyslog-relp</packagereq>
+      <packagereq type="default">nmap</packagereq>
+      <packagereq type="default">plymouth</packagereq>
+      <packagereq type="default">vim-enhanced</packagereq>
+      <packagereq type="default">wget</packagereq>
+    </packagelist>
+  </group>
+  <environment>
+	  <id>minimal-environment</id>
+	  <name>Minimal Install</name>
+	  <name xml:lang="zh_CN">最小安装</name>
+	  <description>Basic functionality.</description>
+	  <description xml:lang="zh_CN">基本功能。</description>
+	  <display_order>1</display_order>
+	  <grouplist>
+		  <groupid>core</groupid>
+	  </grouplist>
+	  <optionlist>
+		  <groupid>standard</groupid>
+	  </optionlist>
+  </environment>
+  <langpacks>
+    <match install="aspell-%s" name="aspell"/>
+    <match install="autocorr-%s" name="autocorr-en"/>
+    <match install="gnome-getting-started-docs-%s" name="gnome-getting-started-docs"/>
+    <match install="hunspell-%s" name="hunspell"/>
+    <match install="hyphen-%s" name="hyphen"/>
+    <match install="libreoffice-help-%s" name="libreoffice-core"/>
+    <match install="man-pages-%s" name="man-pages"/>
+    <match install="mythes-%s" name="mythes"/>
+  </langpacks>
+</comps>
