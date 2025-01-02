@@ -65,9 +65,11 @@ mkdir ${KERNELDIR}
 
 %if exists("boot/efi/EFI/*/grubloongarch64.efi"):
 ## make boot.iso
-runcmd mkisofs -o ${outroot}/images/boot.iso \
+runcmd xorriso as mkisofs -o ${outroot}/images/boot.iso \
        ${efiargs} -R -J -V '${isolabel}' -T ${udfargs} \
        -graft-points \
+       -efi-boot-part \
+       --efi-boot-image \
        ${KERNELDIR}=${outroot}/${KERNELDIR} \
        ${LIVEDIR}=${outroot}/${LIVEDIR} \
        ${efigraft} ${filegraft}
