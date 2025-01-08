@@ -278,3 +278,87 @@ function gen_livecd_iso() {
     implantisomd5 /result/"${LIVE_CD_ISO_NAME}" --force
     return 0
 }
+
+function gen_devstation_livecd_iso() {
+    #pre
+    set +e
+    export LD_PRELOAD=libgomp.so.1
+    rm -rf /etc/yum.repos.d/EnCloudOS.repo || true
+
+    root_pwd=$(cat config/${ARCH}/livecd/root_pwd)
+    if [[ "x${root_pwd}" == "x" ]];then
+        echo "error: password config is empty, please check password config in file config/${ARCH}/livecd/root_pwd"
+        return 1
+    fi
+    rpmlist=$(cat config/${ARCH}/livecd/devstation_rpmlist)
+    if [[ "x${rpmlist}" == "x" ]];then
+        echo "error: devstation_rpmlist is empty, please check rpmlist in file config/${ARCH}/livecd/devstation_rpmlist"
+        return 1
+    fi
+    work_dir="$(pwd)/workspace/"
+    cfg_dir="${work_dir}/config"
+
+    if [ -d "${work_dir}" ]; then rm -rf "$work_dir";fi
+    mkdir -p $work_dir
+
+    if [ -d "${cfg_dir}" ]; then rm -rf "${cfg_dir}";fi
+    mkdir -p "${cfg_dir}"
+    mkdir -p /var/adm/fillup-templates/
+    cp config/${ARCH}/livecd/devstation_livecd_${ARCH}.ks ${cfg_dir}
+    sed -i 's#ROOT_PWD#'${root_pwd}'#' ${cfg_dir}/devstation_livecd_${ARCH}.ks
+    sed -i 's#INSTALL_REPO#'${INSTALL_URL}'#' ${cfg_dir}/devstation_livecd_${ARCH}.ks
+    extra_packages="calamares calamares-devel calamares-interactiveterminal calamares-libs kpmcore kpmcore-devel"
+    rpmlist="${rpmlist} ${extra_packages}"
+    for rpm_name in ${rpmlist}
+    do
+        sed -i '/%packages/a '${rpm_name}'' ${cfg_dir}/devstation_livecd_${ARCH}.ks
+    done
+    rm -rf /usr/share/lorax/templates.d/99-generic/live
+    cp -r config/${ARCH}/livecd/devstation_live /usr/share/lorax/templates.d/99-generic/live
+    # build
+
+    livemedia-creator --make-iso --ks=${cfg_dir}/devstation_livecd_"${ARCH}".ks --nomacboot --no-virt --project "${DEVSTATION_NETINST_ISO_NAME}" --releasever "${VERSION}${RELEASE}" --tmp "${work_dir}" --anaconda-arg="--nosave=all_ks" --dracut-arg="--xz" --dracut-arg="--add livenet dmsquash-live convertfs pollcdrom qemu qemu-net" --dracut-arg="--omit" --dracut-arg="plymouth" --dracut-arg="--no-hostonly" --dracut-arg="--debug" --dracut-arg="--no-early-microcode" --dracut-arg="--nostrip"
+}
+
+function gen_devstation_netinst_iso() {
+    gen_devstation_livecd_iso
+    [ $? != 0  ] && return 1
+    cd ${work_dir}/*/images
+    DEVSTATION_LIVECD_TAR=$(ls *.iso)
+    devstation_livecd_source_list=$(echo "$DEVSTATION_NETINST_ISO_NAME"|sed 's/.iso//g')_source.rpmlist
+    devstation_livecd_binary_list=$(echo "$DEVSTATION_NETINST_ISO_NAME"|sed 's/.iso//g')_binary.rpmlist
+    mv "${DEVSTATION_LIVECD_TAR}" "${DEVSTATION_NETINST_ISO_NAME}"
+    mkdir -p {rootfs,squa};mount ../LiveOS/squashfs.img squa/;mount squa/LiveOS/rootfs.img rootfs/
+    chroot rootfs/ /bin/bash -c "rpm -qai|grep 'Source RPM'" > tmp;cat tmp|awk '{print $4}'|sort|uniq > "$devstation_livecd_source_list"
+    chroot rootfs/ /bin/bash -c "rpm -qa" > tmp;cat tmp|sort|uniq > "$devstation_livecd_binary_list"
+    umount rootfs squa
+    mkdir -p /result/;rm -rf /result/*;mv "${DEVSTATION_NETINST_ISO_NAME}" /result
+    mv "$devstation_livecd_source_list" /result
+    mv "$devstation_livecd_binary_list" /result
+    cd -
+    rm -rf ${work_dir}
+    implantisomd5 /result/"${DEVSTATION_NETINST_ISO_NAME}" --force
+    return 0
+}
+
+function gen_devstation_iso()
+{
+    set +e
+    mkdir -p "${BUILD}"/iso/repodata/
+    cp "$CONFIG" "${BUILD}"/iso/repodata/
+    createrepo -d -g "${BUILD}"/iso/repodata/*.xml "${BUILD}"/iso
+    gen_devstation_livecd_iso
+    [ $? != 0  ] && return 1
+    cd ${work_dir}/*/images
+    DEVSTATION_LIVECD_TAR=$(ls *.iso)
+    mkdir -p iso && mount "$DEVSTATION_LIVECD_TAR" iso && cp -rf iso/* "${BUILD}"/iso && umount iso
+    if [ "$ARCH" == "x86_64" ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DEVSTATION_ISO_NAME}" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table  -eltorito-alt-boot -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0 ] && return 1
+    elif [ "$ARCH" == "aarch64" ] || [ "$ARCH" == "riscv64" ]; then
+        mkisofs -R -J -T -r -l -d -joliet-long -allow-multidot -allow-leading-dots -no-bak -V "${RELEASE_NAME}" -o "${OUTPUT_DIR}/${DEVSTATION_ISO_NAME}" -e images/efiboot.img -no-emul-boot "${BUILD}"/iso
+        [ $? != 0 ] && return 1
+    fi
+    implantisomd5 "${OUTPUT_DIR}/${DEVSTATION_ISO_NAME}"
+    return 0
+}

@@ -81,7 +81,22 @@ function mk_oe_main()
         return 0
     fi
 
-    create_install_img
+    if [ "${ISO_TYPE}" == "devstation_netinst" ]; then
+        gen_devstation_netinst_iso
+        if [ $? -ne 0 ]; then
+            echo "create devstation_netinst iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${DEVSTATION_NETINST_ISO_NAME}"
+        return 0
+    fi
+
+    # Skip create_install_img for devstation, but continue other steps
+    if [ "${ISO_TYPE}" != "devstation" ]; then
+        create_install_img
+    else
+        echo "Skipping create_install_img for devstation ISO_TYPE"
+    fi
 
     echo "Creating repos..."
     create_repos
@@ -95,6 +110,16 @@ function mk_oe_main()
     if [ $? -ne 0 ]; then
         echo "down rpms failed"
         return 1
+    fi
+
+    if [ "${ISO_TYPE}" == "devstation" ]; then
+        gen_devstation_iso
+        if [ $? -ne 0 ]; then
+            echo "create devstation iso failed"
+            return 1
+        fi
+        ls "${OUTPUT_DIR}/${DEVSTATION_ISO_NAME}"
+        return 0
     fi
 
     echo "Initializing config..."
@@ -157,11 +182,11 @@ function mk_oe_main()
         ls "${OUTPUT_DIR}/${EVE_SRC_ISO_NAME}"
     elif [ "${ISO_TYPE}" == "edge" ]; then
         gen_edge_iso
-	if [ $? -ne 0 ]; then
+	    if [ $? -ne 0 ]; then
             echo "create edge iso failed"
-	    return 1
+	        return 1
         fi
-	ls "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
+	    ls "${OUTPUT_DIR}/${EDGE_ISO_NAME}"
     elif [ "${ISO_TYPE}" == "desktop" ]; then
         gen_desktop_iso
         if [ $? -ne 0 ]; then
@@ -170,6 +195,7 @@ function mk_oe_main()
         fi
         ls "${OUTPUT_DIR}/${DESKTOP_ISO_NAME}"
     fi
+
     mkclean
     return 0
 }
