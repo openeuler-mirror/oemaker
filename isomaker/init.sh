@@ -19,14 +19,15 @@ set -e
 function oemaker_usage()
 {
     cat << EOF
-Usage: oemaker [-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]
+Usage: oemaker [-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY] [-u INSTALL_URL]
 
 optional arguments:
-    -t Type        ISO Type, include standard debug source everything everything_debug everything_src livecd and netinst
+    -t Type        ISO Type, include standard debug source everything everything_debug everything_src livecd netinst devstation and devstation_netinst
     -p Product     Product Name, such as: openEuler
     -v Version     version identifier
     -r RELEASE     release information
     -s REPOSITORY  source dnf repository address link(may be listed multiple times)
+    -u INSTALL_URL installation URL address(required only when ISO Type is devstation or devstation_netinst)
     -h             show the help message and exit
 EOF
 }
@@ -48,7 +49,7 @@ function parse_cmd_line()
     REPOS1="${CONFIG_YUM_REPOS}"
 
     # parse input params
-    while getopts ":p:v:r:s:t:h" opt
+    while getopts ":p:v:r:s:t:u:h" opt
     do
         case "$opt" in
             p)
@@ -66,6 +67,9 @@ function parse_cmd_line()
             t)
                 ISO_TYPE="$OPTARG"
             ;;
+            u)
+                INSTALL_URL="$OPTARG"
+            ;;
             h)
                 oemaker_usage
                 exit 0
@@ -78,7 +82,7 @@ function parse_cmd_line()
         esac
     done
 
-    for typename in standard source debug everything_debug everything everything_src netinst edge desktop livecd
+    for typename in standard source debug everything_debug everything everything_src netinst edge desktop livecd devstation devstation_netinst
     do
         if [ "${typename}" == "${ISO_TYPE}" ];then
             return 0
@@ -118,6 +122,8 @@ function global_var_init()
         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-edge-${ARCH}-dvd.iso"
         DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${RELEASE}-${ARCH}-dvd.iso"
         LIVE_CD_ISO_NAME="${PRODUCT}-livecd-${VERSION}-${RELEASE}-${ARCH}.iso"
+        DEVSTATION_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-DevStation-${ARCH}-dvd.iso"
+        DEVSTATION_NETINST_ISO_NAME="${PRODUCT}-${VERSION}-${RELEASE}-DevStation-netinst-${ARCH}-dvd.iso"
     else
         RELEASE_NAME="${PRODUCT}-${VERSION}-${ARCH}"
         STANDARD_ISO_NAME="${PRODUCT}-${VERSION}-${ARCH}-dvd.iso"
@@ -130,6 +136,8 @@ function global_var_init()
         EDGE_ISO_NAME="${PRODUCT}-${VERSION}-edge-${ARCH}-dvd.iso"
         DESKTOP_ISO_NAME="${PRODUCT}-Desktop-${VERSION}-${ARCH}-dvd.iso"
         LIVE_CD_ISO_NAME="${PRODUCT}-livecd-${VERSION}-${ARCH}.iso"
+        DEVSTATION_ISO_NAME="${PRODUCT}-${VERSION}-DevStation-${ARCH}-dvd.iso"
+        DEVSTATION_NETINST_ISO_NAME="${PRODUCT}-${VERSION}-DevStation-netinst-${ARCH}-dvd.iso"
     fi
 
     [ ! -d "${BUILD}" ] && mkdir -p "${BUILD}"
@@ -145,6 +153,7 @@ function global_var_init()
     else
         YUMREPO="$YUM_REPO"
         CONFIG=""
+
     fi
     REPOS=$(echo "$REPOS1")
     if [ "X$REPOS" != "X" ];then

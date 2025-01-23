@@ -32,7 +32,11 @@ function download_rpms()
     elif [ "${ISO_TYPE}" == "desktop" ]; then
         get_desktop_rpms
         return 0
+    elif [ "${ISO_TYPE}" == "devstation" ] || [ "${ISO_TYPE}" == "devstation_netinst" ]; then
+        get_devstation_rpms
+        return 0
     fi
+
     cat "${CONFIG}" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 > _all_rpms.lst
     parse_rpmlist_xml "${ARCH}"
     cat parsed_rpmlist_${ARCH} >> _all_rpms.lst
@@ -177,6 +181,17 @@ function get_desktop_rpms()
     cat "config/${ARCH}/desktop_normal.xml" | grep packagereq | cut -d ">" -f 2 | cut -d "<" -f 1 >> _desktop_rpms.lst
     sort -r -u _desktop_rpms.lst -o _desktop_rpms.lst
     yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _desktop_rpms.lst | tr '\n' ' ')
+    if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
+        echo "Download rpms failed!"
+        exit 133
+    fi
+}
+
+function get_devstation_rpms()
+{
+    cat "config/${ARCH}/livecd/devstation_rpmlist" >> _devstation_rpms.lst
+    sort -r -u _devstation_rpms.lst -o _devstation_rpms.lst
+    yumdownloader --resolve --installroot="${BUILD}"/tmp --destdir="${BUILD}"/iso/Packages/ $(cat _devstation_rpms.lst | tr '\n' ' ')
     if [ $? != 0 ] || [ $(ls "${BUILD}"/iso/Packages/ | wc -l) == 0 ]; then
         echo "Download rpms failed!"
         exit 133
