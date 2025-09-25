@@ -39,7 +39,7 @@ dnf install -y envmaker
 
 oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEASE] [-s REPOSITORY]_</font>
 
-  Optional arguments:
+  可选参数：
 
     -t    ISO type, including standard, debug, source, everything, everything_debug, everything_src, livecd, and netinst 
 
@@ -57,12 +57,12 @@ oemaker <font color=#0000FF >_[-h] [-t Type] [-p Product] [-v Version] [-r RELEA
 
 isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k kickstart file path] origin-iso dest-iso_</font>
 
-  Positional arguments:
+  位置参数：
 
     origin-iso    origin iso image
     dest-iso      destination iso image
 
-  Optional arguments:
+  可选参数：
 
     -t    The temporary path, which must be an absolute path and must be greater than 8 GB
 
@@ -80,11 +80,15 @@ isocut <font color=#0000FF >_[-h] [-t temporary path] [-r extern rpm path] [-k k
 
     -c    Cut packages, yes/no, default is yes
 
+  命令示例：
+  
+    sudo isocut -t /home/temp /home/isocut_iso/openEuler-24.03-LTS-riscv64-dvd.iso /home/result/new.iso
+
 ##### envmaker
 
 envmaker <font color=#0000FF >_[-p Product] [-v Version]_</font>
 
-  Optional arguments:
+  可选参数：
   
     -p    Product name,for example, openEuler_compile_env
 
