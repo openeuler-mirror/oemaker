@@ -384,7 +384,7 @@ def select_rpm():
     rpm_list = ""
     for line in rpm_list_file:
         if not (line is None or line.strip() == ""):
-            rpm_list += " %s" % line[:-1].strip()
+            rpm_list += " %s" % line.strip()
     cmd = "yumdownloader -y --resolve -c {0} --installroot {1} --destdir {2}/{3} {4}".format(
         ICONFIG.yum_conf, ICONFIG.cache_path, ICONFIG.temp_path_new_image,
         EXCLUDE_DIR_PACKAGES, rpm_list)
@@ -436,7 +436,7 @@ def regen_repodata():
             if line is None or line.strip() == "":
                 continue
             pack = ET.SubElement(packlist, 'packagereq', type='default')
-            pack.text = line[:-1].strip()
+            pack.text = line.strip()
             if os.uname()[-1].strip() == 'x86_64':
                 pack.text = pack.text.split(".x86_64")[0]
             elif os.uname()[-1].strip() == 'aarch64':
