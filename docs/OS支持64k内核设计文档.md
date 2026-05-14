@@ -118,6 +118,20 @@
 1. 镜像/RPM行为的兼容性：默认安装行为下，仍保持4K内核的安装行为；64K内核作为可选项可选安装
 2. 软件兼容性：用户态软件功能兼容验证(当前已识别jemalloc，其余通过版本全量验证)；kernel的用户态子包perf、bpftool等
 3. 硬件/驱动兼容性：当前主要保障社区inbox驱动和社区配套outbox驱动
+4. kernel软件子包4K/64K分发策略如下
+
+| 软件包 | 64k独立发包 | 分析结论 |
+|:-----|:----------|:-------|
+| kernel | 是 | 涉及内核64k二进制，需重新编译分发 |
+| kernel-source | 是 | 涉及内核源码，且从易用性设计视角，源码目录当前和包名目录保持一致，建议重新编译分发，实际文件内容4K/64K的实际为一致，仅目录不一致 |
+| kernel-headers | 是 | 结论同kernel-source |
+| kernel-devel | 是 | 结论同kernel-source |
+| kernel-extra-modules | 是 | 涉及内核ko 64k二进制，需要重新编译分发 |
+| kernel-tool | 否 | 不涉及内核态二进制，均为用户态，保留仅分发4K编译二进制即可 |
+| kernel-tool-devel | 否 | 同kernel-tool |
+| perf | 否 | 同kernel-tool，使用perf test进行自带用例的验证 |
+| python3-perf | 否 | 同kernel-tool，使用perf test进行自带用例的验证 |
+| bpftool | 否 | 同kernel-tool，使用tools/testing/selftests/bpf进行验证即可 |
 
 ### 3.6.5、可服务性设计
 
