@@ -837,8 +837,9 @@ def main():
     do_clean()
     return 0
 
-def signal_handler():
+def signal_handler(signum, frame):
     do_clean()
+    exit(1)
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.signal(signal.SIGTERM, signal_handler)
