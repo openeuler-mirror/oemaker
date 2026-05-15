@@ -703,7 +703,7 @@ def remake_iso():
         make_iso_cmd = "genisoimage -joliet-long -U  -J  -R -T -part -hfs -r -l -sysid \"%s\" " \
                        "-V \"%s\" -o \"%s\" -chrp-boot -hfs-bless boot/grub/powerpc-ieee1275 " \
                        "-no-desktop -allow-multidot " % (
-                           SYSID_PPC, ICONFIG.iso_desc, ICONFIG.dest_iso)
+                           SYSID_PPC, ICONFIG.new_iso_name, ICONFIG.dest_iso)
     dest_iso_path = os.path.dirname(ICONFIG.dest_iso)
     if not (dest_iso_path is None or dest_iso_path ==
             "") and not os.path.exists(dest_iso_path):
