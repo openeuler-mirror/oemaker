@@ -503,8 +503,17 @@ def mount_rootfs_image(rootfs_image_path, liveos_path):
         return False
     os.chdir(liveos_path)
     cmd = "losetup {0} rootfs.img".format(loop_dev)
-    ICONFIG.run_cmd(cmd)
-    ICONFIG.run_cmd("kpartx -av rootfs.img")
+    ret = ICONFIG.run_cmd(cmd)
+    if ret[0] != 0:
+        print(f"Run command failed: {cmd}")
+        return False
+
+    cmd = "kpartx -av rootfs.img"
+    ret = ICONFIG.run_cmd(cmd)
+    if ret[0] != 0:
+        print(f"Run command failed: {cmd}")
+        return False
+
     cmd = "mount {0} {1}".format(loop_dev, rootfs_image_path)
     ret = ICONFIG.run_cmd(cmd)
     if ret[0] != 0:
