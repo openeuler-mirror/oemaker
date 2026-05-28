@@ -47,15 +47,16 @@ function create_install_img()
 
 function create_repos()
 {
-    if [ -d /etc/yum.repos.d ];then
-        rm -fr repos.old && mv /etc/yum.repos.d repos.old && mkdir -p /etc/yum.repos.d/
+    if [ -d yum.repos.d ];then
+        rm -fr yum.repos.d
     fi
+    mkdir -p yum.repos.d
 
     repos=($(echo "$YUMREPO" | sed 's/-s//g'))
 
     for repo in  ${repos[@]}
     do
-        yum-config-manager  --add-repo "$repo"
+        yum-config-manager --setopt=reposdir=yum.repos.d --add-repo "$repo"
     done
 
     yum clean all
