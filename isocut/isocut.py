@@ -445,7 +445,7 @@ def regen_repodata():
                 pack.text = pack.text.split(".loongarch64")[0]
             elif os.uname()[-1].strip() == 'riscv64':
                 pack.text = pack.text.split(".riscv64")[0]
-            elif os.uname()[-1].strip() == 'ppc64le'[0]:
+            elif os.uname()[-1].strip() == 'ppc64le':
                 pack.text = pack.text.split(".ppc64le")[0]
             pack.text = pack.text.split(".noarch")[0]
         fp_rpm.close()
