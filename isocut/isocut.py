@@ -517,7 +517,7 @@ def update_anaconda_pixmaps(rootfs_image_path):
     for item in PIXMAPS_FILES_LIST:
         cmd = "cp -af {0}/{1} {2}/{3}".format(ICONFIG.install_pic_path, item, rootfs_image_path, PIXMAPS_PATH)
         ret = ICONFIG.run_cmd(cmd)
-        if not ret:
+        if ret[0] != 0:
             print(f"Copy {item} failed!!")
             return False
 
@@ -530,13 +530,13 @@ def remake_install_img(install_image_path):
 
     cmd = "mksquashfs {0}/squashfs-root install.img".format(install_image_path)
     ret = ICONFIG.run_cmd(cmd)
-    if not ret:
+    if ret[0] != 0:
         print("Umount install.img failed!!")
         return False
 
     cmd = "cp -rf install.img {0}/images/".format(ICONFIG.temp_path_new_image)
     ret = ICONFIG.run_cmd(cmd)
-    if not ret:
+    if ret[0] != 0:
         print("Copy install.img failed!!")
         return False
 
@@ -545,7 +545,7 @@ def remake_install_img(install_image_path):
 def umount_rootfs_image(rootfs_image_path):
     cmd = "umount {0}".format(rootfs_image_path)
     ret = ICONFIG.run_cmd(cmd)
-    if not ret:
+    if ret[0] != 0:
         print(f"Umount {rootfs_image_path} failed!!")
         return False
 
