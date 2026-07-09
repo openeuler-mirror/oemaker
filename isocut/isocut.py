@@ -571,7 +571,10 @@ def replace_install_pic():
         return 10
 
     os.chdir(install_image_path)
-    ICONFIG.run_cmd("unsquashfs install.img")
+    ret = ICONFIG.run_cmd("unsquashfs install.img")
+    if ret[0] != 0:
+        print("Unsquash install.img failed!!")
+        return 10
 
     if not mount_rootfs_image(rootfs_image_path, liveos_path):
         print("Mount rootfs.img failed!!")
