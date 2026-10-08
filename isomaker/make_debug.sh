@@ -20,7 +20,7 @@ set -e
 function down_ava_debug_rpm()
 {
     [ -d "$DBG_DIR" ] && rm -rf "$DBG_DIR"
-    yum list --installroot="${BUILD}"/tmp available | awk '{print $1}' | grep -E 'devel|debuginfo' | grep -v "i686" > ava_deb_lst
+    yum list --setopt=reposdir=yum.repos.d --installroot="${BUILD}"/tmp available | awk '{print $1}' | grep -E 'devel|debuginfo' | grep -v "i686" > ava_deb_lst
     local yumdownloader_log_startline=$(($(awk 'END{print NR}' /var/log/dnf.log)+1))
     yumdownloader --setopt=reposdir=yum.repos.d --installroot="${BUILD}"/tmp --destdir="$DBG_DIR" $(cat ava_deb_lst | tr '\n' ' ') > /dev/null
     if [ $? -ne 0 ] || sed -n ''${yumdownloader_log_startline}',$p' /var/log/dnf.log | grep -n 'conflicting requests'; then
